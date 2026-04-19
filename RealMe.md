@@ -1,9 +1,9 @@
 - 👋 Hi, I’m @MERCIA-lab
 - 👀 I’m interested in cyber security 
-- 🌱 I’m currently learning network and internet technology (NIT)
-- 💞️ I’m looking to collaborate on science behind NIT
-- 📫 How to reach me IG:@rizz
-                      +250795060701
+-  I’m currently learning network and internet technology (NIT) BTEC
+-  I’m looking to collaborate on science behind NIT
+- How to reach me
+  E-mail:promptmeekproton.me
 - 😄 Pronouns😰
 - ⚡ Fun fact: Hey there you in !
 
