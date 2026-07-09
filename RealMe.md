@@ -169,12 +169,9 @@ Also exploring:
 
 ## Connect
 
-GitHub: https://github.com/YOUR_USERNAME
-
-LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN
-
-Email: YOUR_EMAIL
+GitHub: https://github.com/MERCI-lab
+Email: meek@beullashop.com
 
 ---
 
-> "Building software that solves real-world problems through intelligence, scalability, and thoughtful engineering."
+> "Building software that solves real world problems through intelligence, scalability, and thoughtful engineering."
