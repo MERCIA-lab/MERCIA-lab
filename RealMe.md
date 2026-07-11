@@ -1,64 +1,77 @@
-<h1 align="center">Meek Dieu Merci NUKURI</h1>
+<div align="center">
 
-<p align="center">
-Computer Science Student • AI & Machine Learning Engineer • Full-Stack Developer
-</p>
+# Meek Dieu Merci NUKURI
 
-<p align="center">
+<img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=32&duration=3500&pause=1000&color=3B82F6&center=true&vCenter=true&width=900&lines=Computer+Science+Student;AI+%26+Machine+Learning+Engineer;Full-Stack+Developer;Backend+Systems+Engineer;Building+Scalable+Software;Always+Learning+New+Technologies" alt="Typing SVG"/>
+
+<p>
 Building intelligent software, scalable backend systems, and modern web applications.
 </p>
 
-<p align="center">
+<p>
+
 <a href="https://github.com/MERCI-lab">
-<img src="https://komarev.com/ghpvc/?username=MERCI-lab&style=for-the-badge" />
+<img src="https://komarev.com/ghpvc/?username=MERCI-lab&style=for-the-badge"/>
 </a>
+
 <a href="https://github.com/MERCI-lab?tab=followers">
-<img src="https://img.shields.io/github/followers/MERCI-lab?style=for-the-badge" />
+<img src="https://img.shields.io/github/followers/MERCI-lab?style=for-the-badge&logo=github"/>
 </a>
-<a href="https://github.com/MERCI-lab?tab=repositories">
-<img src="https://img.shields.io/github/stars/MERCI-lab?style=for-the-badge" />
+
+<a href="https://github.com/MERCI-lab">
+<img src="https://img.shields.io/github/stars/MERCI-lab?style=for-the-badge&logo=github"/>
 </a>
+
 </p>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&height=180&text=Loading%20Developer%20Profile...&fontSize=36&animation=fadeIn&fontAlignY=38&color=0:0F2027,50:203A43,100:2C5364"/>
+
+</div>
 
 ---
 
-# Table of Contents
+# Navigation
 
-- About
-- Current Focus
-- Tech Stack
-- Featured Project
-- GitHub Analytics
-- GitHub Activity
-- Contribution Graph
-- Achievements
-- Development Environment
-- Currently Learning
-- Goals
-- Contact
+- [About](#about)
+- [Current Focus](#current-focus)
+- [Tech Stack](#tech-stack)
+- [Featured Project](#featured-project)
+- [GitHub Dashboard](#github-dashboard)
+- [Development Journey](#development-journey)
+- [Current Status](#current-status)
+- [Learning Goals](#learning-goals)
+- [Contact](#contact)
 
 ---
 
 # About
 
-I'm a Computer Science student passionate about designing intelligent software systems and scalable applications.
+I'm a Computer Science student passionate about designing intelligent software, scalable backend systems, and AI-powered applications.
 
-My interests span Artificial Intelligence, Machine Learning, Backend Engineering, Cloud Computing, and Full-Stack Development.
+My primary interests include:
 
-I enjoy building software that combines strong engineering principles with practical solutions to real-world problems while continuously learning modern technologies.
+- Artificial Intelligence
+- Machine Learning
+- Backend Engineering
+- Software Architecture
+- Cloud Computing
+- Full-Stack Development
+- Distributed Systems
+
+I enjoy building practical software solutions while continuously improving my engineering knowledge.
 
 ---
 
 # Current Focus
 
-- Artificial Intelligence
-- Machine Learning
-- Deep Learning
-- Large Language Models
+- Building AI-powered applications
+- Learning Deep Learning
+- Exploring Large Language Models
 - Backend Architecture
 - Cloud Infrastructure
-- Software Engineering Best Practices
 - Distributed Systems
+- System Design
+- Open Source Contributions
 
 ---
 
@@ -82,13 +95,13 @@ I enjoy building software that combines strong engineering principles with pract
 <img src="https://skillicons.dev/icons?i=nodejs,express,nestjs,fastapi"/>
 </p>
 
-## Artificial Intelligence
+## AI & Machine Learning
 
 <p>
 <img src="https://skillicons.dev/icons?i=python,pytorch,tensorflow,opencv"/>
 </p>
 
-**Libraries**
+### Libraries
 
 - Hugging Face Transformers
 - LangChain
@@ -122,21 +135,21 @@ I enjoy building software that combines strong engineering principles with pract
 
 ## iMeek Cargo Express
 
-A complete logistics platform for managing transportation and cargo operations.
+A modern logistics and cargo management platform designed for enterprise-scale transportation and shipment operations.
 
-### Features
+### Core Features
 
 - Shipment Tracking
 - Fleet Management
-- Warehouse Management
+- Warehouse Operations
 - Customer Management
 - Analytics Dashboard
 - Payment Integration
-- Notifications
 - Role-Based Access Control
+- Notifications
 - Real-Time Updates
 
-### Technology
+### Technology Stack
 
 - Next.js
 - React
@@ -151,33 +164,27 @@ A complete logistics platform for managing transportation and cargo operations.
 
 ---
 
-# GitHub Analytics
+# GitHub Dashboard
 
 <p align="center">
 
-<img height="180" src="https://github-readme-stats.vercel.app/api?username=MERCI-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github"/>
+<img width="49%" src="https://github-readme-stats.vercel.app/api?username=MERCI-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github"/>
 
-<img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCI-lab&layout=compact&theme=github_dark&hide_border=true"/>
+<img width="49%" src="https://streak-stats.demolab.com?user=MERCI-lab&theme=github-dark&hide_border=true"/>
 
 </p>
 
----
-
-# GitHub Streak
-
 <p align="center">
 
-<img src="https://streak-stats.demolab.com?user=MERCI-lab&theme=github-dark&hide_border=true"/>
+<img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCI-lab&layout=compact&theme=github_dark&hide_border=true"/>
+
+<img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCI-lab&theme=github_dark"/>
 
 </p>
 
----
-
-# Contribution Graph
-
 <p align="center">
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCI-lab&theme=github-dark&hide_border=true"/>
+<img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=MERCI-lab&theme=github-dark&hide_border=true"/>
 
 </p>
 
@@ -203,19 +210,49 @@ A complete logistics platform for managing transportation and cargo operations.
 
 <p align="center">
 
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=MERCI-lab&theme=github_dark"/>
+<img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=MERCI-lab&theme=github_dark"/>
 
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=MERCI-lab&theme=github_dark"/>
-
-</p>
-
-<p align="center">
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCI-lab&theme=github_dark"/>
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=MERCI-lab&theme=github_dark"/>
+<img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=MERCI-lab&theme=github_dark"/>
 
 </p>
+
+---
+
+# Development Journey
+
+```text
+Artificial Intelligence     ████████████░░░ 80%
+
+Backend Engineering         ██████████████░ 90%
+
+Frontend Development        ███████████░░░░ 75%
+
+Cloud Computing             ████████░░░░░░░ 55%
+
+DevOps                      ███████░░░░░░░░ 50%
+
+System Design               █████████░░░░░░ 60%
+```
+
+---
+
+# Current Status
+
+```text
+Loading Development Progress...
+
+█████████████████████░░░░
+
+Learning ............. Deep Learning
+
+Building ............. AI Applications
+
+Reading .............. System Design
+
+Exploring ............ LLMs
+
+Contributing ......... Open Source
+```
 
 ---
 
@@ -223,38 +260,57 @@ A complete logistics platform for managing transportation and cargo operations.
 
 | Category | Technologies |
 |-----------|--------------|
-| Languages | Python, TypeScript, JavaScript, Java, C++, SQL |
-| Frontend | React, Next.js, Tailwind CSS |
-| Backend | Node.js, NestJS, Express, FastAPI |
-| Databases | PostgreSQL, MongoDB, MySQL, Redis |
-| AI/ML | PyTorch, TensorFlow, Hugging Face, LangChain |
-| DevOps | Docker, GitHub Actions, Linux |
+| Languages | Python • TypeScript • JavaScript • Java • C++ • SQL |
+| Frontend | React • Next.js • Tailwind CSS |
+| Backend | Node.js • NestJS • Express • FastAPI |
+| Databases | PostgreSQL • MongoDB • MySQL • Redis |
+| AI | PyTorch • TensorFlow • Hugging Face • LangChain |
+| DevOps | Docker • Git • GitHub Actions • Linux |
 | Cloud | AWS |
 
 ---
 
-# Currently Learning
+# Learning Goals
 
 - Deep Learning
-- Large Language Models
+- Generative AI
 - MLOps
 - Kubernetes
 - AWS
-- Software Architecture
 - Distributed Systems
 - AI Agents
+- Software Architecture
 
 ---
 
-# 2026 Goals
+# 2026 Objectives
 
 - Build production-ready AI systems
-- Contribute more to Open Source
 - Publish technical articles
+- Contribute consistently to Open Source
 - Master Cloud Infrastructure
 - Learn Kubernetes
-- Improve System Design skills
-- Build impactful software products
+- Improve System Design
+- Develop impactful software products
+
+---
+
+<details>
+
+<summary><strong>Development Philosophy</strong></summary>
+
+Software should be:
+
+- Reliable
+- Scalable
+- Secure
+- Maintainable
+- Well Documented
+- User Focused
+
+Every project is an opportunity to solve meaningful problems while improving engineering craftsmanship.
+
+</details>
 
 ---
 
@@ -270,23 +326,10 @@ meek@beullashop.com
 
 ---
 
-<details>
-
-<summary><strong>Development Philosophy</strong></summary>
-
-I believe software should be:
-
-- Reliable
-- Scalable
-- Maintainable
-- Secure
-- Well Documented
-- User Focused
-
-Every project is an opportunity to improve engineering practices while solving meaningful problems.
-
-</details>
-
----
+<p align="center">
 
 > Building intelligent software through thoughtful engineering, continuous learning, and practical innovation.
+
+</p>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&section=footer&height=120&color=0:0F2027,50:203A43,100:2C5364"/>
