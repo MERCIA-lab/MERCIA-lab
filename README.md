@@ -14,14 +14,14 @@
 <p>Building intelligent software, scalable backend systems, and modern web applications.</p>
 
 <p>
-  <a href="https://github.com/MERCI-lab">
-    <img src="https://komarev.com/ghpvc/?username=MERCI-lab&style=for-the-badge&color=3B82F6&label=PROFILE+VIEWS" alt="Profile Views"/>
+  <a href="https://github.com/MERCIA-lab">
+    <img src="https://komarev.com/ghpvc/?username=MERCIA-lab&style=for-the-badge&color=3B82F6&label=PROFILE+VIEWS" alt="Profile Views"/>
   </a>
-  <a href="https://github.com/MERCI-lab?tab=followers">
-    <img src="https://img.shields.io/github/followers/MERCI-lab?style=for-the-badge&logo=github&color=10B981&labelColor=1a1a2e" alt="Followers"/>
+  <a href="https://github.com/MERCIA-lab?tab=followers">
+    <img src="https://img.shields.io/github/followers/MERCIA-lab?style=for-the-badge&logo=github&color=10B981&labelColor=1a1a2e" alt="Followers"/>
   </a>
-  <a href="https://github.com/MERCI-lab">
-    <img src="https://img.shields.io/github/stars/MERCI-lab?style=for-the-badge&logo=github&color=F59E0B&labelColor=1a1a2e" alt="Stars"/>
+  <a href="https://github.com/MERCIA-lab">
+    <img src="https://img.shields.io/github/stars/MERCIA-lab?style=for-the-badge&logo=github&color=F59E0B&labelColor=1a1a2e" alt="Stars"/>
   </a>
 </p>
 </div>
@@ -168,22 +168,22 @@ A modern logistics and cargo management platform designed for enterprise-scale t
 
 <div align="center">
 <p>
-  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=MERCI-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true" alt="GitHub Stats"/>
-  <img width="49%" src="https://streak-stats.demolab.com?user=MERCI-lab&theme=github-dark&hide_border=true&fire=FF6B6B&ring=3B82F6&currStreakLabel=3B82F6" alt="GitHub Streak"/>
+  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true" alt="GitHub Stats"/>
+  <img width="49%" src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&fire=FF6B6B&ring=3B82F6&currStreakLabel=3B82F6" alt="GitHub Streak"/>
 </p>
 <p>
-  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCI-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8" alt="Top Languages"/>
-  <img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCI-lab&theme=github_dark" alt="Profile Stats"/>
+  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8" alt="Top Languages"/>
+  <img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCIA-lab&theme=github_dark" alt="Profile Stats"/>
 </p>
 <p>
-  <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=MERCI-lab&theme=github-dark&hide_border=true&area=true&custom_title=Contribution%20Activity" alt="Activity Graph"/>
+  <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&custom_title=Contribution%20Activity" alt="Activity Graph"/>
 </p>
 </div>
 
 ## Achievements
 
 <div align="center">
-<img src="https://github-profile-trophy.vercel.app/?username=MERCI-lab&theme=algolia&no-frame=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies"/>
+<img src="https://github-profile-trophy.vercel.app/?username=MERCIA-lab&theme=algolia&no-frame=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies"/>
 </div>
 
 ## Development Journey
@@ -220,7 +220,7 @@ System Design               █████████░░░░░░  60%
 
 <div align="center">
 <p>
-  <a href="https://github.com/MERCI-lab">
+  <a href="https://github.com/MERCIA-lab">
     <img src="https://img.shields.io/badge/GitHub-MERCI--lab-181717?style=for-the-badge&logo=github&logoColor=white"/>
   </a>
   <a href="mailto:your.email@example.com">
