@@ -164,28 +164,6 @@ A modern logistics and cargo management platform designed for enterprise-scale t
   <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socket.io&logoColor=white"/>
 </p>
 
-## GitHub Dashboard
-
-<div align="center">
-<p>
-  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true" alt="GitHub Stats"/>
-  <img width="49%" src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&fire=FF6B6B&ring=3B82F6&currStreakLabel=3B82F6" alt="GitHub Streak"/>
-</p>
-<p>
-  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8" alt="Top Languages"/>
-  <img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCIA-lab&theme=github_dark" alt="Profile Stats"/>
-</p>
-<p>
-  <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&custom_title=Contribution%20Activity" alt="Activity Graph"/>
-</p>
-</div>
-
-## Achievements
-
-<div align="center">
-<img src="https://github-profile-trophy.vercel.app/?username=MERCIA-lab&theme=algolia&no-frame=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies"/>
-</div>
-
 ## Development Journey
 
 ```text
