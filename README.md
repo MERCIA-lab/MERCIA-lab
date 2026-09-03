@@ -44,14 +44,14 @@
 <!--           2. ABOUT ME — SPLIT INFORMATION BLOCK             -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-## 🔴 About Me
+## About Me
 
 <table>
   <tr>
     <td width="60%" valign="top">
 
 ```typescript
-// 💻 developer_profile.ts
+// developer_profile.ts
 const engineer = {
   name       : "Meek Dieu Merci NUKURI",
   username   : "MERCIA-lab",
@@ -90,7 +90,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 <!--                  3. CONNECT WITH ME                         -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-## 🔗 Connect With Me
+## Connect With Me
 
 <div align="center">
 
@@ -114,7 +114,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 <!--                     4. TECH STACK                           -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 <div align="center">
 
@@ -158,7 +158,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 <!--                 5. GITHUB ANALYTICS                         -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-## 📊 GitHub Analytics
+## GitHub Analytics
 
 <!-- PRIMARY DASHBOARD: 2-column responsive layout with 1800s cache hints -->
 <table width="100%">
@@ -179,7 +179,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 
 <!-- LAZY-LOADED: NON-CRITICAL STATS & CARDS -->
 <details>
-<summary><strong>📊 Detailed Analytics & Language Breakdown</strong></summary>
+<summary><strong> Detailed Analytics & Language Breakdown</strong></summary>
 <br>
 
 <table width="100%">
