@@ -1,338 +1,223 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=200&text=Meek%20Dieu%20Merci%20NUKURI&fontSize=40&fontAlignY=38&animation=fadeIn&color=0:0F2027,50:203A43,100:2C5364&fontColor=ffffff&desc=CS%20Student%20%7C%20AI%20%26%20Backend%20Engineer%20%7C%20Full-Stack%20Developer&descAlignY=60&descSize=16&descColor=a0aec0" width="100%"/>
-
-<img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=28&duration=3500&pause=1000&color=3B82F6&center=true&vCenter=true&width=900&lines=Computer+Science+Student;AI+%26+Machine+Learning+Engineer;Full-Stack+Developer;Backend+Systems+Engineer;Building+Scalable+Software;Always+Learning+New+Technologies" alt="Typing SVG"/>
-
-<p>Building intelligent software, scalable backend systems, and modern web applications.</p>
-
-<!-- PRIMARY BADGES — shields.io CDN-cached, fast -->
-<p>
-<a href="https://github.com/MERCIA-lab">
-  <img src="https://komarev.com/ghpvc/?username=MERCIA-lab&style=for-the-badge&color=0d1117&labelColor=3B82F6&label=PROFILE+VIEWS"/>
-</a>
-&nbsp;
-<a href="https://github.com/MERCIA-lab?tab=followers">
-  <img src="https://img.shields.io/github/followers/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&color=0d1117&labelColor=3B82F6&label=FOLLOWERS"/>
-</a>
-&nbsp;
-<a href="https://github.com/MERCIA-lab">
-  <img src="https://img.shields.io/github/stars/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&color=0d1117&labelColor=3B82F6&label=TOTAL+STARS"/>
-</a>
-</p>
-
-<!-- GITHUB NATIVE DATA — direct API queries, CDN cached -->
-<p>
-<img src="https://img.shields.io/github/last-commit/MERCIA-lab/MERCIA-lab?style=flat-square&logo=github&logoColor=white&label=Last+Commit&color=0d1117&labelColor=238636"/>
-&nbsp;
-<img src="https://img.shields.io/github/repo-size/MERCIA-lab/MERCIA-lab?style=flat-square&logo=github&logoColor=white&label=Repo+Size&color=0d1117&labelColor=1F6FEB"/>
-&nbsp;
-<img src="https://img.shields.io/badge/Open%20to%20Work-Available-0d1117?style=flat-square&labelColor=238636"/>
-</p>
+# 👋 Welcome to My GitHub Profile
 
 </div>
 
 ---
 
-## Navigation
+## 🎯 Profile Layout Structure
 
-- [About](#about)
-- [Current Focus](#current-focus)
-- [Tech Stack](#tech-stack)
-- [Featured Project](#featured-project)
-- [GitHub Dashboard](#github-dashboard)
-- [Development Journey](#development-journey)
-- [Current Status](#current-status)
-- [Learning Goals](#learning-goals)
-- [Contact](#contact)
+<table>
+  <tr>
+    <!-- LEFT SIDEBAR -->
+    <td width="25%" valign="top">
+      <div align="center">
+      
+### Meek Dieu Merci NUKURI
 
----
+**@MERCIA-lab**
 
-## About
+*Computer Science Student*  
+*AI & Machine Learning Enthusiast*
 
-I'm a Computer Science student passionate about designing intelligent software, scalable backend systems, and AI-powered applications.
-
-My primary interests include:
-
-- Artificial Intelligence
-- Machine Learning
-- Backend Engineering
-- Software Architecture
-- Cloud Computing
-- Full-Stack Development
-- Distributed Systems
-
-I enjoy building practical software solutions while continuously improving my engineering knowledge.
+📍 **Location:** Rwanda  
+📧 **Email:** meek@beullashop.com
 
 ---
 
-## Current Focus
+### 🔗 Connect With Me
 
-- Building AI-powered applications
-- Learning Deep Learning
-- Exploring Large Language Models
-- Backend Architecture
-- Cloud Infrastructure
-- Distributed Systems
-- System Design
-- Open Source Contributions
+[![GitHub](https://img.shields.io/badge/GitHub-MERCIA--lab-0d1117?style=flat-square&logo=github&logoColor=3B82F6&labelColor=161B22)](https://github.com/MERCIA-lab)
+[![Twitter](https://img.shields.io/badge/Twitter-MERCIA__lab-0d1117?style=flat-square&logo=x&logoColor=fff&labelColor=000000)](https://twitter.com/MERCIA_lab)
+[![Email](https://img.shields.io/badge/Email-meek%40beullashop.com-0d1117?style=flat-square&logo=gmail&logoColor=EA4335&labelColor=161B22)](mailto:meek@beullashop.com)
 
 ---
 
-## Tech Stack
+### 📊 Profile Stats
+
+[![Profile Views](https://komarev.com/ghpvc/?username=MERCIA-lab&style=flat&color=3B82F6&label=Views)](https://github.com/MERCIA-lab)
+
+**Followers:** ![Followers](https://img.shields.io/github/followers/MERCIA-lab?style=flat&color=3B82F6&logo=github)
+
+**Total Stars:** ![Stars](https://img.shields.io/github/stars/MERCIA-lab?style=flat&color=3B82F6&logo=github)
+
+---
+
+### 🎖️ Achievements
+
+<details>
+<summary><strong>🏆 Click to expand</strong></summary>
+
+![Trophy](https://github-profile-trophy.vercel.app/?username=MERCIA-lab&theme=algolia&no-frame=true&column=3&margin-w=10&margin-h=10&no-bg=true&row=1&cache_seconds=1800)
+
+</details>
+
+      </div>
+    </td>
+    
+    <!-- MAIN CONTENT -->
+    <td width="75%" valign="top">
+
+---
+
+## 🚀 Hero Section
+
+<div align="center">
+
+### Building Intelligent Software & Scalable Systems
+
+**Computer Science Student | AI & ML Specialist | Backend Engineer**
+
+*Designing elegant solutions for complex problems*
+
+</div>
+
+---
+
+## 📝 About Me
+
+| 👨‍💻 **Role** | AI/ML Developer & Backend Engineer |
+|---|---|
+| 🎯 **Focus** | Deep Learning, LLMs, Scalable Backend Systems |
+| 📚 **Currently Learning** | Advanced Deep Learning, MLOps, Kubernetes |
+| 🛠️ **Building** | AI-powered applications & logistics platforms |
+| 💡 **Interests** | AI, ML, Backend Architecture, Cloud Computing |
+
+---
+
+## 🛠️ Tech Stack
 
 ### Languages
-
-<p>
-<img src="https://skillicons.dev/icons?i=python,typescript,javascript,java,cpp,cs,go,bash&theme=dark"/>
-</p>
+![Languages](https://skillicons.dev/icons?i=python,typescript,javascript,java,cpp,cs,go,bash&theme=dark)
 
 ### Frontend
-
-<p>
-<img src="https://skillicons.dev/icons?i=react,nextjs,html,css,tailwind&theme=dark"/>
-</p>
+![Frontend](https://skillicons.dev/icons?i=react,nextjs,html,css,tailwind&theme=dark)
 
 ### Backend
+![Backend](https://skillicons.dev/icons?i=nodejs,express,nestjs,fastapi,django&theme=dark)
 
-<p>
-<img src="https://skillicons.dev/icons?i=nodejs,express,nestjs,fastapi,django&theme=dark"/>
-</p>
-
-### AI & Machine Learning
-
-<p>
-<img src="https://skillicons.dev/icons?i=pytorch,tensorflow,opencv&theme=dark"/>
-</p>
-
-**Libraries**
-
-<p>
-<img src="https://img.shields.io/badge/Hugging%20Face-Transformers-161B22?style=flat-square&logo=huggingface&logoColor=FFD21E"/>
-<img src="https://img.shields.io/badge/LangChain-Framework-161B22?style=flat-square&logoColor=white"/>
-<img src="https://img.shields.io/badge/Scikit--Learn-ML-161B22?style=flat-square&logo=scikit-learn&logoColor=F7931E"/>
-<img src="https://img.shields.io/badge/Pandas-Data-161B22?style=flat-square&logo=pandas&logoColor=150458"/>
-<img src="https://img.shields.io/badge/NumPy-Scientific-161B22?style=flat-square&logo=numpy&logoColor=4DABCF"/>
-<img src="https://img.shields.io/badge/Matplotlib-Visualization-161B22?style=flat-square&logoColor=white"/>
-<img src="https://img.shields.io/badge/Jupyter-Notebooks-161B22?style=flat-square&logo=jupyter&logoColor=F37626"/>
-</p>
+### AI & ML
+![AI/ML](https://skillicons.dev/icons?i=pytorch,tensorflow,opencv&theme=dark)
 
 ### Databases
-
-<p>
-<img src="https://skillicons.dev/icons?i=postgres,mysql,mongodb,redis&theme=dark"/>
-</p>
+![Databases](https://skillicons.dev/icons?i=postgres,mysql,mongodb,redis&theme=dark)
 
 ### DevOps & Cloud
-
-<p>
-<img src="https://skillicons.dev/icons?i=docker,kubernetes,git,github,linux,aws&theme=dark"/>
-</p>
-
-### Development Tools
-
-<p>
-<img src="https://skillicons.dev/icons?i=vscode,postman,figma&theme=dark"/>
-</p>
+![DevOps](https://skillicons.dev/icons?i=docker,kubernetes,git,github,linux,aws&theme=dark)
 
 ---
 
-## Featured Project
+## 📊 GitHub Analytics
+
+<table width="100%">
+  <tr>
+    <td width="50%">
+      <img src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true&cache_seconds=1800" alt="GitHub Stats"/>
+    </td>
+    <td width="50%">
+      <img src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&ring=3B82F6&fire=3B82F6&currStreakLabel=3B82F6&background=0d1117" alt="GitHub Streak"/>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8&cache_seconds=1800" alt="Top Languages"/>
+    </td>
+    <td width="50%">
+      <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCIA-lab&theme=github_dark" alt="Profile Stats"/>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 📈 Contribution Activity
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&color=3B82F6&line=3B82F6&point=ffffff&custom_title=Contribution+Activity&cache_seconds=1800" alt="Contribution Activity" width="100%"/>
+
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🚀 Featured Projects
 
 ### iMeek Cargo Express
 
-A modern logistics and cargo management platform designed for enterprise-scale transportation and shipment operations.
+*A modern logistics and cargo management platform for enterprise-scale transportation*
 
 <details>
-<summary><strong>Core Features</strong></summary>
-<br>
+<summary><strong>📦 View Features & Tech Stack</strong></summary>
 
 | Feature | Description |
 |---|---|
-| Shipment Tracking | Real-time cargo location and status updates |
-| Fleet Management | Vehicle tracking, maintenance and dispatch |
-| Warehouse Operations | Inventory, storage and workflow management |
-| Customer Management | Client onboarding, history and communication |
-| Analytics Dashboard | Business insights and performance metrics |
-| Payment Integration | Billing, invoicing and payment processing |
-| Role-Based Access Control | Admin, manager, driver and customer roles |
-| Notifications | Push, email and SMS alert system |
-| Real-Time Updates | Live data sync via WebSockets |
+| 🚚 Shipment Tracking | Real-time cargo location and status updates |
+| 🚗 Fleet Management | Vehicle tracking, maintenance and dispatch |
+| 📦 Warehouse Operations | Inventory, storage and workflow management |
+| 👥 Customer Management | Client onboarding and communication |
+| 📊 Analytics Dashboard | Business insights and performance metrics |
+| 💳 Payment Integration | Billing, invoicing and payment processing |
+| 🔐 Role-Based Access | Admin, manager, driver and customer roles |
+| 🔔 Notifications | Push, email and SMS alerts |
+| ⚡ Real-Time Updates | Live data sync via WebSockets |
+
+**Tech Stack:** Next.js • React • TypeScript • NestJS • PostgreSQL • Redis • Docker
 
 </details>
+
+---
+
+## 🎓 Learning Goals & 2026 Objectives
 
 <details>
-<summary><strong>Technology Stack</strong></summary>
-<br>
+<summary><strong>🎯 View Goals & Progress</strong></summary>
 
-| Layer | Technologies |
-|---|---|
-| Frontend | Next.js · React · TypeScript · Tailwind CSS |
-| Backend | NestJS · PostgreSQL · Prisma ORM · Redis |
-| Real-Time | Socket.IO |
-| Infrastructure | Docker |
+### Learning Priorities
+- 🤖 Deep Learning & Neural Networks
+- 🦾 Generative AI & Large Language Models
+- ☸️ Kubernetes & Container Orchestration
+- ☁️ AWS Cloud Architecture
+- 🏗️ Distributed Systems Design
+- 🔄 MLOps & Model Deployment
+- 🎯 Software Architecture Patterns
 
-</details>
-
----
-
-## GitHub Dashboard
-
-<!-- PRIMARY STATS — cache_seconds=1800 (30 min cache) — 2 services only -->
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true&title_color=3B82F6&icon_color=3B82F6&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="GitHub Stats"/>
-    </td>
-    <td width="50%">
-      <img src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&ring=3B82F6&fire=3B82F6&currStreakLabel=3B82F6&background=0d1117&cache_seconds=1800" width="100%" alt="GitHub Streak"/>
-    </td>
-  </tr>
-</table>
-
-<br/>
-
-<!-- ACTIVITY GRAPH — full width, always visible -->
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&color=3B82F6&line=3B82F6&point=ffffff&custom_title=Contribution+Activity" width="100%" alt="Activity Graph"/>
-
----
-
-<!-- LAZY-LOADED: expands on demand, no initial HTTP cost -->
-<details>
-<summary><strong>Detailed Analytics</strong></summary>
-<br>
-
-<!-- Top Languages + Profile Stats — loads only when expanded -->
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8&title_color=3B82F6&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="Top Languages"/>
-    </td>
-    <td width="50%">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCIA-lab&theme=github_dark" width="100%" alt="Profile Stats"/>
-    </td>
-  </tr>
-</table>
-
-<br/>
-
-<!-- Profile Summary Cards — loads only when expanded -->
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=MERCIA-lab&theme=github_dark" width="100%" alt="Profile Details"/>
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=MERCIA-lab&theme=github_dark" width="100%" alt="Repos per Language"/>
-    </td>
-    <td width="50%">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=MERCIA-lab&theme=github_dark" width="100%" alt="Most Commit Language"/>
-    </td>
-  </tr>
-</table>
+### 2026 Objectives
+| Status | Objective |
+|--------|-----------|
+| 🔄 In Progress | Build production-ready AI systems |
+| 🔄 In Progress | Master Deep Learning and LLMs |
+| 📋 Planned | Publish technical articles |
+| 📋 Planned | Contribute to Open Source |
+| 📋 Planned | Master AWS Cloud Infrastructure |
+| 📋 Planned | Learn Kubernetes |
+| 📋 Planned | Develop impactful software products |
 
 </details>
 
 ---
 
-<!-- LAZY-LOADED: Trophies — loads only when expanded -->
-<details>
-<summary><strong>GitHub Achievements</strong></summary>
-<br>
+## 💼 Development Journey
 
-<div align="center">
-<img src="https://github-profile-trophy.vercel.app/?username=MERCIA-lab&theme=algolia&no-frame=true&column=6&margin-w=8&margin-h=8&no-bg=true" width="100%" alt="GitHub Trophies"/>
-</div>
-
-</details>
-
----
-
-## Development Journey
-
-```text
+```
 Backend Engineering         ██████████████████░░  90%
 Artificial Intelligence     ████████████████░░░░  80%
 Frontend Development        ███████████████░░░░░  75%
-System Design               ████████████░░░░░░░░  60%
-Cloud Computing             ███████████░░░░░░░░░  55%
-DevOps                      ██████████░░░░░░░░░░  50%
+System Design               ████████░░░░░░░░░░░░  60%
+Cloud Computing             ███████░░░░░░░░░░░░░  55%
+DevOps                      ██████░░░░░░░░░░░░░░  50%
 ```
 
 ---
 
-## Current Status
-
-```text
-Loading Development Progress...
-
-[====================>    ]  Active
-
-Learning  ............ Deep Learning & LLMs
-Building  ............ AI Applications
-Reading   ............ System Design
-Exploring ............ Large Language Models
-Contributing ......... Open Source
-```
-
----
-
-<!-- LAZY-LOADED: Dev Environment table — loads only when expanded -->
-<details>
-<summary><strong>Development Environment</strong></summary>
-<br>
-
-| Category | Technologies |
-|---|---|
-| Languages | Python • TypeScript • JavaScript • Java • C++ • Go • SQL |
-| Frontend | React • Next.js • Tailwind CSS |
-| Backend | Node.js • NestJS • Express • FastAPI • Django |
-| Databases | PostgreSQL • MongoDB • MySQL • Redis |
-| AI / ML | PyTorch • TensorFlow • Hugging Face • LangChain |
-| DevOps | Docker • Git • GitHub Actions • Linux |
-| Cloud | AWS |
-| Tools | VS Code • Postman • Figma |
-
-</details>
-
----
-
-## Learning Goals
-
-| Goal | Category |
-|---|---|
-| Deep Learning | Artificial Intelligence |
-| Generative AI & LLMs | Artificial Intelligence |
-| MLOps | Engineering |
-| Kubernetes | Infrastructure |
-| AWS Cloud | Infrastructure |
-| Distributed Systems | Architecture |
-| AI Agents | Artificial Intelligence |
-| Software Architecture | Engineering |
-
----
-
-## 2026 Objectives
-
-| Status | Objective |
-|---|---|
-| In Progress | Build production-ready AI systems |
-| In Progress | Master Deep Learning and LLMs |
-| Planned | Publish technical articles |
-| Planned | Contribute consistently to Open Source |
-| Planned | Master Cloud Infrastructure on AWS |
-| Planned | Learn Kubernetes |
-| Planned | Improve System Design |
-| Planned | Develop impactful software products |
-
----
+## 💡 Development Philosophy
 
 <details>
-<summary><strong>Development Philosophy</strong></summary>
-<br>
+<summary><strong>🧠 View Philosophy & Principles</strong></summary>
 
 > *"Great software is not just code — it is a careful balance of reliability, clarity, and human purpose."*
 
-Software should be:
+**Core Principles:**
 
 - **Reliable** — does what it promises, every time
 - **Scalable** — built to grow with its users
@@ -347,32 +232,14 @@ Every project is an opportunity to solve meaningful problems while improving eng
 
 ---
 
-## Contact
-
 <div align="center">
 
-<a href="https://github.com/MERCIA-lab">
-  <img src="https://img.shields.io/badge/GitHub-MERCIA--lab-0d1117?style=for-the-badge&logo=github&logoColor=white&labelColor=3B82F6"/>
-</a>
-&nbsp;
-<a href="mailto:meek@beullashop.com">
-  <img src="https://img.shields.io/badge/Email-meek%40beullashop.com-0d1117?style=for-the-badge&logo=gmail&logoColor=white&labelColor=EA4335"/>
-</a>
-&nbsp;
-<a href="https://twitter.com/MERCIA_lab">
-  <img src="https://img.shields.io/badge/Twitter%2FX-MERCIA__lab-0d1117?style=for-the-badge&logo=x&logoColor=white&labelColor=000000"/>
-</a>
+### ⭐ If you find my work interesting, consider giving a star!
 
-<br/><br/>
-
-> *Building intelligent software through thoughtful engineering, continuous learning, and practical innovation.*
-
-</div>
+**Building intelligent software through thoughtful engineering & continuous learning**
 
 ---
 
-<img src="https://capsule-render.vercel.app/api?type=waving&section=footer&height=130&color=0:0F2027,50:203A43,100:2C5364&text=Keep%20Building.%20Keep%20Learning.&fontSize=18&fontColor=3B82F6&fontAlignY=70&animation=fadeIn" width="100%"/>
+*Last updated: 2026-09-03*
 
-<div align="center">
-  <sub>If you find my work interesting, consider giving a star!</sub>
 </div>
