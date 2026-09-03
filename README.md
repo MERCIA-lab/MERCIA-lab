@@ -6,6 +6,7 @@
 
 <p>Building intelligent software, scalable backend systems, and modern web applications.</p>
 
+<!-- PRIMARY BADGES — shields.io CDN-cached, fast -->
 <p>
 <a href="https://github.com/MERCIA-lab">
   <img src="https://komarev.com/ghpvc/?username=MERCIA-lab&style=for-the-badge&color=0d1117&labelColor=3B82F6&label=PROFILE+VIEWS"/>
@@ -18,6 +19,15 @@
 <a href="https://github.com/MERCIA-lab">
   <img src="https://img.shields.io/github/stars/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&color=0d1117&labelColor=3B82F6&label=TOTAL+STARS"/>
 </a>
+</p>
+
+<!-- GITHUB NATIVE DATA — direct API queries, CDN cached -->
+<p>
+<img src="https://img.shields.io/github/last-commit/MERCIA-lab/MERCIA-lab?style=flat-square&logo=github&logoColor=white&label=Last+Commit&color=0d1117&labelColor=238636"/>
+&nbsp;
+<img src="https://img.shields.io/github/repo-size/MERCIA-lab/MERCIA-lab?style=flat-square&logo=github&logoColor=white&label=Repo+Size&color=0d1117&labelColor=1F6FEB"/>
+&nbsp;
+<img src="https://img.shields.io/badge/Open%20to%20Work-Available-0d1117?style=flat-square&labelColor=238636"/>
 </p>
 
 </div>
@@ -168,18 +178,35 @@ A modern logistics and cargo management platform designed for enterprise-scale t
 
 ## GitHub Dashboard
 
+<!-- PRIMARY STATS — cache_seconds=1800 (30 min cache) — 2 services only -->
 <table width="100%">
   <tr>
     <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true&title_color=3B82F6&icon_color=3B82F6&text_color=c9d1d9&bg_color=0d1117" width="100%" alt="GitHub Stats"/>
+      <img src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true&title_color=3B82F6&icon_color=3B82F6&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="GitHub Stats"/>
     </td>
     <td width="50%">
-      <img src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&ring=3B82F6&fire=3B82F6&currStreakLabel=3B82F6&background=0d1117" width="100%" alt="GitHub Streak"/>
+      <img src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&ring=3B82F6&fire=3B82F6&currStreakLabel=3B82F6&background=0d1117&cache_seconds=1800" width="100%" alt="GitHub Streak"/>
     </td>
   </tr>
+</table>
+
+<br/>
+
+<!-- ACTIVITY GRAPH — full width, always visible -->
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&color=3B82F6&line=3B82F6&point=ffffff&custom_title=Contribution+Activity" width="100%" alt="Activity Graph"/>
+
+---
+
+<!-- LAZY-LOADED: expands on demand, no initial HTTP cost -->
+<details>
+<summary><strong>Detailed Analytics</strong></summary>
+<br>
+
+<!-- Top Languages + Profile Stats — loads only when expanded -->
+<table width="100%">
   <tr>
     <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8&title_color=3B82F6&text_color=c9d1d9&bg_color=0d1117" width="100%" alt="Top Languages"/>
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8&title_color=3B82F6&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="Top Languages"/>
     </td>
     <td width="50%">
       <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCIA-lab&theme=github_dark" width="100%" alt="Profile Stats"/>
@@ -189,20 +216,7 @@ A modern logistics and cargo management platform designed for enterprise-scale t
 
 <br/>
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&color=3B82F6&line=3B82F6&point=ffffff&custom_title=Contribution+Activity" width="100%" alt="Activity Graph"/>
-
----
-
-## GitHub Achievements
-
-<div align="center">
-<img src="https://github-profile-trophy.vercel.app/?username=MERCIA-lab&theme=algolia&no-frame=true&column=6&margin-w=8&margin-h=8&no-bg=true" width="100%" alt="GitHub Trophies"/>
-</div>
-
----
-
-## Profile Summary
-
+<!-- Profile Summary Cards — loads only when expanded -->
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=MERCIA-lab&theme=github_dark" width="100%" alt="Profile Details"/>
 
 <table width="100%">
@@ -215,6 +229,21 @@ A modern logistics and cargo management platform designed for enterprise-scale t
     </td>
   </tr>
 </table>
+
+</details>
+
+---
+
+<!-- LAZY-LOADED: Trophies — loads only when expanded -->
+<details>
+<summary><strong>GitHub Achievements</strong></summary>
+<br>
+
+<div align="center">
+<img src="https://github-profile-trophy.vercel.app/?username=MERCIA-lab&theme=algolia&no-frame=true&column=6&margin-w=8&margin-h=8&no-bg=true" width="100%" alt="GitHub Trophies"/>
+</div>
+
+</details>
 
 ---
 
@@ -247,7 +276,10 @@ Contributing ......... Open Source
 
 ---
 
-## Development Environment
+<!-- LAZY-LOADED: Dev Environment table — loads only when expanded -->
+<details>
+<summary><strong>Development Environment</strong></summary>
+<br>
 
 | Category | Technologies |
 |---|---|
@@ -259,6 +291,8 @@ Contributing ......... Open Source
 | DevOps | Docker • Git • GitHub Actions • Linux |
 | Cloud | AWS |
 | Tools | VS Code • Postman • Figma |
+
+</details>
 
 ---
 
@@ -340,5 +374,5 @@ Every project is an opportunity to solve meaningful problems while improving eng
 <img src="https://capsule-render.vercel.app/api?type=waving&section=footer&height=130&color=0:0F2027,50:203A43,100:2C5364&text=Keep%20Building.%20Keep%20Learning.&fontSize=18&fontColor=3B82F6&fontAlignY=70&animation=fadeIn" width="100%"/>
 
 <div align="center">
-  <sub>⭐ If you find my work interesting, consider giving a star!</sub>
+  <sub>If you find my work interesting, consider giving a star!</sub>
 </div>
