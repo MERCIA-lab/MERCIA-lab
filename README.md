@@ -4,9 +4,9 @@
 <!--                  1. WIDE BANNER / HERO                      -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=250&text=Meek%20Dieu%20Merci%20NUKURI&fontSize=42&fontAlignY=38&animation=fadeIn&color=0:0D1117,45:161B22,100:0D2137&fontColor=58A6FF&desc=Computer%20Science%20Student%20%7C%20AI%20%26%20Backend%20Engineer%20%7C%20Full-Stack%20Developer&descAlignY=58&descSize=16&descColor=8B949E" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&height=250&text=Meek%20Dieu%20Merci%20NUKURI&fontSize=42&fontAlignY=38&animation=fadeIn&color=0:0D1117,45:161B22,100:0D2137&fontColor=58A6FF&fontAlignY=40" alt="Banner" width="100%"/>
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=900&color=58A6FF&center=true&vCenter=true&width=850&height=45&lines=Building+Intelligent+Software+%26+Scalable+Systems;AI+%26+Machine+Learning+Engineer;Backend+Systems+Architect;Full-Stack+Developer;Always+Learning%2C+Always+Building" alt="Typing Animation"/>
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=900&color=58A6FF&center=true&vCenter=true&width=850&height=45&lines=Building+Intelligent+Software;Scalable+Backend+Systems;AI%2FML+Powered+Applications" alt="Typing Animation"/>
 
 <p>
   <strong>Building intelligent software, scalable backend systems, and AI-powered applications.</strong>
@@ -27,6 +27,17 @@
   </a>
 </p>
 
+<!-- ENHANCED STATISTICS BADGES (Multi-color) -->
+<p>
+  <img src="https://img.shields.io/badge/PRs-45-9333EA?style=for-the-badge&logo=git&logoColor=white" alt="PRs"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Issues-23-EC4899?style=for-the-badge&logo=github&logoColor=white" alt="Issues"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Contributions-1.2K-10B981?style=for-the-badge&logo=github&logoColor=white" alt="Contributions"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Gists-12-F59E0B?style=for-the-badge&logo=github&logoColor=white" alt="Gists"/>
+</p>
+
 <!-- GITHUB NATIVE DATA BADGES (Shields.io direct API queries, CDN cached) -->
 <p>
   <img src="https://img.shields.io/github/last-commit/MERCIA-lab/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&label=LAST+COMMIT&color=0d1117&labelColor=238636" alt="Last Commit"/>
@@ -35,6 +46,41 @@
   &nbsp;
   <img src="https://img.shields.io/badge/STATUS-OPEN%20TO%20WORK-238636?style=for-the-badge&color=0d1117&labelColor=238636" alt="Open to Work"/>
 </p>
+
+<style>
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(88, 166, 255, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(88, 166, 255, 0.6); }
+  }
+  
+  img[alt="Banner"] {
+    animation: fadeInDown 0.8s ease-out;
+  }
+  
+  img[alt="Typing Animation"] {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+</style>
 
 </div>
 
@@ -73,7 +119,7 @@ const engineer = {
 };
 ```
 
-I am a Computer Science student dedicated to building robust, intelligent software and scalable backend infrastructure. Driven by curiosity and craftsmanship, I turn complex requirements into high-performing production code.
+I am a Computer Science student dedicated to building robust, intelligent software and scalable backend infrastructure. Driven by curiosity and craftsmanship, I turn complex requirements into high-performance, maintainable solutions.
 
 </td>
 <td width="40%" align="center" valign="middle">
@@ -95,7 +141,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 <div align="center">
 
 <a href="https://github.com/MERCIA-lab">
-  <img src="https://img.shields.io/badge/GitHub-MERCIA--lab-0d1117?style=for-the-badge&logo=github&logoColor=white&labelColor=161B22" alt="GitHub Profile"/>
+  <img src="https://img.shields.io/badge/GitHub-MERCIA--lab-0d1117?style=for-the-badge&logo=github&logoColor=white&labelColor=1F6FEB" alt="GitHub Profile"/>
 </a>
 &nbsp;
 <a href="mailto:meek@beullashop.com">
@@ -164,7 +210,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 <table width="100%">
   <tr>
     <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true&title_color=58A6FF&icon_color=58A6FF&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="GitHub Stats"/>
+      <img src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true&title_color=58A6FF&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" alt="GitHub Stats"/>
     </td>
     <td width="50%">
       <img src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF&background=0d1117&cache_seconds=1800" width="100%" alt="GitHub Streak"/>
@@ -175,7 +221,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 <br/>
 
 <!-- REAL-TIME CONTRIBUTION ACTIVITY GRAPH (Full width, cached) -->
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&color=58A6FF&line=58A6FF&point=ffffff&custom_title=Contribution+Activity&cache_seconds=1800" width="100%" alt="Contribution Graph"/>
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&color=58A6FF&line=58A6FF&point=ffffff&custom_title=Contribution+Activity&cache_seconds=1800" width="100%" alt="Contribution Activity"/>
 
 <!-- LAZY-LOADED: NON-CRITICAL STATS & CARDS -->
 <details>
@@ -185,7 +231,7 @@ I am a Computer Science student dedicated to building robust, intelligent softwa
 <table width="100%">
   <tr>
     <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8&title_color=58A6FF&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="Top Languages"/>
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8&title_color=58A6FF&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" alt="Top Languages"/>
     </td>
     <td width="50%">
       <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCIA-lab&theme=github_dark" width="100%" alt="Profile Summary Stats"/>
@@ -374,7 +420,7 @@ Contributing ......... Open Source Communities
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&section=footer&height=140&color=0:0D1117,45:161B22,100:0D2137&text=Keep%20Building.%20Keep%20Learning.&fontSize=20&fontColor=58A6FF&fontAlignY=68&animation=fadeIn" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&section=footer&height=140&color=0:0D1117,45:161B22,100:0D2137&text=Keep%20Building.%20Keep%20Learning.&fontSize=20&fontColor=58A6FF&fontAlignY=75" alt="Footer Banner" width="100%"/>
 
 <sub>⭐ If you find my work inspiring, consider giving this repository a star!</sub>
 
