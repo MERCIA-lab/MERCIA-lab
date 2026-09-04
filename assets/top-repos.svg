@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="495" height="225" viewBox="0 0 495 225" fill="none">
+  <style>
+    .card-bg {
+      fill: #0d1117;
+      stroke: #30363d;
+      stroke-width: 1.5;
+      rx: 12px;
+    }
+    .header-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      fill: #58a6ff;
+    }
+    .header-col {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      fill: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .repo-name {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      fill: #c9d1d9;
+    }
+    .repo-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      fill: #38bdf8;
+      text-anchor: middle;
+    }
+  </style>
+
+  <rect width="495" height="225" class="card-bg" />
+
+  <!-- Card Header -->
+  <text x="25" y="32" class="header-title">MERCIA-lab's GitHub Contribution Stats</text>
+  <text x="47" y="52" class="header-col">Repository</text>
+  <text x="400" y="52" class="header-col">Commits</text>
+  <line x1="25" y1="58" x2="470" y2="58" stroke="#30363d" stroke-width="1" />
+
+  
+    <g transform="translate(25, 65)">
+      <!-- Repo Icon -->
+      <path fill="#8b949e" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5z"/>
+      <!-- Repo Name -->
+      <text x="22" y="12" class="repo-name">Shipping-Tracking-System</text>
+      <!-- Commits/Contrib Badge -->
+      <rect x="390" y="-2" width="50" height="20" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="415" y="12" class="repo-count">38</text>
+    </g>
+    <line x1="25" y1="91" x2="470" y2="91" stroke="#21262d" stroke-width="0.8" />
+        
+
+    <g transform="translate(25, 101)">
+      <!-- Repo Icon -->
+      <path fill="#8b949e" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5z"/>
+      <!-- Repo Name -->
+      <text x="22" y="12" class="repo-name">daily-routine-tracker</text>
+      <!-- Commits/Contrib Badge -->
+      <rect x="390" y="-2" width="50" height="20" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="415" y="12" class="repo-count">12</text>
+    </g>
+    <line x1="25" y1="127" x2="470" y2="127" stroke="#21262d" stroke-width="0.8" />
+        
+
+    <g transform="translate(25, 137)">
+      <!-- Repo Icon -->
+      <path fill="#8b949e" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5z"/>
+      <!-- Repo Name -->
+      <text x="22" y="12" class="repo-name">Financial-Advisor-System</text>
+      <!-- Commits/Contrib Badge -->
+      <rect x="390" y="-2" width="50" height="20" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="415" y="12" class="repo-count">6</text>
+    </g>
+    <line x1="25" y1="163" x2="470" y2="163" stroke="#21262d" stroke-width="0.8" />
+        
+
+    <g transform="translate(25, 173)">
+      <!-- Repo Icon -->
+      <path fill="#8b949e" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5z"/>
+      <!-- Repo Name -->
+      <text x="22" y="12" class="repo-name">FreeMCue</text>
+      <!-- Commits/Contrib Badge -->
+      <rect x="390" y="-2" width="50" height="20" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="415" y="12" class="repo-count">5</text>
+    </g>
+    <line x1="25" y1="199" x2="470" y2="199" stroke="#21262d" stroke-width="0.8" />
+        
+</svg>

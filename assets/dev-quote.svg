@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="495" height="225" viewBox="0 0 495 225" fill="none">
+  <style>
+    .card-bg {
+      fill: #0d1117;
+      stroke: #30363d;
+      stroke-width: 1.5;
+      rx: 12px;
+    }
+    .quote-mark {
+      font-family: Georgia, serif;
+      font-size: 42px;
+      fill: #38bdf8;
+      opacity: 0.6;
+      text-anchor: middle;
+    }
+    .quote-line {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 13.5px;
+      font-style: italic;
+      fill: #c9d1d9;
+      text-anchor: middle;
+    }
+    .quote-author {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      fill: #58a6ff;
+      text-anchor: middle;
+    }
+    .quote-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      fill: #8b949e;
+      text-anchor: middle;
+    }
+  </style>
+
+  <rect width="495" height="225" class="card-bg" />
+
+  <!-- Quotation Mark -->
+  <text x="247" y="50" class="quote-mark">“</text>
+
+  <!-- Quote Lines -->
+  <text x="247" y="82" class="quote-line">“Simplicity is prerequisite for reliability.”</text>
+  <text x="247" y="105" class="quote-line">“Computer science is no more about computers</text>
+  <text x="247" y="127" class="quote-line">than astronomy is about telescopes.”</text>
+
+  <!-- Divider -->
+  <line x1="180" y1="145" x2="315" y2="145" stroke="#30363d" stroke-width="1" />
+
+  <!-- Author & Tag -->
+  <text x="247" y="168" class="quote-author">Edsger W. Dijkstra</text>
+  <text x="247" y="188" class="quote-tag">Turing Award Laureate &amp; Computing Pioneer</text>
+</svg>

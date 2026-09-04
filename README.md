@@ -1,273 +1,283 @@
 <div align="center">
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                  1. WIDE BANNER / HERO                      -->
+<!--                  1. MASTERHEAD BANNER                       -->
 <!-- ═══════════════════════════════════════════════════════════ -->
-
-<img src="https://capsule-render.vercel.app/api?type=waving&height=250&text=Meek%20Dieu%20Merci%20NUKURI&fontSize=42&fontAlignY=38&animation=fadeIn&color=0:0D1117,45:161B22,100:0D2137&fontColor=58A6FF&desc=Computer%20Science%20Student%20%7C%20AI%20%26%20Backend%20Engineer%20%7C%20Full-Stack%20Developer&descAlignY=58&descSize=16&descColor=8B949E" width="100%"/>
-
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=900&color=58A6FF&center=true&vCenter=true&width=850&height=45&lines=Building+Intelligent+Software+%26+Scalable+Systems;AI+%26+Machine+Learning+Engineer;Backend+Systems+Architect;Full-Stack+Developer;Always+Learning%2C+Always+Building" alt="Typing Animation"/>
-
-<p>
-  <strong>Building intelligent software, scalable backend systems, and AI-powered applications.</strong>
-</p>
-
-<!-- IDENTITY & ESSENTIAL STATS -->
-<p>
-  <a href="https://github.com/MERCIA-lab">
-    <img src="https://komarev.com/ghpvc/?username=MERCIA-lab&style=for-the-badge&color=0d1117&labelColor=1F6FEB&label=PROFILE+VIEWS" alt="Profile Views"/>
-  </a>
-  &nbsp;
-  <a href="https://github.com/MERCIA-lab?tab=followers">
-    <img src="https://img.shields.io/github/followers/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&color=0d1117&labelColor=238636&label=FOLLOWERS" alt="Followers"/>
-  </a>
-  &nbsp;
-  <a href="https://github.com/MERCIA-lab">
-    <img src="https://img.shields.io/github/stars/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&color=0d1117&labelColor=D29922&label=STARS" alt="Stars"/>
-  </a>
-</p>
-
-<!-- GITHUB NATIVE DATA BADGES (Shields.io direct API queries, CDN cached) -->
-<p>
-  <img src="https://img.shields.io/github/last-commit/MERCIA-lab/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&label=LAST+COMMIT&color=0d1117&labelColor=238636" alt="Last Commit"/>
-  &nbsp;
-  <img src="https://img.shields.io/github/repo-size/MERCIA-lab/MERCIA-lab?style=for-the-badge&logo=github&logoColor=white&label=REPO+SIZE&color=0d1117&labelColor=1F6FEB" alt="Repo Size"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/STATUS-OPEN%20TO%20WORK-238636?style=for-the-badge&color=0d1117&labelColor=238636" alt="Open to Work"/>
-</p>
-
-</div>
-
----
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--           2. ABOUT ME — SPLIT INFORMATION BLOCK             -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
-## About Me
-
-<table>
-  <tr>
-    <td width="60%" valign="top">
-
-```typescript
-// developer_profile.ts
-const engineer = {
-  name       : "Meek Dieu Merci NUKURI",
-  username   : "MERCIA-lab",
-  title      : "Computer Science Student & Software Engineer",
-  location   : "Rwanda",
-  
-  passions   : [
-    "Artificial Intelligence & ML",
-    "Scalable Backend Architecture",
-    "Distributed Systems",
-    "Full-Stack Web Development",
-    "Open Source & Cloud"
-  ],
-
-  focusNow   : "Deep Learning, LLMs & Enterprise Logistics",
-  currentApp : "iMeek Cargo Express",
-  learning   : ["Advanced Deep Learning", "MLOps", "Kubernetes"],
-  status     : "Open for High-Impact Collaborations"
-};
-```
-
-I am a Computer Science student dedicated to building robust, intelligent software and scalable backend infrastructure. Driven by curiosity and craftsmanship, I turn complex requirements into high-performing production code.
-
-</td>
-<td width="40%" align="center" valign="middle">
-
-<img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width="100%" alt="Developer Workspace Illustration"/>
-
-</td>
-</tr>
-</table>
-
----
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--                  3. CONNECT WITH ME                         -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
-## Connect With Me
-
-<div align="center">
 
 <a href="https://github.com/MERCIA-lab">
-  <img src="https://img.shields.io/badge/GitHub-MERCIA--lab-0d1117?style=for-the-badge&logo=github&logoColor=white&labelColor=161B22" alt="GitHub Profile"/>
+  <img src="assets/header_banner.jpg" width="100%" alt="Cyberpunk Terminal Header" loading="lazy" decoding="async" />
 </a>
-&nbsp;
-<a href="mailto:meek@beullashop.com">
-  <img src="https://img.shields.io/badge/Email-meek%40beullashop.com-0d1117?style=for-the-badge&logo=gmail&logoColor=EA4335&labelColor=161B22" alt="Email"/>
+
+<br/><br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--            2. DYNAMIC TYPING HEADLINE & SALUTATION         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<a href="https://github.com/MERCIA-lab">
+  <img src="assets/typing-headline.svg" width="100%" alt="Meek Dieu Merci here 🔥 !" loading="lazy" decoding="async" />
 </a>
-&nbsp;
-<a href="https://twitter.com/MERCIA_lab">
-  <img src="https://img.shields.io/badge/Twitter%2FX-MERCIA__lab-0d1117?style=for-the-badge&logo=x&logoColor=white&labelColor=000000" alt="Twitter"/>
-</a>
+
+<h1 align="center">Namaste 🙏 I'm Meek Dieu Merci NUKURI</h1>
 
 </div>
 
----
+<br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                     4. TECH STACK                           -->
+<!--                     3. ABOUT ME                             -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-## Tech Stack
+<h2>💫 About Me</h2>
 
-<div align="center">
-
-**Languages**  
-<img src="https://skillicons.dev/icons?i=python,typescript,javascript,java,cpp,cs,go,bash&theme=dark" alt="Languages"/>
-
-**Frontend Development**  
-<img src="https://skillicons.dev/icons?i=react,nextjs,html,css,tailwind&theme=dark" alt="Frontend"/>
-
-**Backend Engineering**  
-<img src="https://skillicons.dev/icons?i=nodejs,express,nestjs,fastapi,django&theme=dark" alt="Backend"/>
-
-**Artificial Intelligence & Machine Learning**  
-<img src="https://skillicons.dev/icons?i=pytorch,tensorflow,opencv&theme=dark" alt="AI/ML"/>
-
-<p>
-  <img src="https://img.shields.io/badge/Hugging%20Face-Transformers-161B22?style=flat-square&logo=huggingface&logoColor=FFD21E"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/LangChain-Framework-161B22?style=flat-square&logoColor=white"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/Scikit--Learn-ML-161B22?style=flat-square&logo=scikit-learn&logoColor=F7931E"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/Pandas-Data-161B22?style=flat-square&logo=pandas&logoColor=150458"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/NumPy-Scientific-161B22?style=flat-square&logo=numpy&logoColor=4DABCF"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/Jupyter-Notebooks-161B22?style=flat-square&logo=jupyter&logoColor=F37626"/>
+<p align="left">
+  <a href="https://github.com/MERCIA-lab">
+    <img src="https://komarev.com/ghpvc/?username=MERCIA-lab&style=flat-square&color=38bdf8&labelColor=0d1117&label=Profile+Views" alt="Profile Views" loading="lazy" decoding="async" />
+  </a>
 </p>
 
-**Databases & Cloud & Infrastructure**  
-<img src="https://skillicons.dev/icons?i=postgres,mysql,mongodb,redis,docker,kubernetes,git,linux,aws&theme=dark" alt="DevOps"/>
+<table width="100%" border="0">
+  <tr>
+    <td width="60%" valign="top" style="border: none;">
 
-**Developer Tools**  
-<img src="https://skillicons.dev/icons?i=vscode,postman,figma&theme=dark" alt="Tools"/>
+<h4>🌟 Began the journey with Computer Science and Software Engineering</h4>
+<h4>👨‍💻 I work on Full-Stack development and Cloud Systems while focusing on Artificial Intelligence and Machine Learning.</h4>
+<h4>🎓 I am currently pursuing a degree in Computer Science.</h4>
+<h4>🛠️ Hands-on experience in Full-Stack, Scalable Backend Architectures, and Distributed Systems.</h4>
+<h4>💬 Ask me about Python, TypeScript, NestJS, Next.js, FastAPI, Deep Learning, and System Design.</h4>
+<h4>⚡ Passionate about Artificial Intelligence, Machine Learning, Deep Learning, Data Science, and Cloud Automation.</h4>
+<h4>🤹 I only like perfection — building intelligent software through thoughtful engineering and practical innovation.</h4>
 
+<br/>
+
+<div align="right">
+  <h3>🌟 Follow Me on:</h3>
+  <a href="https://github.com/MERCIA-lab" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" loading="lazy" decoding="async" />
+  </a>
+  &nbsp;
+  <a href="mailto:meek@beullashop.com">
+    <img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email Badge" loading="lazy" decoding="async" />
+  </a>
+  &nbsp;
+  <a href="https://twitter.com/MERCIA_lab" target="_blank">
+    <img src="https://img.shields.io/badge/Twitter%2FX-000000?style=for-the-badge&logo=x&logoColor=white" alt="Twitter Badge" loading="lazy" decoding="async" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/MERCIA-lab" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge" loading="lazy" decoding="async" />
+  </a>
 </div>
 
----
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--                 5. GITHUB ANALYTICS                         -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
-## GitHub Analytics
-
-<!-- PRIMARY DASHBOARD: 2-column responsive layout with 1800s cache hints -->
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api?username=MERCIA-lab&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&include_all_commits=true&count_private=true&title_color=58A6FF&icon_color=58A6FF&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="GitHub Stats"/>
     </td>
-    <td width="50%">
-      <img src="https://streak-stats.demolab.com?user=MERCIA-lab&theme=github-dark&hide_border=true&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF&background=0d1117&cache_seconds=1800" width="100%" alt="GitHub Streak"/>
+    <td width="40%" align="center" valign="middle" style="border: none;">
+      <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width="100%" alt="Coding Developer GIF" loading="lazy" decoding="async" />
     </td>
   </tr>
 </table>
 
 <br/>
 
-<!-- REAL-TIME CONTRIBUTION ACTIVITY GRAPH (Full width, cached) -->
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=MERCIA-lab&theme=github-dark&hide_border=true&area=true&color=58A6FF&line=58A6FF&point=ffffff&custom_title=Contribution+Activity&cache_seconds=1800" width="100%" alt="Contribution Graph"/>
-
-<!-- LAZY-LOADED: NON-CRITICAL STATS & CARDS -->
-<details>
-<summary><strong> Detailed Analytics & Language Breakdown</strong></summary>
-<br>
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MERCIA-lab&layout=compact&theme=github_dark&hide_border=true&langs_count=8&title_color=58A6FF&text_color=c9d1d9&bg_color=0d1117&cache_seconds=1800" width="100%" alt="Top Languages"/>
-    </td>
-    <td width="50%">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=MERCIA-lab&theme=github_dark" width="100%" alt="Profile Summary Stats"/>
-    </td>
-  </tr>
-</table>
-
-<br/>
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=MERCIA-lab&theme=github_dark" width="100%" alt="Profile Details"/>
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=MERCIA-lab&theme=github_dark" width="100%" alt="Repos per Language"/>
-    </td>
-    <td width="50%">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=MERCIA-lab&theme=github_dark" width="100%" alt="Most Commit Language"/>
-    </td>
-  </tr>
-</table>
-
-</details>
-
----
-
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                 6. GITHUB TROPHIES                          -->
+<!--      4. LANGUAGES & TOOLS I HAVE PLACED MY HANDS ON        -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<details>
-<summary><strong>🏆 GitHub Achievements & Trophies</strong></summary>
-<br>
+<h2 align="center">💻 Languages & tools I Have placed My Hands On</h2>
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=MERCIA-lab&theme=algolia&no-frame=true&column=6&margin-w=8&margin-h=8&no-bg=true" width="100%" alt="GitHub Trophies"/>
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=bootstrap,html,css,vscode,github,git,figma,c,cpp,py,linux,bash,js,ts" alt="Languages and Tools Row 1" loading="lazy" decoding="async" />
+  </a>
+  <br/>
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=cs,dotnet,react,nextjs,tailwind,nodejs,express,nestjs,fastapi,postgres,mysql,mongodb,redis,docker,aws" alt="Languages and Tools Row 2" loading="lazy" decoding="async" />
+  </a>
 </div>
 
-</details>
-
----
+<br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                 7. FEATURED PROJECT                         -->
+<!--                    5. GITHUB STATS                          -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-## 🚀 Featured Project
+<h2 align="center">⚡ GitHub Stats</h2>
 
-### iMeek Cargo Express
-
-> **Modern Enterprise Logistics & Cargo Management Platform**  
-> Designed for scalable transportation management, cargo tracking, and automated warehouse operations.
-
-<details>
-<summary><strong>📦 View Platform Architecture & Features</strong></summary>
-<br>
-
-| Capability | Overview |
-|---|---|
-| 📍 **Shipment Tracking** | Real-time live tracking with status lifecycle updates |
-| 🚛 **Fleet Operations** | Fleet tracking, maintenance logs, and vehicle dispatching |
-| 🏭 **Warehouse Management** | Dynamic storage allocation, stock management, and inbound/outbound queues |
-| 👥 **Customer Portal** | Self-service tracking, client history, and documentation |
-| 📊 **Analytics Dashboard** | Live operational KPIs, throughput charts, and volume metrics |
-| 💳 **Billing & Payments** | Automated invoices, transaction management, and payment verification |
-| 🔐 **Role-Based Security** | Granular ACL for Admins, Dispatchers, Drivers, and Customers |
-| ⚡ **Live Synchronization** | Real-time events delivered via WebSockets |
+<table width="100%" border="0" align="center">
+  <tr align="center">
+    <td width="50%" align="center" style="border: none;">
+      <a href="https://github.com/MERCIA-lab">
+        <img src="assets/github-stats.svg" width="100%" alt="MERCIA-lab's GitHub Stats" loading="lazy" decoding="async" />
+      </a>
+    </td>
+    <td width="50%" align="center" style="border: none;">
+      <a href="https://github.com/MERCIA-lab">
+        <img src="assets/streak-stats.svg" width="100%" alt="MERCIA-lab's Streak Stats" loading="lazy" decoding="async" />
+      </a>
+    </td>
+  </tr>
+</table>
 
 <br/>
+
+<div align="center">
+  <a href="https://github.com/MERCIA-lab">
+    <img src="assets/languages.svg" width="60%" alt="Most Used Languages" loading="lazy" decoding="async" />
+  </a>
+</div>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--                     6. TECH STACK                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<h2 align="center">💻 Tech Stack</h2>
+
+<div align="center">
+
+<!-- Row 1: Languages & Shell -->
+<p align="center">
+  <img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white" alt="C" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Windows%20Terminal-4D4D4D?style=for-the-badge&logo=windows-terminal&logoColor=white" alt="Terminal" loading="lazy" decoding="async" />
+</p>
+
+<!-- Row 2: Frameworks & Web -->
+<p align="center">
+  <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" loading="lazy" decoding="async" />
+</p>
+
+<!-- Row 3: AI/ML, Databases & Cloud -->
+<p align="center">
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/MySQL-00758F?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS" loading="lazy" decoding="async" />
+</p>
+
+<!-- Row 4: Tools & Platforms -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Microsoft_Office-D83B01?style=for-the-badge&logo=microsoft-office&logoColor=white" alt="Office" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white" alt="Visual Studio" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/VS_Code-0078D4?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Git-E44C30?style=for-the-badge&logo=git&logoColor=white" alt="Git" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm" loading="lazy" decoding="async" />
+</p>
+
+</div>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--      7. TOP-CONTRIBUTED REPO & RANDOM DEV QUOTE             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<table width="100%" border="0" align="center">
+  <tr>
+    <td width="50%" align="center" valign="top" style="border: none;">
+      <h3>⭐ Top-Contributed Repo</h3>
+      <a href="https://github.com/MERCIA-lab/Shipping-Tracking-System">
+        <img src="assets/top-repos.svg" width="100%" alt="Top Contributed Repos" loading="lazy" decoding="async" />
+      </a>
+    </td>
+    <td width="50%" align="center" valign="top" style="border: none;">
+      <h3>💭 Random Dev Quote</h3>
+      <img src="assets/dev-quote.svg" width="100%" alt="Random Dev Quote" loading="lazy" decoding="async" />
+    </td>
+  </tr>
+</table>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--             8. FEATURED PROJECT SHOWCASE                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<h2 align="center">🚀 Featured Project Showcase</h2>
+
+<div align="center">
+  <a href="https://github.com/MERCIA-lab/Shipping-Tracking-System">
+    <img src="assets/project-showcase.svg" width="100%" alt="Flagship Projects: Shipping-Tracking-System & FreeMCue" loading="lazy" decoding="async" />
+  </a>
+</div>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--                     9. SUPPORT ME                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div align="center">
+
+<h2>Support Me ☕</h2>
+
+<a href="https://buymeacoffee.com/MERCIA_lab" target="_blank">
+  <img src="https://img.shields.io/badge/BUY%20ME%20A%20COFFEE-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" loading="lazy" decoding="async" />
+</a>
+
+<br/><br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--                    10. FOOTER BANNER                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<img src="assets/footer_banner.jpg" width="100%" alt="Cyberpunk City Harbor Skyline Banner" loading="lazy" decoding="async" />
+
+</div>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--      11. DEEP DIVE: FEATURED PROJECT & TECHNICAL DATA       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<details>
+<summary><strong>🚀 Featured Project Deep Dive: iMeek Cargo Express (Enterprise Logistics Platform)</strong></summary>
+<br/>
+
+> **Modern Logistics & Cargo Management Platform** designed for enterprise-scale transportation, real-time shipment monitoring, and automated warehouse operations.
+
+| Capability | Architecture Overview |
+|---|---|
+| 📍 **Real-Time Tracking** | Live shipment geolocation updates with status lifecycle triggers |
+| 🚛 **Fleet Operations** | Fleet tracking, maintenance schedules, and automated vehicle dispatch |
+| 🏭 **Warehouse Management** | Dynamic storage allocation, inventory control, and load queues |
+| 👥 **Customer Portal** | Self-service tracking, client history, documentation, and invoices |
+| 📊 **Live Analytics** | Operational KPIs, throughput metrics, and volume charts |
+| 💳 **Payments & Billing** | Integrated billing pipelines, transaction verification, and receipt generation |
+| 🔐 **RBAC Security** | Granular permissions across Admins, Dispatchers, Drivers, and Clients |
+| ⚡ **Live Synchronization** | Real-time WebSocket event bus via Socket.IO |
 
 **Technology Stack:**
 `Next.js` • `React` • `TypeScript` • `Tailwind CSS` • `NestJS` • `PostgreSQL` • `Prisma ORM` • `Redis` • `Docker` • `Socket.IO`
 
 </details>
 
----
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--               8. DEVELOPMENT JOURNEY                        -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
-## 💼 Development Journey
+<details>
+<summary><strong>💼 Development Journey, Status & 2026 Objectives</strong></summary>
+<br/>
 
 ```text
 Backend Engineering         ██████████████████░░  90%
@@ -288,94 +298,46 @@ Exploring ............ Cloud Infrastructure & Kubernetes
 Contributing ......... Open Source Communities
 ```
 
----
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--           9. LEARNING GOALS & 2026 OBJECTIVES               -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
-## 🎯 Goals & Roadmap
-
 <table width="100%">
   <tr>
     <td width="50%" valign="top">
 
 ### 📚 Learning Roadmap
+- **AI / Deep Learning**: Neural architectures & transformer models
+- **Generative AI**: LLM agents, RAG pipelines, function calling
+- **MLOps**: Automated model tracking & continuous training
+- **Cloud Architecture**: AWS distributed serverless & containers
+- **Orchestration**: Kubernetes clusters, service meshes
+- **Systems Engineering**: Fault-tolerant event-driven pipelines
 
-| Domain | Focus Topic |
-|---|---|
-| **AI / Deep Learning** | Neural architectures & transformers |
-| **Generative AI** | LLM agents, RAG, tool calling |
-| **MLOps** | Model tracking, CI/CD pipelines |
-| **Cloud** | AWS serverless & container solutions |
-| **Orchestration** | Kubernetes deployment & networking |
-| **Systems** | Fault-tolerant distributed design |
-
-  </td>
+    </td>
     <td width="50%" valign="top">
 
 ### 🚀 2026 Objectives
+- 🔄 **In Progress**: Build production-ready AI systems
+- 🔄 **In Progress**: Master Deep Learning & LLM architectures
+- 📋 **Planned**: Publish deep-dive technical engineering articles
+- 📋 **Planned**: Regular, high-impact Open Source contributions
+- 📋 **Planned**: Advance AWS Cloud Architect certification
+- 📋 **Planned**: Deploy enterprise distributed platforms
 
-| Status | Objective |
-|---|---|
-| 🔄 **In Progress** | Build production-ready AI systems |
-| 🔄 **In Progress** | Master Deep Learning and LLMs |
-| 📋 **Planned** | Publish technical engineering articles |
-| 📋 **Planned** | Consistent open-source contributions |
-| 📋 **Planned** | Advance AWS Cloud certification |
-| 📋 **Planned** | Deploy high-impact distributed apps |
-
-  </td>
+    </td>
   </tr>
 </table>
 
----
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--            10. DEV ENVIRONMENT & PHILOSOPHY                 -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
-<details>
-<summary><strong>🖥️ Development Environment Specifications</strong></summary>
-<br>
-
-| Category | Stack & Tools |
-|---|---|
-| **Languages** | Python • TypeScript • JavaScript • Java • C++ • Go • SQL |
-| **Frontend** | React • Next.js • Tailwind CSS |
-| **Backend** | Node.js • NestJS • Express • FastAPI • Django |
-| **Databases** | PostgreSQL • MongoDB • MySQL • Redis |
-| **AI / ML** | PyTorch • TensorFlow • Hugging Face • LangChain |
-| **DevOps** | Docker • Kubernetes • Git • GitHub Actions • Linux |
-| **Cloud** | Amazon Web Services (AWS) |
-| **Tooling** | VS Code • Postman • Figma |
-
-</details>
-
-<details>
-<summary><strong>🧠 Development Philosophy</strong></summary>
-<br>
-
+#### 🧠 Engineering Philosophy
 > *"Great software is not just code — it is a careful balance of reliability, clarity, and human purpose."*
 
-- **Reliable** — does what it promises, every single run
-- **Scalable** — engineered to grow effortlessly with its users
-- **Secure** — user privacy and system security are non-negotiable
-- **Maintainable** — clean, self-documenting code built for longevity
-- **User Focused** — the end user's experience always guides technical decisions
+- **Reliable** — does what it promises, every single execution.
+- **Scalable** — engineered to grow gracefully with increasing throughput.
+- **Secure** — data integrity and defensive security are paramount.
+- **Maintainable** — clean, self-documenting code built for longevity.
+- **User Focused** — the end user's operational reality guides technical decisions.
 
 </details>
 
 ---
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--                     11. FOOTER HERO                         -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
 <div align="center">
-
-<img src="https://capsule-render.vercel.app/api?type=waving&section=footer&height=140&color=0:0D1117,45:161B22,100:0D2137&text=Keep%20Building.%20Keep%20Learning.&fontSize=20&fontColor=58A6FF&fontAlignY=68&animation=fadeIn" width="100%"/>
-
-<sub>⭐ If you find my work inspiring, consider giving this repository a star!</sub>
-
+  <sub>⭐ If you find my work inspiring, consider giving this repository a star!</sub>
 </div>

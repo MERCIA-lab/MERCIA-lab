@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" fill="none">
+  <style>
+    .card-bg {
+      fill: #0d1117;
+      stroke: #30363d;
+      stroke-width: 1.5;
+      rx: 12px;
+    }
+    .stat-number {
+      font-family: 'Righteous', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      fill: #f0f6fc;
+      text-anchor: middle;
+    }
+    .stat-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      fill: #58a6ff;
+      text-anchor: middle;
+    }
+    .stat-sub {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      fill: #8b949e;
+      text-anchor: middle;
+    }
+    .flame-icon {
+      fill: url(#flameGrad);
+      animation: flamePulse 2s ease-in-out infinite;
+      transform-origin: 247px 55px;
+    }
+    .streak-ring-bg {
+      stroke: rgba(249, 115, 22, 0.2);
+      stroke-width: 4;
+      fill: none;
+    }
+    .streak-ring-prog {
+      stroke: url(#flameGrad);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 180;
+      stroke-dashoffset: 40;
+      fill: none;
+      animation: glowRing 3s ease-in-out infinite alternate;
+      transform-origin: 247px 88px;
+    }
+    @keyframes flamePulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(239, 68, 68, 1)); }
+    }
+    @keyframes glowRing {
+      0% { stroke-dashoffset: 60; }
+      100% { stroke-dashoffset: 20; }
+    }
+    .divider {
+      stroke: #21262d;
+      stroke-width: 1;
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="flameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ef4444" />
+    </linearGradient>
+  </defs>
+
+  <rect width="495" height="195" class="card-bg" />
+
+  <!-- Column 1: Total Contributions -->
+  <g transform="translate(85, 45)">
+    <text x="0" y="35" class="stat-number">61</text>
+    <text x="0" y="65" class="stat-label">Total Contributions</text>
+    <text x="0" y="85" class="stat-sub">Aug 10 - Sep 03</text>
+  </g>
+
+  <!-- Vertical Divider 1 -->
+  <line x1="170" y1="30" x2="170" y2="165" class="divider" />
+
+  <!-- Column 2: Current Streak (Centered with Flame & Ring) -->
+  <g transform="translate(247, 0)">
+    <!-- Streak Ring -->
+    <circle cx="0" cy="85" r="32" class="streak-ring-bg" />
+    <circle cx="0" cy="85" r="32" class="streak-ring-prog" />
+
+    <!-- Flame Icon in center -->
+    <path class="flame-icon" transform="translate(-10, 60)" d="M5.05 13.95c.55-.3 1.15-.75 1.4-1.35.35-.85.1-1.85-.35-2.65-.5-1-.95-2-1-3.15 0-.15 0-.3.05-.45.05.3.15.6.3.85.45.85 1.25 1.55 1.9 2.3.9 1 1.7 2.15 1.65 3.55 0 .25-.05.5-.1.75.65-.6 1.1-1.4 1.2-2.3.15-1.15-.35-2.35-.95-3.35-.65-1.05-1.45-2.05-1.95-3.2-.45-1-.65-2.15-.45-3.25.3.35.65.65 1.05.9 1.35.85 2.25 2.3 2.7 3.8.55 1.8.35 3.85-.7 5.45-.45.7-.95 1.35-1.4 2.05-.2.3-.3.65-.25 1 .05.35.25.65.55.85 1.15.7 2.65.45 3.5-.6 1.05-1.25 1.35-2.95 1.1-4.55-.25-1.6-.9-3.1-1.65-4.55-.4-.75-.8-1.5-1.25-2.2-.15-.25-.3-.55-.35-.85.1-.05.2-.05.3-.05 1.5.1 2.9.85 3.9 1.95 1.35 1.5 1.95 3.6 1.75 5.65-.2 2.15-1.25 4.15-2.9 5.55-1.75 1.5-4.2 2.15-6.45 1.75-2.65-.45-4.85-2.35-5.6-4.9-.45-1.5-.2-3.1.6-4.4z"/>
+
+    <!-- Streak number inside -->
+    <text x="0" y="100" class="stat-number">3</text>
+    <text x="0" y="135" class="stat-label">Current Streak</text>
+    <text x="0" y="153" class="stat-sub">🔥 Active streak</text>
+  </g>
+
+  <!-- Vertical Divider 2 -->
+  <line x1="325" y1="30" x2="325" y2="165" class="divider" />
+
+  <!-- Column 3: Longest Streak -->
+  <g transform="translate(410, 45)">
+    <text x="0" y="35" class="stat-number">4</text>
+    <text x="0" y="65" class="stat-label">Longest Streak</text>
+    <text x="0" y="85" class="stat-sub">Personal Best</text>
+  </g>
+</svg>
