@@ -1,28 +1,13 @@
 <div align="center">
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--            1. WORKSTATION ENVIRONMENT GALLERY               -->
-<!-- ═══════════════════════════════════════════════════════════ -->
+<a href="https://github.com/MERCIA-lab">
+  <img src="assets/animated-character-white.gif" width="220" alt="Meek Dieu Merci NUKURI - Animated Character" style="border-radius: 50%; max-width: 100%;" loading="eager" decoding="async" />
+</a>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr align="center">
-    <td width="50%" align="center" valign="middle" style="border: none; padding: 2px;">
-      <a href="https://github.com/MERCIA-lab">
-        <img src="assets/workspace-dark.jpg" width="100%" alt="Development Environment Setup - Ultrawide Console" loading="eager" decoding="async" />
-      </a>
-    </td>
-    <td width="50%" align="center" valign="middle" style="border: none; padding: 2px;">
-      <a href="https://github.com/MERCIA-lab">
-        <img src="assets/workspace-light.jpg" width="100%" alt="Development Environment Setup - Multi-Display Architecture" loading="eager" decoding="async" />
-      </a>
-    </td>
-  </tr>
-</table>
-
-<br/>
+<br/><br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--            2. DYNAMIC HEADLINE & SALUTATION                 -->
+<!--            1. HERO IDENTITY & DYNAMIC HEADLINE              -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <a href="https://github.com/MERCIA-lab">
@@ -42,7 +27,7 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                     3. ABOUT PROFILE                        -->
+<!--                     2. ABOUT PROFILE                        -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <h2>About</h2>
@@ -52,10 +37,6 @@
     <img src="https://komarev.com/ghpvc/?username=MERCIA-lab&style=flat-square&color=38bdf8&labelColor=0d1117&label=Profile+Views" alt="Profile Views" loading="lazy" decoding="async" />
   </a>
 </p>
-
-<table width="100%" border="0">
-  <tr>
-    <td width="60%" valign="top" style="border: none;">
 
 <h4>Specialized in Distributed Systems, Cloud Infrastructure, and Applied Artificial Intelligence</h4>
 <h4>Architecting high-throughput backend services, resilient microservices, and modern web applications.</h4>
@@ -67,8 +48,8 @@
 
 <br/>
 
-<div align="right">
-  <h3>Connect:</h3>
+<div align="left">
+  <strong>Connect:</strong> &nbsp;
   <a href="https://github.com/MERCIA-lab" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" loading="lazy" decoding="async" />
   </a>
@@ -86,17 +67,10 @@
   </a>
 </div>
 
-    </td>
-    <td width="40%" align="center" valign="middle" style="border: none;">
-      <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width="100%" alt="Software Engineering Workspace" loading="lazy" decoding="async" />
-    </td>
-  </tr>
-</table>
-
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--           4. CORE TECHNICAL COMPETENCIES                    -->
+<!--           3. CORE TECHNICAL COMPETENCIES                    -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <h2 align="center">Technical Competencies</h2>
@@ -114,7 +88,7 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--            5. TELEMETRY & PERFORMANCE ANALYTICS             -->
+<!--            4. TELEMETRY & PERFORMANCE ANALYTICS             -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <h2 align="center">Performance Telemetry</h2>
@@ -145,7 +119,7 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--            6. TECHNOLOGY STACK & INFRASTRUCTURE             -->
+<!--            5. TECHNOLOGY STACK & INFRASTRUCTURE             -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <h2 align="center">Technology Stack & Infrastructure</h2>
@@ -162,45 +136,45 @@
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Windows%20Terminal-4D4D4D?style=for-the-badge&logo=windows-terminal&logoColor=white" alt="Terminal" loading="lazy" decoding="async" />
 </p>
 
 <!-- Row 2: Frameworks & Runtimes -->
 <p align="center">
-  <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET" loading="lazy" decoding="async" />
 </p>
 
-<!-- Row 3: AI, ML & Persistence -->
+<!-- Row 3: Styling & Design Systems -->
 <p align="center">
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/MySQL-00758F?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS" loading="lazy" decoding="async" />
-</p>
-
-<!-- Row 4: Engineering Tooling -->
-<p align="center">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Microsoft_Office-D83B01?style=for-the-badge&logo=microsoft-office&logoColor=white" alt="Office" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white" alt="Visual Studio" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/VS_Code-0078D4?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/Git-E44C30?style=for-the-badge&logo=git&logoColor=white" alt="Git" loading="lazy" decoding="async" />
-  <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm" loading="lazy" decoding="async" />
+</p>
+
+<!-- Row 4: Databases, Storage & ORMs -->
+<p align="center">
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" loading="lazy" decoding="async" />
+</p>
+
+<!-- Row 5: Cloud, Infrastructure, Tooling & AI -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white" alt="Bash" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" loading="lazy" decoding="async" />
 </p>
 
 </div>
@@ -208,7 +182,7 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--      7. REPOSITORY TELEMETRY & COMPUTING PHILOSOPHY         -->
+<!--      6. REPOSITORY TELEMETRY & COMPUTING PHILOSOPHY         -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <table width="100%" border="0" align="center">
@@ -225,6 +199,31 @@
     </td>
   </tr>
 </table>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--            7. WORKSTATION & ENGINEERING SETUP               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div align="center">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr align="center">
+    <td width="50%" align="center" valign="middle" style="border: none; padding: 2px;">
+      <a href="https://github.com/MERCIA-lab">
+        <img src="assets/workspace-dark.jpg" width="100%" alt="Development Environment Setup - Ultrawide Console" loading="lazy" decoding="async" />
+      </a>
+    </td>
+    <td width="50%" align="center" valign="middle" style="border: none; padding: 2px;">
+      <a href="https://github.com/MERCIA-lab">
+        <img src="assets/workspace-light.jpg" width="100%" alt="Development Environment Setup - Multi-Display Architecture" loading="lazy" decoding="async" />
+      </a>
+    </td>
+  </tr>
+</table>
+
+</div>
 
 <br/>
 
