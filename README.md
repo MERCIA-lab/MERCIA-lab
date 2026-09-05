@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://github.com/MERCIA-lab">
-  <img src="assets/profile-photo.jpg" width="240" alt="Meek Dieu Merci NUKURI" loading="eager" decoding="async" />
+  <img src="assets/profile-photo-circle.png" width="240" alt="Meek Dieu Merci NUKURI" loading="eager" decoding="async" />
 </a>
 
 <br/><br/>
