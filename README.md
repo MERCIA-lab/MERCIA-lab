@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://github.com/MERCIA-lab">
-  <img src="assets/animated-character-white.gif" width="220" alt="Meek Dieu Merci NUKURI - Animated Character" style="border-radius: 50%; max-width: 100%;" loading="eager" decoding="async" />
+  <img src="assets/profile-photo.jpg" width="240" alt="Meek Dieu Merci NUKURI" loading="eager" decoding="async" />
 </a>
 
 <br/><br/>
