@@ -91,7 +91,7 @@
     <!-- Streak number inside -->
     <text x="0" y="100" class="stat-number">3</text>
     <text x="0" y="135" class="stat-label">Current Streak</text>
-    <text x="0" y="153" class="stat-sub">🔥 Active streak</text>
+    <text x="0" y="153" class="stat-sub">Active Cadence</text>
   </g>
 
   <!-- Vertical Divider 2 -->

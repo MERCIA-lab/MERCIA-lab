@@ -1,34 +1,51 @@
 <div align="center">
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                  1. MASTERHEAD BANNER                       -->
+<!--            1. WORKSTATION ENVIRONMENT GALLERY               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr align="center">
+    <td width="50%" align="center" valign="middle" style="border: none; padding: 2px;">
+      <a href="https://github.com/MERCIA-lab">
+        <img src="assets/workspace-dark.jpg" width="100%" alt="Development Environment Setup - Ultrawide Console" loading="eager" decoding="async" />
+      </a>
+    </td>
+    <td width="50%" align="center" valign="middle" style="border: none; padding: 2px;">
+      <a href="https://github.com/MERCIA-lab">
+        <img src="assets/workspace-light.jpg" width="100%" alt="Development Environment Setup - Multi-Display Architecture" loading="eager" decoding="async" />
+      </a>
+    </td>
+  </tr>
+</table>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--            2. DYNAMIC HEADLINE & SALUTATION                 -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <a href="https://github.com/MERCIA-lab">
-  <img src="assets/header_banner.jpg" width="100%" alt="Cyberpunk Terminal Header" loading="lazy" decoding="async" />
+  <img src="assets/typing-headline.svg" width="850" alt="Meek Dieu Merci NUKURI" loading="eager" decoding="async" />
 </a>
 
-<br/><br/>
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--            2. DYNAMIC TYPING HEADLINE & SALUTATION         -->
-<!-- ═══════════════════════════════════════════════════════════ -->
+<br/>
 
 <a href="https://github.com/MERCIA-lab">
-  <img src="assets/typing-headline.svg" width="100%" alt="Meek Dieu Merci here 🔥 !" loading="lazy" decoding="async" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3000&pause=1000&color=38BDF8&center=true&vCenter=true&width=850&height=40&lines=Building+Intelligent+Software+%26+Scalable+Distributed+Systems;AI+%26+Machine+Learning+Systems+Architect;Full-Stack+Engineer+%7C+High-Throughput+Cloud+Backends;Continuous+Engineering+%26+System+Design+Excellence" alt="Engineering Specializations" />
 </a>
 
-<h1 align="center">Namaste 🙏 I'm Meek Dieu Merci NUKURI</h1>
+<h1 align="center">Meek Dieu Merci NUKURI</h1>
 
 </div>
 
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                     3. ABOUT ME                             -->
+<!--                     3. ABOUT PROFILE                        -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<h2>💫 About Me</h2>
+<h2>About</h2>
 
 <p align="left">
   <a href="https://github.com/MERCIA-lab">
@@ -40,18 +57,18 @@
   <tr>
     <td width="60%" valign="top" style="border: none;">
 
-<h4>🌟 Began the journey with Computer Science and Software Engineering</h4>
-<h4>👨‍💻 I work on Full-Stack development and Cloud Systems while focusing on Artificial Intelligence and Machine Learning.</h4>
-<h4>🎓 I am currently pursuing a degree in Computer Science.</h4>
-<h4>🛠️ Hands-on experience in Full-Stack, Scalable Backend Architectures, and Distributed Systems.</h4>
-<h4>💬 Ask me about Python, TypeScript, NestJS, Next.js, FastAPI, Deep Learning, and System Design.</h4>
-<h4>⚡ Passionate about Artificial Intelligence, Machine Learning, Deep Learning, Data Science, and Cloud Automation.</h4>
-<h4>🤹 I only like perfection — building intelligent software through thoughtful engineering and practical innovation.</h4>
+<h4>Specialized in Distributed Systems, Cloud Infrastructure, and Applied Artificial Intelligence</h4>
+<h4>Architecting high-throughput backend services, resilient microservices, and modern web applications.</h4>
+<h4>Pursuing Computer Science with deep academic grounding in algorithms, data structures, and system design.</h4>
+<h4>Hands-on expertise across full-stack TypeScript, Python, NestJS, Next.js, FastAPI, and PostgreSQL.</h4>
+<h4>Active technical focus on Deep Learning architectures, LLM orchestration workflows, and MLOps pipelines.</h4>
+<h4>Engineering philosophy centered on absolute reliability, modular system boundaries, and operational clarity.</h4>
+<h4>Committed to open-source software craftsmanship and continuous technical innovation.</h4>
 
 <br/>
 
 <div align="right">
-  <h3>🌟 Follow Me on:</h3>
+  <h3>Connect:</h3>
   <a href="https://github.com/MERCIA-lab" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" loading="lazy" decoding="async" />
   </a>
@@ -71,7 +88,7 @@
 
     </td>
     <td width="40%" align="center" valign="middle" style="border: none;">
-      <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width="100%" alt="Coding Developer GIF" loading="lazy" decoding="async" />
+      <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width="100%" alt="Software Engineering Workspace" loading="lazy" decoding="async" />
     </td>
   </tr>
 </table>
@@ -79,28 +96,28 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--      4. LANGUAGES & TOOLS I HAVE PLACED MY HANDS ON        -->
+<!--           4. CORE TECHNICAL COMPETENCIES                    -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<h2 align="center">💻 Languages & tools I Have placed My Hands On</h2>
+<h2 align="center">Technical Competencies</h2>
 
 <div align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=bootstrap,html,css,vscode,github,git,figma,c,cpp,py,linux,bash,js,ts" alt="Languages and Tools Row 1" loading="lazy" decoding="async" />
+    <img src="https://skillicons.dev/icons?i=bootstrap,html,css,vscode,github,git,figma,c,cpp,py,linux,bash,js,ts" alt="Technical Competencies Row 1" loading="lazy" decoding="async" />
   </a>
   <br/>
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=cs,dotnet,react,nextjs,tailwind,nodejs,express,nestjs,fastapi,postgres,mysql,mongodb,redis,docker,aws" alt="Languages and Tools Row 2" loading="lazy" decoding="async" />
+    <img src="https://skillicons.dev/icons?i=cs,dotnet,react,nextjs,tailwind,nodejs,express,nestjs,fastapi,postgres,mysql,mongodb,redis,docker,aws" alt="Technical Competencies Row 2" loading="lazy" decoding="async" />
   </a>
 </div>
 
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                    5. GITHUB STATS                          -->
+<!--            5. TELEMETRY & PERFORMANCE ANALYTICS             -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<h2 align="center">⚡ GitHub Stats</h2>
+<h2 align="center">Performance Telemetry</h2>
 
 <table width="100%" border="0" align="center">
   <tr align="center">
@@ -128,14 +145,14 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                     6. TECH STACK                           -->
+<!--            6. TECHNOLOGY STACK & INFRASTRUCTURE             -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<h2 align="center">💻 Tech Stack</h2>
+<h2 align="center">Technology Stack & Infrastructure</h2>
 
 <div align="center">
 
-<!-- Row 1: Languages & Shell -->
+<!-- Row 1: Languages & Core -->
 <p align="center">
   <img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white" alt="C" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#" loading="lazy" decoding="async" />
@@ -148,7 +165,7 @@
   <img src="https://img.shields.io/badge/Windows%20Terminal-4D4D4D?style=for-the-badge&logo=windows-terminal&logoColor=white" alt="Terminal" loading="lazy" decoding="async" />
 </p>
 
-<!-- Row 2: Frameworks & Web -->
+<!-- Row 2: Frameworks & Runtimes -->
 <p align="center">
   <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" loading="lazy" decoding="async" />
@@ -161,7 +178,7 @@
   <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" loading="lazy" decoding="async" />
 </p>
 
-<!-- Row 3: AI/ML, Databases & Cloud -->
+<!-- Row 3: AI, ML & Persistence -->
 <p align="center">
   <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow" loading="lazy" decoding="async" />
@@ -174,7 +191,7 @@
   <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS" loading="lazy" decoding="async" />
 </p>
 
-<!-- Row 4: Tools & Platforms -->
+<!-- Row 4: Engineering Tooling -->
 <p align="center">
   <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma" loading="lazy" decoding="async" />
   <img src="https://img.shields.io/badge/Microsoft_Office-D83B01?style=for-the-badge&logo=microsoft-office&logoColor=white" alt="Office" loading="lazy" decoding="async" />
@@ -191,20 +208,20 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--      7. TOP-CONTRIBUTED REPO & RANDOM DEV QUOTE             -->
+<!--      7. REPOSITORY TELEMETRY & COMPUTING PHILOSOPHY         -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <table width="100%" border="0" align="center">
   <tr>
     <td width="50%" align="center" valign="top" style="border: none;">
-      <h3>⭐ Top-Contributed Repo</h3>
+      <h3>Repository Contributions</h3>
       <a href="https://github.com/MERCIA-lab/Shipping-Tracking-System">
-        <img src="assets/top-repos.svg" width="100%" alt="Top Contributed Repos" loading="lazy" decoding="async" />
+        <img src="assets/top-repos.svg" width="100%" alt="Top Contributed Repositories" loading="lazy" decoding="async" />
       </a>
     </td>
     <td width="50%" align="center" valign="top" style="border: none;">
-      <h3>💭 Random Dev Quote</h3>
-      <img src="assets/dev-quote.svg" width="100%" alt="Random Dev Quote" loading="lazy" decoding="async" />
+      <h3>Computing Philosophy</h3>
+      <img src="assets/dev-quote.svg" width="100%" alt="Computing Axioms" loading="lazy" decoding="async" />
     </td>
   </tr>
 </table>
@@ -212,71 +229,184 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--             8. FEATURED PROJECT SHOWCASE                    -->
+<!--        8. FEATURED PROJECTS & REPOSITORIES PORTFOLIO        -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<h2 align="center">🚀 Featured Project Showcase</h2>
+<h2 align="center">Featured Projects & Architecture Portfolio</h2>
 
 <div align="center">
   <a href="https://github.com/MERCIA-lab/Shipping-Tracking-System">
-    <img src="assets/project-showcase.svg" width="100%" alt="Flagship Projects: Shipping-Tracking-System & FreeMCue" loading="lazy" decoding="async" />
+    <img src="assets/project-showcase.svg" width="100%" alt="Flagship Projects Showcase" loading="lazy" decoding="async" />
   </a>
 </div>
 
 <br/>
 
+<table width="100%" border="0">
+
+  <!-- Repository 1: Shipping-Tracking-System -->
+  <tr>
+    <td width="100%" style="border-bottom: 1px solid #30363d; padding: 16px 0;">
+      <h3>
+        <a href="https://github.com/MERCIA-lab/Shipping-Tracking-System">Shipping-Tracking-System</a>
+        &nbsp;
+        <img src="https://img.shields.io/badge/STATUS-PRODUCTION-238636?style=flat-square" alt="Status" />
+        &nbsp;
+        <img src="https://img.shields.io/badge/TIER-FLAGSHIP-38bdf8?style=flat-square" alt="Tier" />
+      </h3>
+      <p>
+        <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=13&duration=3000&pause=1000&color=38BDF8&width=750&height=26&lines=Enterprise+logistics+platform+with+real-time+freight+telematics;Dynamic+warehouse+queuing+and+automated+parcel+dispatch;Full-duplex+WebSocket+synchronization+with+NestJS+%26+Redis" alt="Shipping-Tracking-System Description" />
+      </p>
+      <p>
+        <strong>Architecture:</strong> Cloud-native logistics management suite handling end-to-end parcel dispatch, fleet telematics, dynamic warehouse allocation queues, and automated customer billing workflows.
+      </p>
+      <p>
+        <strong>Tech Stack:</strong>
+        <code>TypeScript</code> &bull; <code>NestJS</code> &bull; <code>Next.js</code> &bull; <code>PostgreSQL</code> &bull; <code>Prisma ORM</code> &bull; <code>Redis</code> &bull; <code>Docker</code> &bull; <code>Socket.IO</code>
+      </p>
+    </td>
+  </tr>
+
+  <!-- Repository 2: FreeMCue -->
+  <tr>
+    <td width="100%" style="border-bottom: 1px solid #30363d; padding: 16px 0;">
+      <h3>
+        <a href="https://github.com/MERCIA-lab/FreeMCue">FreeMCue</a>
+        &nbsp;
+        <img src="https://img.shields.io/badge/STATUS-ACTIVE-238636?style=flat-square" alt="Status" />
+        &nbsp;
+        <img src="https://img.shields.io/badge/CATEGORY-AI%20COPILOT-a855f7?style=flat-square" alt="Category" />
+      </h3>
+      <p>
+        <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=13&duration=3000&pause=1000&color=A855F7&width=750&height=26&lines=macOS+AI+teleprompter+and+intelligent+meeting+copilot;Context-aware+overlay+completely+invisible+from+screen+shares;Privacy-first+local+AI+inference+and+real-time+speech" alt="FreeMCue Description" />
+      </p>
+      <p>
+        <strong>Architecture:</strong> High-performance macOS desktop assistant and intelligent teleprompter. Delivers context-sensitive meeting cues in real time while using OS-level window flags to remain entirely invisible on screen recordings and video conference streams.
+      </p>
+      <p>
+        <strong>Tech Stack:</strong>
+        <code>Python</code> &bull; <code>PyTorch</code> &bull; <code>macOS AppKit</code> &bull; <code>Speech Recognition</code> &bull; <code>Local LLM Inference</code>
+      </p>
+    </td>
+  </tr>
+
+  <!-- Repository 3: Financial-Advisor-System -->
+  <tr>
+    <td width="100%" style="border-bottom: 1px solid #30363d; padding: 16px 0;">
+      <h3>
+        <a href="https://github.com/MERCIA-lab/Financial-Advisor-System">Financial-Advisor-System</a>
+        &nbsp;
+        <img src="https://img.shields.io/badge/STATUS-MAINTAINED-58a6ff?style=flat-square" alt="Status" />
+        &nbsp;
+        <img src="https://img.shields.io/badge/CATEGORY-FINTECH-22c55e?style=flat-square" alt="Category" />
+      </h3>
+      <p>
+        <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=13&duration=3000&pause=1000&color=22C55E&width=750&height=26&lines=Automated+financial+planning+and+algorithmic+portfolio+analytics;Dynamic+risk+evaluation+and+spending+pattern+intelligence;Engineered+with+Node.js%2C+Express%2C+and+predictive+modeling" alt="Financial-Advisor-System Description" />
+      </p>
+      <p>
+        <strong>Architecture:</strong> Algorithmic wealth evaluation and financial advisory platform. Integrates automated risk profiling, spending pattern anomaly detection, and predictive asset allocation simulations.
+      </p>
+      <p>
+        <strong>Tech Stack:</strong>
+        <code>JavaScript</code> &bull; <code>Node.js</code> &bull; <code>Express</code> &bull; <code>PostgreSQL</code> &bull; <code>Predictive Analytics</code>
+      </p>
+    </td>
+  </tr>
+
+  <!-- Repository 4: daily-routine-tracker -->
+  <tr>
+    <td width="100%" style="border-bottom: 1px solid #30363d; padding: 16px 0;">
+      <h3>
+        <a href="https://github.com/MERCIA-lab/daily-routine-tracker">daily-routine-tracker</a>
+        &nbsp;
+        <img src="https://img.shields.io/badge/STATUS-ACTIVE-238636?style=flat-square" alt="Status" />
+        &nbsp;
+        <img src="https://img.shields.io/badge/CATEGORY-PRODUCTIVITY-eab308?style=flat-square" alt="Category" />
+      </h3>
+      <p>
+        <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=13&duration=3000&pause=1000&color=EAB308&width=750&height=26&lines=High-efficiency+routine+execution+and+cadence+monitoring;Lightweight+state+persistence+and+velocity+analytics;Optimizing+daily+focus+blocks+with+zero+latency" alt="daily-routine-tracker Description" />
+      </p>
+      <p>
+        <strong>Architecture:</strong> High-efficiency execution cadence system engineered to track daily consistency, optimize focused work intervals, and analyze habit momentum with lightweight client synchronization.
+      </p>
+      <p>
+        <strong>Tech Stack:</strong>
+        <code>JavaScript</code> &bull; <code>CSS3</code> &bull; <code>Full-Stack</code> &bull; <code>Workflow Automation</code>
+      </p>
+    </td>
+  </tr>
+
+  <!-- Repository 5: MERCIA-lab Architecture -->
+  <tr>
+    <td width="100%" style="padding: 16px 0;">
+      <h3>
+        <a href="https://github.com/MERCIA-lab/MERCIA-lab">MERCIA-lab</a>
+        &nbsp;
+        <img src="https://img.shields.io/badge/STATUS-OPERATIONAL-238636?style=flat-square" alt="Status" />
+        &nbsp;
+        <img src="https://img.shields.io/badge/CATEGORY-TELEMETRY-38bdf8?style=flat-square" alt="Category" />
+      </h3>
+      <p>
+        <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=13&duration=3000&pause=1000&color=38BDF8&width=750&height=26&lines=Automated+GitHub+GraphQL+telemetry+and+dark-mode+SVG+generation;Zero-dependency+analytics+pipeline+with+daily+CI%2FCD+updates;Self-hosted+responsive+developer+cards+and+metrics" alt="MERCIA-lab Description" />
+      </p>
+      <p>
+        <strong>Architecture:</strong> Self-hosted profile analytics engine querying the GitHub GraphQL and REST APIs. Synthesizes dark-mode glassmorphism SVG telemetry cards with zero external third-party dependencies, automated via GitHub Actions scheduled cron jobs.
+      </p>
+      <p>
+        <strong>Tech Stack:</strong>
+        <code>Python</code> &bull; <code>GitHub Actions</code> &bull; <code>GraphQL</code> &bull; <code>SVG Vector Graphics</code> &bull; <code>CI/CD Pipelines</code>
+      </p>
+    </td>
+  </tr>
+
+</table>
+
+<br/>
+
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                     9. SUPPORT ME                           -->
+<!--                     9. SPONSORSHIP                          -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <div align="center">
 
-<h2>Support Me ☕</h2>
+<h2>Sponsorship & Support</h2>
 
 <a href="https://buymeacoffee.com/MERCIA_lab" target="_blank">
-  <img src="https://img.shields.io/badge/BUY%20ME%20A%20COFFEE-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" loading="lazy" decoding="async" />
+  <img src="https://img.shields.io/badge/SPONSOR%20ME-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Sponsor" loading="lazy" decoding="async" />
 </a>
+
+</div>
 
 <br/><br/>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-<!--                    10. FOOTER BANNER                        -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-
-<img src="assets/footer_banner.jpg" width="100%" alt="Cyberpunk City Harbor Skyline Banner" loading="lazy" decoding="async" />
-
-</div>
-
-<br/>
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!--      11. DEEP DIVE: FEATURED PROJECT & TECHNICAL DATA       -->
+<!--      10. DEEP DIVE: ARCHITECTURE & TECHNICAL DATA           -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
 <details>
-<summary><strong>🚀 Featured Project Deep Dive: iMeek Cargo Express (Enterprise Logistics Platform)</strong></summary>
+<summary><strong>Architecture Specification: iMeek Cargo Express (Enterprise Logistics Platform)</strong></summary>
 <br/>
 
-> **Modern Logistics & Cargo Management Platform** designed for enterprise-scale transportation, real-time shipment monitoring, and automated warehouse operations.
+> **Modern Logistics & Cargo Management Platform** engineered for enterprise transportation pipelines, real-time shipment monitoring, and automated warehouse coordination.
 
 | Capability | Architecture Overview |
 |---|---|
-| 📍 **Real-Time Tracking** | Live shipment geolocation updates with status lifecycle triggers |
-| 🚛 **Fleet Operations** | Fleet tracking, maintenance schedules, and automated vehicle dispatch |
-| 🏭 **Warehouse Management** | Dynamic storage allocation, inventory control, and load queues |
-| 👥 **Customer Portal** | Self-service tracking, client history, documentation, and invoices |
-| 📊 **Live Analytics** | Operational KPIs, throughput metrics, and volume charts |
-| 💳 **Payments & Billing** | Integrated billing pipelines, transaction verification, and receipt generation |
-| 🔐 **RBAC Security** | Granular permissions across Admins, Dispatchers, Drivers, and Clients |
-| ⚡ **Live Synchronization** | Real-time WebSocket event bus via Socket.IO |
+| **Real-Time Tracking** | Live shipment geolocation updates with deterministic status lifecycle triggers |
+| **Fleet Operations** | Real-time vehicle telematics, maintenance scheduling, and automated route dispatch |
+| **Warehouse Operations** | Dynamic bay allocation, inventory state management, and dispatch queue balancing |
+| **Customer Portal** | Self-service tracking console, historical documentation, and automated invoices |
+| **Operational Analytics** | Live KPI monitoring, transit throughput metrics, and volume capacity telemetry |
+| **Billing Pipelines** | Automated invoicing, multi-gateway transaction settlement, and audit logs |
+| **Security & RBAC** | Granular access control policies governing Admins, Dispatchers, Drivers, and Clients |
+| **Event Bus** | Full-duplex WebSocket event distribution via Socket.IO and Redis pub/sub |
 
 **Technology Stack:**
-`Next.js` • `React` • `TypeScript` • `Tailwind CSS` • `NestJS` • `PostgreSQL` • `Prisma ORM` • `Redis` • `Docker` • `Socket.IO`
+`Next.js` &bull; `React` &bull; `TypeScript` &bull; `Tailwind CSS` &bull; `NestJS` &bull; `PostgreSQL` &bull; `Prisma ORM` &bull; `Redis` &bull; `Docker` &bull; `Socket.IO`
 
 </details>
 
 <details>
-<summary><strong>💼 Development Journey, Status & 2026 Objectives</strong></summary>
+<summary><strong>Engineering Focus, Trajectory & 2026 Objectives</strong></summary>
 <br/>
 
 ```text
@@ -291,53 +421,53 @@ DevOps / MLOps              ██████████░░░░░░░�
 ```text
 [====================>    ] STATUS: ACTIVE
 
-Learning  ............ Deep Learning & LLMs
-Building  ............ Production AI Applications
-Reading   ............ Distributed Systems & Architecture
-Exploring ............ Cloud Infrastructure & Kubernetes
-Contributing ......... Open Source Communities
+Learning  ............ Deep Learning Architectures & LLMs
+Building  ............ Production-Grade Intelligent Systems
+Reading   ............ Distributed Systems & High-Throughput Design
+Exploring ............ Cloud Infrastructure & Container Orchestration
+Contributing ......... Open Source Systems & Frameworks
 ```
 
 <table width="100%">
   <tr>
     <td width="50%" valign="top">
 
-### 📚 Learning Roadmap
-- **AI / Deep Learning**: Neural architectures & transformer models
-- **Generative AI**: LLM agents, RAG pipelines, function calling
-- **MLOps**: Automated model tracking & continuous training
-- **Cloud Architecture**: AWS distributed serverless & containers
-- **Orchestration**: Kubernetes clusters, service meshes
-- **Systems Engineering**: Fault-tolerant event-driven pipelines
+### Learning Roadmap
+- **AI / Deep Learning**: Neural network foundations, transformers, and diffusion architectures
+- **Generative Systems**: Agentic LLM systems, deterministic tool use, and RAG pipelines
+- **MLOps**: Continuous model tracking, automated training pipelines, and edge deployment
+- **Cloud Architecture**: AWS distributed serverless, container clustering, and event brokers
+- **Orchestration**: Kubernetes cluster configuration, ingress controllers, and service meshes
+- **Systems Engineering**: Fault-tolerant distributed consensus and low-latency message queues
 
     </td>
     <td width="50%" valign="top">
 
-### 🚀 2026 Objectives
-- 🔄 **In Progress**: Build production-ready AI systems
-- 🔄 **In Progress**: Master Deep Learning & LLM architectures
-- 📋 **Planned**: Publish deep-dive technical engineering articles
-- 📋 **Planned**: Regular, high-impact Open Source contributions
-- 📋 **Planned**: Advance AWS Cloud Architect certification
-- 📋 **Planned**: Deploy enterprise distributed platforms
+### 2026 Objectives
+- **In Progress**: Deploy production-grade intelligent platforms
+- **In Progress**: Master advanced deep learning architectures and LLM reasoning models
+- **Planned**: Author and publish high-density systems engineering analyses
+- **Planned**: Sustained contributions to core open-source repositories
+- **Planned**: Complete AWS Solutions Architect certification
+- **Planned**: Architect high-throughput distributed microservice backends
 
     </td>
   </tr>
 </table>
 
-#### 🧠 Engineering Philosophy
+#### Core Engineering Principles
 > *"Great software is not just code — it is a careful balance of reliability, clarity, and human purpose."*
 
-- **Reliable** — does what it promises, every single execution.
-- **Scalable** — engineered to grow gracefully with increasing throughput.
-- **Secure** — data integrity and defensive security are paramount.
-- **Maintainable** — clean, self-documenting code built for longevity.
-- **User Focused** — the end user's operational reality guides technical decisions.
+- **Reliability** &mdash; Deterministic execution under all network and load conditions.
+- **Scalability** &mdash; Architectures engineered to handle growing throughput without structural redesign.
+- **Security** &mdash; Data integrity and defensive posture integrated at every layer of the stack.
+- **Maintainability** &mdash; Clean, modular, and self-documenting code built for long-term viability.
+- **User Alignment** &mdash; Pragmatic engineering decisions guided by the end user's operational reality.
 
 </details>
 
 ---
 
 <div align="center">
-  <sub>⭐ If you find my work inspiring, consider giving this repository a star!</sub>
+  <sub>Engineering intelligent software through disciplined systems design, continuous learning, and scalable architecture.</sub>
 </div>
