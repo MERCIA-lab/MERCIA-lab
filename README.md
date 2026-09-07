@@ -470,3 +470,15 @@ Contributing ......... Open Source Systems & Frameworks
 <div align="center">
   <sub>Engineering intelligent software through disciplined systems design, continuous learning, and scalable architecture.</sub>
 </div>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--        KIGALI, RWANDA — TECH ECOSYSTEM MAP                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div align="center">
+
+<img src="africa-rwanda.svg" width="860" alt="Africa Map — Kigali Rwanda Tech Ecosystem" loading="lazy" decoding="async" />
+
+</div>
