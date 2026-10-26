@@ -7,27 +7,32 @@ Zero third-party external service dependencies (no Vercel / Heroku).
 """
 
 import os
-import sys
 import json
+import math
+import re
 import urllib.request
 import urllib.error
-from datetime import datetime
+import textwrap
+from datetime import datetime, timedelta, timezone
+from html import escape
 
 USERNAME = "MERCIA-lab"
-DISPLAY_NAME = "Meek Dieu Merci NUKURI"
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets")
 
 # Default / Fallback data from verified live API state
 FALLBACK_DATA = {
     "total_stars": 5,
+    "total_forks": 0,
     "total_commits": 54,
     "total_prs": 1,
     "total_issues": 0,
+    "total_reviews": 0,
     "contributed_repos": 6,
     "total_contributions": 61,
     "current_streak": 3,
     "longest_streak": 4,
     "streak_range": "Aug 10 - Sep 03",
+    "contribution_days": [],
     "languages": [
         {"name": "TypeScript", "bytes": 331307, "color": "#3178c6", "percent": 51.8},
         {"name": "JavaScript", "bytes": 133083, "color": "#f1e05a", "percent": 20.8},
@@ -37,10 +42,10 @@ FALLBACK_DATA = {
         {"name": "CSS", "bytes": 31636, "color": "#563d7c", "percent": 2.6},
     ],
     "top_repos": [
-        {"name": "Shipping-Tracking-System", "lang": "TypeScript", "color": "#3178c6", "stars": 1, "contribs": 38},
-        {"name": "daily-routine-tracker", "lang": "JavaScript", "color": "#f1e05a", "stars": 1, "contribs": 12},
-        {"name": "Financial-Advisor-System", "lang": "JavaScript", "color": "#f1e05a", "stars": 1, "contribs": 6},
-        {"name": "FreeMCue", "lang": "Python/AI", "color": "#3572A5", "stars": 1, "contribs": 5},
+        {"name": "Shipping-Tracking-System", "lang": "TypeScript", "color": "#3178c6", "stars": 1, "forks": 0},
+        {"name": "daily-routine-tracker", "lang": "JavaScript", "color": "#f1e05a", "stars": 1, "forks": 0},
+        {"name": "Financial-Advisor-System", "lang": "JavaScript", "color": "#f1e05a", "stars": 1, "forks": 0},
+        {"name": "FreeMCue", "lang": "Python", "color": "#3572A5", "stars": 1, "forks": 0},
     ],
 }
 
@@ -52,13 +57,15 @@ def fetch_live_github_data(token):
         "User-Agent": "MERCIA-lab-Profile-Updater",
         "Content-Type": "application/json"
     }
+    headers["Authorization"] = f"Bearer {token}"
 
     graphql_query = """
-    query($login: String!) {
+    query($login: String!, $from: DateTime!, $to: DateTime!) {
       user(login: $login) {
-        contributionsCollection {
+        contributionsCollection(from: $from, to: $to) {
           totalCommitContributions
           totalPullRequestContributions
+          totalPullRequestReviewContributions
           totalIssueContributions
           totalRepositoryContributions
           contributionCalendar {
@@ -71,9 +78,13 @@ def fetch_live_github_data(token):
             }
           }
         }
-        repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+        repositories(first: 100, ownerAffiliations: OWNER, isFork: false, orderBy: {field: UPDATED_AT, direction: DESC}) {
           nodes {
             name
+            url
+            description
+            updatedAt
+            isPrivate
             stargazerCount
             forkCount
             primaryLanguage {
@@ -96,24 +107,49 @@ def fetch_live_github_data(token):
     """
 
     try:
+        end_date = datetime.now(timezone.utc)
+        start_date = end_date - timedelta(days=365)
         req = urllib.request.Request(
             "https://api.github.com/graphql",
-            data=json.dumps({"query": graphql_query, "variables": {"login": USERNAME}}).encode(),
+            data=json.dumps({
+                "query": graphql_query,
+                "variables": {
+                    "login": USERNAME,
+                    "from": start_date.isoformat(),
+                    "to": end_date.isoformat(),
+                },
+            }).encode(),
             headers=headers
         )
         with urllib.request.urlopen(req, timeout=10) as res:
             res_data = json.loads(res.read().decode())
+            if res_data.get("errors"):
+                raise RuntimeError(f"GitHub GraphQL query failed: {res_data['errors']}")
             user = res_data.get("data", {}).get("user")
+            if not user:
+                raise RuntimeError(f"GitHub user {USERNAME} was not found in the API response.")
             if user:
                 cc = user.get("contributionsCollection", {})
                 data["total_commits"] = cc.get("totalCommitContributions", data["total_commits"])
                 data["total_prs"] = cc.get("totalPullRequestContributions", data["total_prs"])
+                data["total_reviews"] = cc.get("totalPullRequestReviewContributions", data["total_reviews"])
                 data["total_issues"] = cc.get("totalIssueContributions", data["total_issues"])
                 data["contributed_repos"] = cc.get("totalRepositoryContributions", data["contributed_repos"])
                 data["total_contributions"] = cc.get("contributionCalendar", {}).get("totalContributions", data["total_contributions"])
+                data["streak_range"] = f"{start_date:%b %d, %Y} - {end_date:%b %d, %Y}"
 
                 weeks = cc.get("contributionCalendar", {}).get("weeks", [])
                 days = [d for w in weeks for d in w.get("contributionDays", [])]
+                data["contribution_days"] = [
+                    {
+                        "date": day["date"],
+                        "count": day.get("contributionCount", 0),
+                        "week": week_index,
+                        "weekday": day_index,
+                    }
+                    for week_index, week in enumerate(weeks)
+                    for day_index, day in enumerate(week.get("contributionDays", []))
+                ]
                 cur_streak = 0
                 max_streak = 0
                 streak = 0
@@ -129,12 +165,34 @@ def fetch_live_github_data(token):
                             max_streak = streak
                     else:
                         streak = 0
-                data["current_streak"] = max(cur_streak, 1)
+                data["current_streak"] = cur_streak
                 data["longest_streak"] = max(max_streak, data["current_streak"])
 
-                repos = user.get("repositories", {}).get("nodes", [])
+                repos = [
+                    repo for repo in user.get("repositories", {}).get("nodes", [])
+                    if not repo.get("isPrivate", False)
+                ]
                 total_stars = sum(r.get("stargazerCount", 0) for r in repos)
-                data["total_stars"] = max(total_stars, data["total_stars"])
+                data["total_stars"] = total_stars
+                data["total_forks"] = sum(r.get("forkCount", 0) for r in repos)
+                data["top_repos"] = sorted(
+                    (
+                        {
+                            "name": repo["name"],
+                            "url": repo["url"],
+                            "description": repo.get("description") or "",
+                            "updated_at": repo.get("updatedAt", ""),
+                            "is_private": repo.get("isPrivate", False),
+                            "lang": (repo.get("primaryLanguage") or {}).get("name") or "Other",
+                            "color": (repo.get("primaryLanguage") or {}).get("color") or "#8b949e",
+                            "stars": repo.get("stargazerCount", 0),
+                            "forks": repo.get("forkCount", 0),
+                        }
+                        for repo in repos
+                    ),
+                    key=lambda repo: (repo["stars"], repo["updated_at"]),
+                    reverse=True,
+                )[:8]
 
                 lang_map = {}
                 for r in repos:
@@ -146,14 +204,13 @@ def fetch_live_github_data(token):
                             lang_map[lname] = {"name": lname, "bytes": 0, "color": lcolor}
                         lang_map[lname]["bytes"] += lsize
 
-                if lang_map:
-                    tot_bytes = sum(v["bytes"] for v in lang_map.values())
-                    sorted_langs = sorted(lang_map.values(), key=lambda x: x["bytes"], reverse=True)[:6]
-                    for l in sorted_langs:
-                        l["percent"] = round((l["bytes"] / tot_bytes) * 100, 1) if tot_bytes > 0 else 0
-                    data["languages"] = sorted_langs
-    except Exception as err:
-        print(f"Note: Using cached fallback analytics ({err})", file=sys.stderr)
+                tot_bytes = sum(v["bytes"] for v in lang_map.values())
+                sorted_langs = sorted(lang_map.values(), key=lambda x: x["bytes"], reverse=True)[:6]
+                for language in sorted_langs:
+                    language["percent"] = round((language["bytes"] / tot_bytes) * 100, 1) if tot_bytes else 0
+                data["languages"] = sorted_langs
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as err:
+        raise RuntimeError(f"Unable to refresh live GitHub analytics: {err}") from err
 
     return data
 
@@ -513,17 +570,17 @@ def generate_top_repos_svg(data):
     rows = []
     y_pos = 65
 
-    for idx, r in enumerate(repos):
+    for idx, r in enumerate(repos[:4]):
         badge_color = "#38bdf8" if idx == 0 else "#58a6ff"
         rows.append(f"""
     <g transform="translate(25, {y_pos})">
       <!-- Repo Icon -->
       <path fill="#8b949e" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5z"/>
       <!-- Repo Name -->
-      <text x="22" y="12" class="repo-name">{r['name']}</text>
-      <!-- Commits/Contrib Badge -->
+      <text x="22" y="12" class="repo-name">{escape(r['name'])}</text>
+      <!-- Stars Badge -->
       <rect x="390" y="-2" width="50" height="20" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="0.8"/>
-      <text x="415" y="12" class="repo-count">{r['contribs']}</text>
+      <text x="415" y="12" class="repo-count">{r.get('stars', 0)}</text>
     </g>
     <line x1="25" y1="{y_pos + 26}" x2="470" y2="{y_pos + 26}" stroke="#21262d" stroke-width="0.8" />
         """)
@@ -571,9 +628,9 @@ def generate_top_repos_svg(data):
   <rect width="495" height="225" class="card-bg" />
 
   <!-- Card Header -->
-  <text x="25" y="32" class="header-title">{USERNAME}'s GitHub Contribution Stats</text>
+  <text x="25" y="32" class="header-title">{USERNAME}'s Top Repositories</text>
   <text x="47" y="52" class="header-col">Repository</text>
-  <text x="400" y="52" class="header-col">Commits</text>
+  <text x="400" y="52" class="header-col">Stars</text>
   <line x1="25" y1="58" x2="470" y2="58" stroke="#30363d" stroke-width="1" />
 
   {rows_str}
@@ -780,21 +837,357 @@ def generate_project_showcase_svg():
 </svg>"""
 
 
+def generate_live_project_showcase_svg(data):
+    """Render current public repository metadata as a responsive portfolio diagram."""
+    repos = data.get("top_repos", [])[:6]
+    card_height = 150
+    height = max(card_height + 20, len(repos) * card_height + 20)
+    max_stars = max((repo.get("stars", 0) for repo in repos), default=0)
+    max_forks = max((repo.get("forks", 0) for repo in repos), default=0)
+    cards = []
+
+    for index, repo in enumerate(repos):
+        y = 10 + index * card_height
+        name = escape(textwrap.shorten(repo.get("name", "Repository"), width=30, placeholder="..."))
+        url = escape(repo.get("url") or f"https://github.com/{USERNAME}/{repo.get('name', '')}", quote=True)
+        description = repo.get("description") or "No repository description has been added yet."
+        lines = textwrap.wrap(description, width=44)[:2]
+        if not lines:
+            lines = ["No repository description has been added yet."]
+        description_svg = "\n".join(
+            f'<text x="38" y="{y + 70 + line_index * 18}" class="description">{escape(line)}</text>'
+            for line_index, line in enumerate(lines)
+        )
+        language = escape(textwrap.shorten(repo.get("lang", "Other"), width=22, placeholder="..."))
+        language_color = escape(repo.get("color", "#8b949e"), quote=True)
+        updated = escape((repo.get("updated_at") or "Unknown")[:10])
+        stars = repo.get("stars", 0)
+        forks = repo.get("forks", 0)
+        star_height = max(6, round(52 * stars / max_stars)) if max_stars else 6
+        fork_height = max(6, round(52 * forks / max_forks)) if max_forks else 6
+        visibility = "PUBLIC"
+        cards.append(f"""
+  <a href="{url}">
+    <g transform="translate(0, {y})">
+      <rect x="15" y="14" width="475" height="126" rx="16" class="card-shadow"/>
+      <rect x="10" y="8" width="475" height="126" rx="16" class="card"/>
+      <path d="M26 9h260l-30 5H26z" fill="url(#edge)" opacity=".9"/>
+      <rect x="26" y="25" width="5" height="88" rx="2.5" fill="{language_color}"/>
+      <text x="42" y="48" class="title">{name}</text>
+      <rect x="372" y="25" width="94" height="22" rx="11" class="status"/>
+      <text x="419" y="40" text-anchor="middle" class="badge">{visibility}</text>
+      {description_svg}
+      <circle cx="43" cy="116" r="5" fill="{language_color}"/>
+      <text x="55" y="120" class="meta">{language}</text>
+      <text x="166" y="120" class="meta">Updated {updated}</text>
+      <g transform="translate(330, 110)">
+        <path d="M0 { -star_height}l10-6h48l-10 6z" fill="#86efac"/>
+        <path d="M48 { -star_height}l10-6v{star_height}l-10 6z" fill="#166534"/>
+        <rect x="0" y="{ -star_height}" width="48" height="{star_height}" fill="url(#starBar)"/>
+        <text x="28" y="18" text-anchor="middle" class="metric">{stars} stars</text>
+      </g>
+      <g transform="translate(415, 110)">
+        <path d="M0 { -fork_height}l10-6h48l-10 6z" fill="#bbf7d0"/>
+        <path d="M48 { -fork_height}l10-6v{fork_height}l-10 6z" fill="#14532d"/>
+        <rect x="0" y="{ -fork_height}" width="48" height="{fork_height}" fill="url(#forkBar)"/>
+        <text x="28" y="18" text-anchor="middle" class="metric">{forks} forks</text>
+      </g>
+    </g>
+  </a>""")
+
+    content = "\n".join(cards) or """
+  <text x="450" y="95" text-anchor="middle" class="title">No public repositories found</text>
+"""
+    return f"""    <svg xmlns="http://www.w3.org/2000/svg" width="495" height="{height}" viewBox="0 0 495 {height}" preserveAspectRatio="xMidYMin meet" fill="none">
+  <style>
+    .card {{ fill: url(#panel); stroke: #1f6f38; stroke-width: 1.2; }}
+    .card-shadow {{ fill: #020617; opacity: .7; }}
+    .title {{ font: 700 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #bbf7d0; }}
+    .description {{ font: 12px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #a7f3b4; }}
+    .meta {{ font: 11px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #6b9c76; }}
+    .metric {{ font: 10px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #cbd5e1; }}
+    .badge {{ font: 700 9px 'JetBrains Mono', monospace; fill: #86efac; }}
+    .status {{ fill: #052e16; stroke: #166534; }}
+    a {{ text-decoration: none; }}
+    @media (max-width: 600px) {{
+      .title {{ font-size: 20px; }}
+      .description {{ font-size: 14px; }}
+      .meta {{ font-size: 12px; }}
+    }}
+  </style>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102317"/>
+      <stop offset=".55" stop-color="#08130b"/>
+      <stop offset="1" stop-color="#0a1b10"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#14532d" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="starBar" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#15803d"/>
+    </linearGradient>
+    <linearGradient id="forkBar" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#bbf7d0"/>
+      <stop offset="1" stop-color="#166534"/>
+    </linearGradient>
+  </defs>
+{content}
+</svg>"""
+
+
+def generate_pixel_banner_svg():
+    return """<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="240" viewBox="0 0 1200 240">
+  <rect width="1200" height="240" rx="8" fill="#07110b"/>
+  <path d="M0 190h1200v50H0z" fill="#0a1b10"/>
+  <g fill="#12371f">
+    <path d="M50 40h24v24H50zM74 64h24v24H74zM98 88h24v24H98zM50 112h24v24H50z"/>
+    <path d="M1060 35h24v24h-24zM1084 59h24v24h-24zM1108 83h24v24h-24zM1060 107h24v24h-24z"/>
+    <path d="M150 160h18v18h-18zM174 160h18v18h-18zM198 160h18v18h-18zM222 160h18v18h-18z"/>
+    <path d="M930 160h18v18h-18zM954 160h18v18h-18zM978 160h18v18h-18zM1002 160h18v18h-18z"/>
+  </g>
+  <path d="M270 48h660v2H270zM270 184h660v2H270z" fill="#1f6f38"/>
+  <text x="600" y="105" text-anchor="middle" fill="#b7f7c4"
+        font-family="'Courier New', monospace" font-size="38" font-weight="700"
+        letter-spacing="3">MEEK DIEU MERCI NUKURI</text>
+  <text x="600" y="148" text-anchor="middle" fill="#4ade80"
+        font-family="'Courier New', monospace" font-size="18" font-weight="700"
+        letter-spacing="2">COMPUTER SCIENCE | AI &amp; ML | SOFTWARE ENGINEERING</text>
+  <text x="600" y="215" text-anchor="middle" fill="#4b7657"
+        font-family="'Courier New', monospace" font-size="12" letter-spacing="3">BUILDING WITH CURIOSITY AND PURPOSE</text>
+</svg>"""
+
+
+def generate_pixel_divider_svg():
+    return """<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="22" viewBox="0 0 1200 22">
+  <path d="M0 9h1200v4H0z" fill="#14351e"/>
+  <path d="M28 5h64v4H28zM104 13h42v4h-42zM1110 5h62v4h-62zM1050 13h42v4h-42z" fill="#4ade80"/>
+  <path d="M180 5h18v4h-18zM220 13h26v4h-26zM980 5h18v4h-18zM940 13h26v4h-26z" fill="#22c55e"/>
+  <path d="M540 5h120v12H540z" fill="#07110b" stroke="#1f6f38"/>
+  <path d="M560 9h12v4h-12zM580 9h12v4h-12zM600 9h12v4h-12zM620 9h12v4h-12z" fill="#4ade80"/>
+</svg>"""
+
+
+def generate_profile_overview_svg(data):
+    metrics = [
+        ("CONTRIBUTIONS", data["total_contributions"]),
+        ("STARS", data["total_stars"]),
+        ("FORKS", data.get("total_forks", 0)),
+    ]
+    cards = []
+    for index, (label, value) in enumerate(metrics):
+        x = 10 + index * 300
+        cards.append(f"""
+  <g transform="translate({x}, 8)">
+    <rect x="4" y="6" width="286" height="100" rx="12" fill="#020804" opacity=".65"/>
+    <rect width="286" height="100" rx="12" fill="url(#card)" stroke="#1f6f38"/>
+    <path d="M12 1h180l-12 3H12z" fill="#4ade80" opacity=".7"/>
+    <text x="143" y="38" text-anchor="middle" class="label">{label}</text>
+    <text x="143" y="79" text-anchor="middle" class="value">{value}</text>
+  </g>""")
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="900" height="125" viewBox="0 0 900 125">
+  <style>
+    .label {{ font: 700 12px 'Courier New', monospace; letter-spacing: 2px; fill: #86efac; }}
+    .value {{ font: 700 30px 'Courier New', monospace; fill: #dcfce7; }}
+  </style>
+  <defs>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#102317"/><stop offset="1" stop-color="#08130b"/>
+    </linearGradient>
+  </defs>
+{"".join(cards)}
+</svg>"""
+
+
+def generate_isometric_contributions_svg(data):
+    days = data.get("contribution_days", [])
+    blocks = []
+    colors = ["#12351e", "#14532d", "#15803d", "#22c55e", "#4ade80"]
+    ordered_days = sorted(days, key=lambda day: (day["week"] + day["weekday"], day["week"]))
+
+    for day in ordered_days:
+        count = day.get("count", 0)
+        level = min(count, len(colors) - 1)
+        x = 175 + (day["week"] - day["weekday"]) * 11
+        base_y = 76 + (day["week"] + day["weekday"]) * 4.5
+        block_height = 2 + min(count, 8) * 2
+        top_y = base_y - block_height
+        color = colors[level]
+        date = escape(day.get("date", ""))
+        blocks.append(f"""
+  <g>
+    <title>{date}: {count} contributions</title>
+    <path d="M{x} {top_y}l5-3 10 0-5 3z" fill="#86efac"/>
+    <path d="M{x + 10} {top_y}l5-3v{block_height}l-5 3z" fill="#166534"/>
+    <path d="M{x} {top_y}h10v{block_height}H{x}z" fill="{color}"/>
+  </g>""")
+
+    if not blocks:
+        blocks.append('<text x="450" y="230" text-anchor="middle" class="empty">Contribution data will appear after the first successful refresh.</text>')
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430">
+  <style>
+    .heading {{ font: 700 18px 'Courier New', monospace; fill: #bbf7d0; letter-spacing: 1px; }}
+    .subheading {{ font: 12px 'Courier New', monospace; fill: #6b9c76; }}
+    .empty {{ font: 14px 'Courier New', monospace; fill: #86efac; }}
+  </style>
+  <defs>
+    <linearGradient id="floor" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0d2816"/><stop offset="1" stop-color="#07110b"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="896" height="426" rx="14" fill="url(#floor)" stroke="#1f6f38"/>
+  <text x="28" y="38" class="heading">CONTRIBUTION MATRIX // LAST 12 MONTHS</text>
+  <text x="28" y="58" class="subheading">{data["total_contributions"]} contributions | each raised block represents a contribution day</text>
+  <g opacity=".82">
+{"".join(blocks)}
+  </g>
+  <g transform="translate(330, 390)" class="subheading">
+    <text x="0" y="0">LESS</text>
+    <rect x="48" y="-12" width="14" height="10" fill="#12351e"/>
+    <rect x="68" y="-12" width="14" height="10" fill="#14532d"/>
+    <rect x="88" y="-12" width="14" height="10" fill="#15803d"/>
+    <rect x="108" y="-12" width="14" height="10" fill="#22c55e"/>
+    <rect x="128" y="-12" width="14" height="10" fill="#4ade80"/>
+    <text x="152" y="0">MORE</text>
+  </g>
+</svg>"""
+
+
+def generate_activity_radar_svg(data):
+    metrics = [
+        ("Commits", data.get("total_commits", 0)),
+        ("Issues", data.get("total_issues", 0)),
+        ("Pull requests", data.get("total_prs", 0)),
+        ("Reviews", data.get("total_reviews", 0)),
+        ("Repositories", data.get("contributed_repos", 0)),
+    ]
+    center_x, center_y, radius = 450, 235, 132
+
+    def point(angle, scale):
+        radians = math.radians(angle)
+        return (
+            round(center_x + math.cos(radians) * radius * scale, 1),
+            round(center_y + math.sin(radians) * radius * scale, 1),
+        )
+
+    angles = [-90 + index * 72 for index in range(len(metrics))]
+    maximum = max((value for _, value in metrics), default=0) or 1
+    grid = []
+    for scale in (0.25, 0.5, 0.75, 1):
+        points = " ".join(f"{x},{y}" for x, y in (point(angle, scale) for angle in angles))
+        grid.append(f'<polygon points="{points}" class="grid"/>')
+
+    data_points = " ".join(
+        f"{x},{y}" for x, y in (
+            point(angle, value / maximum) for angle, (_, value) in zip(angles, metrics)
+        )
+    )
+    axes = []
+    labels = []
+    for angle, (label, value) in zip(angles, metrics):
+        x, y = point(angle, 1)
+        label_x, label_y = point(angle, 1.22)
+        axes.append(f'<line x1="{center_x}" y1="{center_y}" x2="{x}" y2="{y}" class="axis"/>')
+        labels.append(
+            f'<text x="{label_x}" y="{label_y}" text-anchor="middle" class="label">{escape(label)}: {value}</text>'
+        )
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="900" height="470" viewBox="0 0 900 470">
+  <style>
+    .heading {{ font: 700 18px 'Courier New', monospace; fill: #bbf7d0; letter-spacing: 1px; }}
+    .grid {{ fill: none; stroke: #1f6f38; stroke-width: 1; }}
+    .axis {{ stroke: #27663a; stroke-width: 1; }}
+    .shape {{ fill: #22c55e; fill-opacity: .24; stroke: #4ade80; stroke-width: 3; }}
+    .label {{ font: 12px 'Courier New', monospace; fill: #a7f3b4; }}
+  </style>
+  <rect x="2" y="2" width="896" height="466" rx="14" fill="#08130b" stroke="#1f6f38"/>
+  <text x="28" y="38" class="heading">ACTIVITY RADAR // LAST 12 MONTHS</text>
+{"".join(grid)}
+{"".join(axes)}
+  <polygon points="{data_points}" class="shape"/>
+{"".join(labels)}
+</svg>"""
+
+
+def generate_language_donut_svg(data):
+    languages = sorted(data.get("languages", []), key=lambda language: language.get("bytes", 0), reverse=True)
+    leading = languages[:4]
+    remainder = languages[4:]
+    if remainder:
+        other_bytes = sum(language.get("bytes", 0) for language in remainder)
+        leading.append({"name": "Other", "bytes": other_bytes, "color": "#86efac"})
+    total_bytes = sum(language.get("bytes", 0) for language in leading)
+    circumference = 2 * math.pi * 91
+    circles = []
+    legend = []
+    offset = 0
+
+    for index, language in enumerate(leading):
+        value = language.get("bytes", 0)
+        share = value / total_bytes if total_bytes else 0
+        segment = circumference * share
+        color = language.get("color", "#22c55e")
+        if not re.fullmatch(r"#[0-9a-fA-F]{6}", color):
+            color = "#22c55e"
+        circles.append(
+            f'<circle cx="245" cy="190" r="91" fill="none" stroke="{color}" stroke-width="25" '
+            f'stroke-dasharray="{segment:.2f} {circumference - segment:.2f}" '
+            f'stroke-dashoffset="{-offset:.2f}" transform="rotate(-90 245 190)"/>'
+        )
+        percent = round(share * 100, 1)
+        name = escape(textwrap.shorten(language.get("name", "Other"), width=24, placeholder="..."))
+        legend.append(
+            f'<g transform="translate(500, {104 + index * 42})">'
+            f'<circle cx="0" cy="0" r="6" fill="{color}"/>'
+            f'<text x="18" y="5" class="label">{name}</text>'
+            f'<text x="330" y="5" text-anchor="end" class="value">{percent}%</text></g>'
+        )
+        offset += segment
+
+    center_label = "TOP LANGUAGES" if total_bytes else "NO DATA"
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="900" height="390" viewBox="0 0 900 390">
+  <style>
+    .heading {{ font: 700 18px 'Courier New', monospace; fill: #bbf7d0; letter-spacing: 1px; }}
+    .label {{ font: 14px 'Courier New', monospace; fill: #bbf7d0; }}
+    .value {{ font: 700 13px 'Courier New', monospace; fill: #4ade80; }}
+    .center {{ font: 700 12px 'Courier New', monospace; fill: #86efac; }}
+  </style>
+  <rect x="2" y="2" width="896" height="386" rx="14" fill="#08130b" stroke="#1f6f38"/>
+  <text x="28" y="38" class="heading">LANGUAGE MIX // PUBLIC REPOSITORIES</text>
+  <circle cx="245" cy="190" r="91" fill="none" stroke="#12351e" stroke-width="25"/>
+{"".join(circles)}
+  <text x="245" y="194" text-anchor="middle" class="center">{center_label}</text>
+{"".join(legend)}
+</svg>"""
+
+
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     token = os.environ.get("GITHUB_TOKEN")
 
     print(f"Fetching GitHub data for user {USERNAME}...")
-    data = fetch_live_github_data(token) if token else FALLBACK_DATA
+    if token:
+        data = fetch_live_github_data(token)
+    else:
+        print("GITHUB_TOKEN not set; generating assets with bundled fallback analytics.")
+        data = FALLBACK_DATA
 
     files_to_generate = {
+        "pixel-banner.svg": generate_pixel_banner_svg(),
+        "pixel-divider.svg": generate_pixel_divider_svg(),
+        "profile-overview.svg": generate_profile_overview_svg(data),
+        "contribution-isometric.svg": generate_isometric_contributions_svg(data),
+        "activity-radar.svg": generate_activity_radar_svg(data),
+        "language-donut.svg": generate_language_donut_svg(data),
         "typing-headline.svg": generate_typing_headline_svg(),
         "github-stats.svg": generate_github_stats_svg(data),
         "streak-stats.svg": generate_streak_stats_svg(data),
         "languages.svg": generate_languages_svg(data),
         "top-repos.svg": generate_top_repos_svg(data),
         "dev-quote.svg": generate_dev_quote_svg(),
-        "project-showcase.svg": generate_project_showcase_svg(),
+        "project-showcase.svg": generate_live_project_showcase_svg(data),
     }
 
     for filename, content in files_to_generate.items():

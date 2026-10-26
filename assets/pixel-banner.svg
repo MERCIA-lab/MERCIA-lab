@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="240" viewBox="0 0 1200 240">
+  <rect width="1200" height="240" rx="8" fill="#07110b"/>
+  <path d="M0 190h1200v50H0z" fill="#0a1b10"/>
+  <g fill="#12371f">
+    <path d="M50 40h24v24H50zM74 64h24v24H74zM98 88h24v24H98zM50 112h24v24H50z"/>
+    <path d="M1060 35h24v24h-24zM1084 59h24v24h-24zM1108 83h24v24h-24zM1060 107h24v24h-24z"/>
+    <path d="M150 160h18v18h-18zM174 160h18v18h-18zM198 160h18v18h-18zM222 160h18v18h-18z"/>
+    <path d="M930 160h18v18h-18zM954 160h18v18h-18zM978 160h18v18h-18zM1002 160h18v18h-18z"/>
+  </g>
+  <path d="M270 48h660v2H270zM270 184h660v2H270z" fill="#1f6f38"/>
+  <text x="600" y="105" text-anchor="middle" fill="#b7f7c4" font-family="'Courier New', monospace" font-size="38" font-weight="700" letter-spacing="3">MEEK DIEU MERCI NUKURI</text>
+  <text x="600" y="148" text-anchor="middle" fill="#4ade80" font-family="'Courier New', monospace" font-size="18" font-weight="700" letter-spacing="2">COMPUTER SCIENCE | AI &amp; ML | SOFTWARE ENGINEERING</text>
+  <text x="600" y="215" text-anchor="middle" fill="#4b7657" font-family="'Courier New', monospace" font-size="12" letter-spacing="3">BUILDING WITH CURIOSITY AND PURPOSE</text>
+</svg>
