@@ -16,7 +16,7 @@
 **{{ profile.name }}** · [@{{ profile.handle }}]({{ profile.links.github }})<br/>
 Computer Science Student · AI &amp; Software Engineer<br/>
 📍 {{ profile.location }} · [✉ {{ profile.email }}](mailto:{{ profile.email }})<br/>
-👥 {{ profile_stats.followers }} followers · {{ profile_stats.following }} following
+👥 {{ profile_stats.followers_display }} followers · {{ profile_stats.following_display }} following
 
 </td></tr></table>
 
@@ -55,7 +55,7 @@ Computer Science Student · AI &amp; Software Engineer<br/>
 {% for row in repo_rows %}
 <tr>
 {% for repo in row %}
-<td width="50%" valign="top" bgcolor="#12161d"><a href="{{ repo.url }}">{{ repo.name }}</a><br/>{{ repo.description }}<br/><br/>{{ repo.language }} · ★ {{ repo.stars }}</td>
+<td width="50%" valign="top" bgcolor="#12161d"><a href="{{ repo.url }}">{{ repo.name }}</a><br/>{{ repo.description }}<br/><br/>{{ repo.language }} · ★ {{ repo.stars if repo.stars is not none else "—" }}</td>
 {% endfor %}
 </tr>
 {% endfor %}

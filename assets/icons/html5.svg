@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="56" viewBox="0 0 40 56" role="img" aria-label="HTML">
+<rect x=".5" y=".5" width="39" height="39" rx="3" fill="#0f141b" stroke="#1f2630"/>
+<rect x="4" y="4" width="32" height="32" fill="#e34f26" opacity=".15"/>
+<svg x="4" y="4" width="32" height="32" viewBox="0 0 24 24" fill="#E34F26" preserveAspectRatio="xMidYMid meet"><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z" /></svg>
+<text x="20" y="51" text-anchor="middle" fill="#c9d1d9" font-family="monospace" font-size="5">HTML</text>
+</svg>

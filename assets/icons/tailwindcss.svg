@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="56" viewBox="0 0 40 56" role="img" aria-label="Tailwind">
+<rect x=".5" y=".5" width="39" height="39" rx="3" fill="#0f141b" stroke="#1f2630"/>
+<rect x="4" y="4" width="32" height="32" fill="#38bdf8" opacity=".15"/>
+<svg x="4" y="4" width="32" height="32" viewBox="0 0 24 24" fill="#06B6D4" preserveAspectRatio="xMidYMid meet"><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" /></svg>
+<text x="20" y="51" text-anchor="middle" fill="#c9d1d9" font-family="monospace" font-size="5">Tailwind</text>
+</svg>

@@ -1,0 +1,51 @@
+{
+  "activity_available": false,
+  "commits": 0,
+  "contributions": 0,
+  "days": [],
+  "followers": 0,
+  "following": 0,
+  "forks": 0,
+  "issues": 0,
+  "languages": [],
+  "pulls": 0,
+  "repos": 0,
+  "repository_data_available": false,
+  "reviews": 0,
+  "selected_repos": [
+    {
+      "description": "Logistics platform for shipment tracking, fleet, warehouse, and dispatch workflows.",
+      "fallback": "Logistics platform for shipment tracking, fleet, warehouse, and dispatch workflows.",
+      "language": "—",
+      "name": "Shipping-Tracking-System",
+      "stars": "—",
+      "url": "https://github.com/MERCIA-lab/Shipping-Tracking-System"
+    },
+    {
+      "description": "Python and AI project.",
+      "fallback": "Python and AI project.",
+      "language": "—",
+      "name": "FreeMCue",
+      "stars": "—",
+      "url": "https://github.com/MERCIA-lab/FreeMCue"
+    },
+    {
+      "description": "Financial planning and portfolio analytics project.",
+      "fallback": "Financial planning and portfolio analytics project.",
+      "language": "—",
+      "name": "Financial-Advisor-System",
+      "stars": "—",
+      "url": "https://github.com/MERCIA-lab/Financial-Advisor-System"
+    },
+    {
+      "description": "Application for tracking daily routines.",
+      "fallback": "Application for tracking daily routines.",
+      "language": "—",
+      "name": "daily-routine-tracker",
+      "stars": "—",
+      "url": "https://github.com/MERCIA-lab/daily-routine-tracker"
+    }
+  ],
+  "stars": 0,
+  "user_data_available": false
+}

@@ -14,6 +14,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
+from xml.etree import ElementTree as ET
 from xml.sax.saxutils import escape
 
 import requests
@@ -27,6 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
 GENERATED = ASSETS / "generated"
 ICONS = ASSETS / "icons"
+CACHE = GENERATED / "profile-data.json"
 USERNAME = "MERCIA-lab"
 API = "https://api.github.com"
 PALETTE = {
@@ -92,6 +94,17 @@ SKILL_META = {
     "Docker": ("D", "#2496ed"), "AWS": ("AWS", "#ff9900"), "Git": ("G", "#f05032"),
     "GitHub": ("GH", "#c9d1d9"), "Linux": ("LX", "#fcc624"), "Bash": ("$_", "#4eaa25"),
     "VS Code": ("<>" , "#007acc"), "Figma": ("F", "#f24e1e"),
+}
+SKILL_ICON = {
+    "HTML": "html5", "CSS": "css", "JS": "javascript", "TS": "typescript",
+    "React": "react", "Next.js": "nextdotjs", "Tailwind": "tailwindcss",
+    "Node.js": "nodedotjs", "Express": "express", "NestJS": "nestjs",
+    "FastAPI": "fastapi", "C": "c", "C++": "cplusplus", "Python": "python",
+    "PyTorch": "pytorch", "TensorFlow": "tensorflow", "OpenCV": "opencv",
+    "PostgreSQL": "postgresql", "MySQL": "mysql", "MongoDB": "mongodb",
+    "Redis": "redis", "Docker": "docker", "AWS": "amazonwebservices",
+    "Git": "git", "GitHub": "github", "Linux": "linux", "Bash": "gnubash",
+    "VS Code": "vscode", "Figma": "figma",
 }
 SOCIALS = [
     ("GitHub", "github", "#c9d1d9"), ("LinkedIn", "linkedin", "#0a66c2"),
@@ -196,11 +209,34 @@ def icon_svg(label: str, color: str, initials: str = "") -> str:
 def skill_icon_svg(label: str, color: str, initials: str = "") -> str:
     initials = initials or label[:3].upper()
     size = 10 if len(initials) > 3 else 13
+    slug = SKILL_ICON.get(label, "")
+    vendor = ICONS / "vendor" / f"{slug}.svg" if slug else None
+    logo = ""
+    if label == "VS Code":
+        logo = '<path fill="#007acc" d="M17.2 2.1 9.3 9.5 4.2 5.6 2 6.8v10.4l2.2 1.3 5.1-3.9 7.9 7.4 4.8-2.4V4.5L17.2 2.1ZM4.6 7.1 8 12l-3.4 4.9V7.1ZM9.2 12l8.4-6.5v13L9.2 12Z"/>'
+    elif vendor and vendor.exists():
+        try:
+            root = ET.parse(vendor).getroot()
+            viewbox = root.attrib.get("viewBox", "0 0 24 24")
+            source_color = root.attrib.get("fill", color)
+            parts = []
+            for child in root:
+                if child.tag.rsplit("}", 1)[-1].lower() == "title":
+                    continue
+                part = ET.tostring(child, encoding="unicode")
+                if label == "AWS":
+                    part = part.replace("#252f3e", "#c9d1d9").replace("#232f3e", "#c9d1d9")
+                parts.append(part)
+            if parts:
+                logo = f'<svg x="4" y="4" width="32" height="32" viewBox="{escape(viewbox)}" fill="{escape(source_color)}" preserveAspectRatio="xMidYMid meet">{"".join(parts)}</svg>'
+        except ET.ParseError as exc:
+            raise ValueError(f"Invalid local skill icon {vendor}: {exc}") from exc
+    if not logo:
+        logo = f'<text x="20" y="25" text-anchor="middle" fill="{color}" font-family="monospace" font-size="{size}" font-weight="bold">{escape(initials)}</text>'
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="40" height="56" viewBox="0 0 40 56" role="img" aria-label="{escape(label)}">
 <rect x=".5" y=".5" width="39" height="39" rx="3" fill="#0f141b" stroke="#1f2630"/>
 <rect x="4" y="4" width="32" height="32" fill="{color}" opacity=".15"/>
-<path d="M5 8h5M30 32h5" stroke="{color}" stroke-width="2"/>
-<text x="20" y="25" text-anchor="middle" fill="{color}" font-family="monospace" font-size="{size}" font-weight="bold">{escape(initials)}</text>
+{logo}
 <text x="20" y="51" text-anchor="middle" fill="{PALETTE['text']}" font-family="monospace" font-size="5">{escape(label[:11])}</text>
 </svg>'''
 
@@ -213,12 +249,21 @@ def fallback_data() -> dict:
     return {"contributions": 0, "commits": 0, "issues": 0, "pulls": 0,
             "reviews": 0, "repos": 0, "stars": 0, "forks": 0,
             "followers": 0, "following": 0,
-            "activity_available": False,
+            "activity_available": False, "repository_data_available": False,
+            "user_data_available": False,
             "days": [], "languages": [], "selected_repos": []}
 
 
-def fetch_profile_data(profile: dict) -> dict:
-    data = fallback_data()
+def fetch_profile_data(profile: dict, cached: dict, offline: bool = False) -> dict:
+    data = {**fallback_data(), **cached}
+    if offline:
+        if not data["selected_repos"]:
+            data["selected_repos"] = [
+                dict(item, description=item["fallback"], language="—", stars="—",
+                     url=f"https://github.com/{USERNAME}/{item['name']}")
+                for item in profile["selected_repos"]
+            ]
+        return data
     session = requests.Session()
     session.headers.update({"Accept": "application/vnd.github+json", "User-Agent": "MERCIA-lab-profile-builder"})
     token = os.getenv("GITHUB_TOKEN")
@@ -233,8 +278,10 @@ def fetch_profile_data(profile: dict) -> dict:
         user = user_response.json()
         data["followers"] = user.get("followers", 0)
         data["following"] = user.get("following", 0)
+        data["user_data_available"] = True
         data["stars"] = sum(repo.get("stargazers_count", 0) for repo in repositories)
         data["forks"] = sum(repo.get("forks_count", 0) for repo in repositories)
+        data["repository_data_available"] = True
         language_totals: dict[str, dict] = {}
         for repo in repositories:
             repo_languages = {}
@@ -269,10 +316,7 @@ def fetch_profile_data(profile: dict) -> dict:
                 "url": (repo or {}).get("html_url") or f"https://github.com/{USERNAME}/{item['name']}",
             })
     except requests.RequestException as exc:
-        print(f"GitHub repositories API unavailable; using profile.yml fallback data: {exc}", file=sys.stderr)
-        data["selected_repos"] = [dict(item, description=item["fallback"], language="—", stars=0,
-                                       url=f"https://github.com/{USERNAME}/{item['name']}")
-                                  for item in profile["selected_repos"]]
+        print(f"GitHub repositories API unavailable; using the saved public-data cache: {exc}", file=sys.stderr)
 
     try:
         query = """query($login:String!){user(login:$login){contributionsCollection{
@@ -300,7 +344,7 @@ def fetch_profile_data(profile: dict) -> dict:
     except requests.RequestException as exc:
         print(f"GitHub GraphQL unavailable; contribution panel will show zeroes: {exc}", file=sys.stderr)
     if not data["selected_repos"]:
-        data["selected_repos"] = [dict(item, description=item["fallback"], language="—", stars=0,
+        data["selected_repos"] = [dict(item, description=item["fallback"], language="—", stars="—",
                                        url=f"https://github.com/{USERNAME}/{item['name']}")
                                   for item in profile["selected_repos"]]
     return data
@@ -390,8 +434,8 @@ def stats_panel(data: dict, light: bool = False) -> str:
 {donut(data, 78, 402, 28)}
 <path d="M24 440H876" stroke="{PALETTE['border']}"/>
 <text x="45" y="464" fill="{PALETTE['bright']}" font-family="monospace" font-size="12">{data['contributions'] if data['activity_available'] else "—"}</text><text x="90" y="464" fill="{muted}" font-family="monospace" font-size="10">CONTRIBUTIONS</text>
-<text x="390" y="464" fill="{PALETTE['beige']}" font-family="monospace" font-size="12">{data['stars']}</text><text x="420" y="464" fill="{muted}" font-family="monospace" font-size="10">STARS</text>
-<text x="650" y="464" fill="{PALETTE['blue']}" font-family="monospace" font-size="12">{data['forks']}</text><text x="680" y="464" fill="{muted}" font-family="monospace" font-size="10">FORKS</text>
+<text x="390" y="464" fill="{PALETTE['beige']}" font-family="monospace" font-size="12">{data['stars'] if data['repository_data_available'] else "—"}</text><text x="420" y="464" fill="{muted}" font-family="monospace" font-size="10">STARS</text>
+<text x="650" y="464" fill="{PALETTE['blue']}" font-family="monospace" font-size="12">{data['forks'] if data['repository_data_available'] else "—"}</text><text x="680" y="464" fill="{muted}" font-family="monospace" font-size="10">FORKS</text>
 </svg>'''
 
 
@@ -416,7 +460,7 @@ def build_skills_grid(profile: dict, sha: str) -> tuple[list[list[dict]], str]:
             name = row[col_index] if col_index < len(row) else ""
             if name:
                 initials, color = SKILL_META.get(name, (re.sub(r"[^A-Za-z0-9]", "", name)[:3].upper() or "?", "#6e7681"))
-                icon_name = {"C++": "cplusplus"}.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
+                icon_name = SKILL_ICON.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
                 icon_path = ICONS / f"{icon_name}.svg"
                 write_if_changed(icon_path, skill_icon_svg(name, color, initials))
                 icon = f'<img src="assets/icons/{icon_name}.svg?v={sha}" width="40" height="56" alt="{escape(name)}"/>'
@@ -523,7 +567,13 @@ def main() -> None:
     ASSETS.mkdir(exist_ok=True)
     GENERATED.mkdir(parents=True, exist_ok=True)
     ICONS.mkdir(parents=True, exist_ok=True)
-    data = fetch_profile_data(profile)
+    cached_data = {}
+    if CACHE.exists():
+        try:
+            cached_data = json.loads(CACHE.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"Ignoring unreadable cached GitHub data at {CACHE}: {exc}", file=sys.stderr)
+    data = fetch_profile_data(profile, cached_data, offline="--offline" in sys.argv[1:])
     seed, iso_week = iso_week_seed()
     cache_state = json.dumps({"profile": profile, "data": data, "week": iso_week}, sort_keys=True, ensure_ascii=False)
     sha = os.getenv("PROFILE_SHA") or hashlib.sha256(cache_state.encode("utf-8")).hexdigest()[:7]
@@ -536,6 +586,7 @@ def main() -> None:
         write_if_changed(GENERATED / f"divider-{slug}.svg", glitch_svg(seed + index * 197, 470))
     write_if_changed(GENERATED / "stats-panel.svg", stats_panel(data))
     write_if_changed(GENERATED / "stats-panel-light.svg", stats_panel(data, True))
+    write_if_changed(CACHE, json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2))
     write_if_changed(ASSETS / "project-showcase.svg", project_showcase(data))
     write_if_changed(GENERATED / "pixel-strip.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="280" height="18" viewBox="0 0 280 18">{pixel_mosaic(seed + 991, 0, 1, 35, 2, 8)}</svg>')
     _, skills_html = build_skills_grid(profile, sha)
@@ -548,7 +599,13 @@ def main() -> None:
     template = env.get_template("README.md.j2")
     repo_rows = [data["selected_repos"][index:index + 2] for index in range(0, len(data["selected_repos"]), 2)]
     rendered = template.render(profile=profile, repos=data["selected_repos"], repo_rows=repo_rows, iso_week=iso_week,
-                               sha=sha, profile_stats=data, skills_html=skills_html,
+                               sha=sha,
+                               profile_stats={
+                                   **data,
+                                   "followers_display": data["followers"] if data["user_data_available"] else "—",
+                                   "following_display": data["following"] if data["user_data_available"] else "—",
+                               },
+                               skills_html=skills_html,
                                socials_html=socials_html)
     write_if_changed(ROOT / "README.md", rendered)
     print(f"Profile build complete for {USERNAME} ({iso_week}); README and local assets are current.")
