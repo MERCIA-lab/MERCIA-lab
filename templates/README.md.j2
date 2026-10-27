@@ -46,19 +46,26 @@
 
 <img src="assets/generated/section-header-featured-project.svg?v={{ sha }}" width="100%" alt="Featured Project" />
 
+<div style="background-color:#0d1117; color:#e6edf3; padding:16px;">
 <a href="{{ featured_repo.url }}">
 <picture>
-  <source media="(max-width: 600px)" srcset="assets/shipping-cargo-route-mobile.gif?v={{ sha }}" />
-  <img src="assets/shipping-cargo-route.gif?v={{ sha }}" width="100%" alt="{{ featured_repo.name }}: {{ featured_repo.description }} Animated cargo route from warehouse through dispatch to delivery." />
+  <source media="(max-width: 600px)" srcset="assets/shipping-cargo-route-mobile.gif?v={{ sha }}-black-description" />
+  <img src="assets/shipping-cargo-route.gif?v={{ sha }}-black-description" width="100%" alt="{{ featured_repo.name }}: {{ featured_repo.description }} Animated cargo route that pauses at warehouse, dispatch, transit hub, and delivery milestones." />
 </picture>
 </a>
+<p>A logistics platform for managing end-to-end cargo operations.<br/>
+Track shipments from warehouse intake through dispatch and delivery.<br/>
+Follow each parcel as it moves through transit hubs.<br/>
+Coordinate fleet activity and dispatch workflows in one place.<br/>
+Get a clear view of shipment progress at every milestone.</p>
+</div>
 
 <br/>
 
 <img src="assets/generated/section-header-skill-set.svg?v={{ sha }}" width="100%" alt="Skill Set" />
 <picture>
-  <source media="(max-width: 600px)" srcset="assets/generated/skills-grid-mobile.svg?v={{ sha }}" />
-  <img src="assets/generated/skills-grid.svg?v={{ sha }}" width="100%" alt="Technology skills with recognizable language and tool icons" />
+  <source media="(max-width: 600px)" srcset="assets/generated/skills-grid-mobile.svg?v={{ sha }}-larger-icons" />
+  <img src="assets/generated/skills-grid.svg?v={{ sha }}-larger-icons" width="100%" alt="Technology skills with enlarged recognizable language and tool icons" />
 </picture>
 
 <br/>

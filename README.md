@@ -46,19 +46,26 @@ Good engineering starts with curiosity: asking who a feature helps, what assumpt
 
 <img src="assets/generated/section-header-featured-project.svg?v=9c02418" width="100%" alt="Featured Project" />
 
+<div style="background-color:#0d1117; color:#e6edf3; padding:16px;">
 <a href="https://github.com/MERCIA-lab/Shipping-Tracking-System">
 <picture>
-  <source media="(max-width: 600px)" srcset="assets/shipping-cargo-route-mobile.gif?v=9c02418" />
-  <img src="assets/shipping-cargo-route.gif?v=9c02418" width="100%" alt="Shipping-Tracking-System: Logistics platform for shipment tracking, fleet, warehouse, and dispatch workflows. Animated cargo route from warehouse through dispatch to delivery." />
+  <source media="(max-width: 600px)" srcset="assets/shipping-cargo-route-mobile.gif?v=9c02418-black-description" />
+  <img src="assets/shipping-cargo-route.gif?v=9c02418-black-description" width="100%" alt="Shipping-Tracking-System: Logistics platform for shipment tracking, fleet, warehouse, and dispatch workflows. Animated cargo route that pauses at warehouse, dispatch, transit hub, and delivery milestones." />
 </picture>
 </a>
+<p>A logistics platform for managing end-to-end cargo operations.<br/>
+Track shipments from warehouse intake through dispatch and delivery.<br/>
+Follow each parcel as it moves through transit hubs.<br/>
+Coordinate fleet activity and dispatch workflows in one place.<br/>
+Get a clear view of shipment progress at every milestone.</p>
+</div>
 
 <br/>
 
 <img src="assets/generated/section-header-skill-set.svg?v=9c02418" width="100%" alt="Skill Set" />
 <picture>
-  <source media="(max-width: 600px)" srcset="assets/generated/skills-grid-mobile.svg?v=9c02418" />
-  <img src="assets/generated/skills-grid.svg?v=9c02418" width="100%" alt="Technology skills with recognizable language and tool icons" />
+  <source media="(max-width: 600px)" srcset="assets/generated/skills-grid-mobile.svg?v=9c02418-larger-icons" />
+  <img src="assets/generated/skills-grid.svg?v=9c02418-larger-icons" width="100%" alt="Technology skills with enlarged recognizable language and tool icons" />
 </picture>
 
 <br/>

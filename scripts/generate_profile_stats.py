@@ -582,11 +582,15 @@ def cargo_route_gif(width: int, item: dict) -> bytes:
     route_vertices = [stations[0], (station_x[1], stations[0][1]), stations[1],
                       (station_x[2], stations[1][1]), stations[2], (station_x[3], stations[2][1]), stations[3]]
     station_vertex_indices = (2, 4, 6)
-    frame_count = 60
+    # Give each tracking milestone time to read: hold at the current stop,
+    # then move to the next one, with an extra hold at delivery.
+    frames_per_stage = 22
+    travel_frames = 12
+    frame_count = len(stations) * frames_per_stage
     frames = []
 
     for frame_index in range(frame_count):
-        progress = frame_index / (frame_count - 1)
+        stage_index, stage_frame = divmod(frame_index, frames_per_stage)
         image = Image.new("RGB", (width, height), bg)
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle((1, 1, width - 2, height - 2), radius=10, fill=card, outline=border, width=1)
@@ -621,6 +625,16 @@ def cargo_route_gif(width: int, item: dict) -> bytes:
                 if vertex_index in station_vertex_indices:
                     station_progress.append(route_length)
         station_progress.insert(0, 0.0)
+
+        if stage_index >= len(stations) - 1:
+            progress = 1.0
+        elif stage_frame < travel_frames:
+            stage_start = station_progress[stage_index] / route_length
+            stage_end = station_progress[stage_index + 1] / route_length
+            travel_progress = stage_frame / max(1, travel_frames - 1)
+            progress = stage_start + (stage_end - stage_start) * travel_progress
+        else:
+            progress = station_progress[stage_index + 1] / route_length
 
         def segment_point(start, end, distance):
             dx = 0 if start[0] == end[0] else (1 if end[0] > start[0] else -1)
@@ -703,7 +717,7 @@ def skills_grid_svg(profile: dict, columns: int, width: int) -> str:
     names = [name for row in profile["skills"] for name in row]
     rows = max(1, math.ceil(len(names) / columns))
     cell_width = width / columns
-    cell_height = 78
+    cell_height = 86
     cells = []
     for index, name in enumerate(names):
         col, row = index % columns, index // columns
@@ -717,9 +731,10 @@ def skills_grid_svg(profile: dict, columns: int, width: int) -> str:
             icon_root = ET.fromstring(icon_svg)
             icon_parts = [ET.tostring(child, encoding="unicode") for child in icon_root
                           if child.tag.rsplit("}", 1)[-1].lower() not in ("text", "rect")]
-            nested_x = x + (cell_width - 40) / 2
-            cells.append(f'<svg x="{nested_x:.2f}" y="{y + 5}" width="40" height="40" viewBox="0 0 40 40">{"".join(icon_parts)}</svg>')
-            cells.append(f'<text x="{x + cell_width / 2:.2f}" y="{y + 64}" fill="{PALETTE["text"]}" text-anchor="middle" font-family="monospace" font-size="10">{escape(name)}</text>')
+            icon_size = 56
+            nested_x = x + (cell_width - icon_size) / 2
+            cells.append(f'<svg x="{nested_x:.2f}" y="{y + 2}" width="{icon_size}" height="{icon_size}" viewBox="0 0 40 40">{"".join(icon_parts)}</svg>')
+            cells.append(f'<text x="{x + cell_width / 2:.2f}" y="{y + 76}" fill="{PALETTE["text"]}" text-anchor="middle" font-family="monospace" font-size="10">{escape(name)}</text>')
     return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{rows * cell_height}" viewBox="0 0 {width} {rows * cell_height}" role="img" aria-label="Technical skills icon grid">{"".join(cells)}</svg>'
 
 
