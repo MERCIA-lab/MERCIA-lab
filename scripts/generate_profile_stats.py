@@ -171,13 +171,11 @@ def banner_svg(name: str, handle: str, tagline: str, seed: int, light: bool = Fa
     card = "#ffffff" if light else PALETTE["card"]
     fg = "#18202a" if light else PALETTE["heading"]
     muted = "#57606a" if light else PALETTE["muted"]
-    # Standard profile text, pixel-rendered name, pixel mosaic that changes by ISO week.
-    title_a = name.upper().replace(" NUKURI", "")
+    # Keep the full pixel-rendered name on one horizontal line.
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="200" viewBox="0 0 900 200" role="img" aria-label="{escape(name)} — {escape(tagline)}">
 <rect x=".5" y=".5" width="899" height="199" rx="8" fill="{card}" stroke="{PALETTE['border']}"/>
 <text x="24" y="24" fill="{muted}" font-family="monospace" font-size="11">{escape(handle)} / README.md</text>
-{bitmap(title_a, 25, 42, 4, fg)}
-{bitmap('NUKURI', 25, 79, 4, fg)}
+{bitmap(name.upper(), 25, 42, 5, fg)}
 {pixel_mosaic(seed, 25, 119, 100, 6, 8)}
 <rect x="25" y="172" width="850" height="1" fill="{PALETTE['border']}"/>
 <text x="874" y="191" fill="{muted}" text-anchor="end" font-family="monospace" font-size="10">{escape(tagline)}</text>
@@ -751,7 +749,7 @@ def social_bar(profile: dict, sha: str) -> str:
         write_if_changed(ICONS / filename, icon_content)
         safe_target = html.escape(target, quote=True)
         cells_body.append(f'<td align="center"><a href="{safe_target}"><img src="assets/icons/{filename}?v={sha}" width="48" height="48" alt="{label}"/></a></td>')
-    return '<table cellpadding="2" border="0"><tr>' + "".join(cells_head) + "</tr><tr>" + "".join(cells_body) + "</tr></table>"
+    return '<table cellpadding="0" cellspacing="0" border="0"><tr>' + "".join(cells_head) + "</tr><tr>" + "".join(cells_body) + "</tr></table>"
 
 
 def parse_profile_yaml(content: str) -> dict:

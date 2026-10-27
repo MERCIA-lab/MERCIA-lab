@@ -1,8 +1,8 @@
 <!-- Generated from profile.yml and templates/README.md.j2 by scripts/generate_profile_stats.py. Edit the source files, not README.md. -->
 <div align="center">
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="assets/pixel-banner-light.svg?v=9c02418" />
-  <img src="assets/pixel-banner.svg?v=9c02418" width="100%" alt="Meek Dieu Merci NUKURI - COMPUTER SCIENCE / AI & SOFTWARE ENGINEER" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/pixel-banner-light.svg?v=9c02418-single-line-name" />
+  <img src="assets/pixel-banner.svg?v=9c02418-single-line-name" width="100%" alt="Meek Dieu Merci NUKURI - COMPUTER SCIENCE / AI & SOFTWARE ENGINEER" />
 </picture>
 <img src="assets/pixel-divider.svg?v=9c02418" width="100%" height="16" alt="" />
 </div>
@@ -32,7 +32,7 @@ Good engineering starts with curiosity: asking who a feature helps, what assumpt
 <br/>
 
 <div align="center">
-<table cellpadding="0" border="0"><tr><td><img src="assets/icons/social-pixels-left.svg?v=9c02418" width="16" height="40" alt="" /></td><td><table cellpadding="2" border="0"><tr><td align="center">GitHub</td><td align="center">LinkedIn</td><td align="center">X (Twitter)</td><td align="center">Gmail</td></tr><tr><td align="center"><a href="https://github.com/MERCIA-lab"><img src="assets/icons/social-github.svg?v=9c02418" width="48" height="48" alt="GitHub"/></a></td><td align="center"><a href="https://www.linkedin.com/in/meek-dieu-merci-09589b434/"><img src="assets/icons/social-linkedin.svg?v=9c02418" width="48" height="48" alt="LinkedIn"/></a></td><td align="center"><a href="https://twitter.com/MERCIA_lab"><img src="assets/icons/social-x.svg?v=9c02418" width="48" height="48" alt="X (Twitter)"/></a></td><td align="center"><a href="mailto:meek@beullashop.com"><img src="assets/icons/social-gmail.svg?v=9c02418" width="48" height="48" alt="Gmail"/></a></td></tr></table></td><td><img src="assets/icons/social-pixels-right.svg?v=9c02418" width="16" height="40" alt="" /></td></tr></table>
+<table cellpadding="0" cellspacing="0" border="0"><tr><td align="center">GitHub</td><td align="center">LinkedIn</td><td align="center">X (Twitter)</td><td align="center">Gmail</td></tr><tr><td align="center"><a href="https://github.com/MERCIA-lab"><img src="assets/icons/social-github.svg?v=9c02418" width="48" height="48" alt="GitHub"/></a></td><td align="center"><a href="https://www.linkedin.com/in/meek-dieu-merci-09589b434/"><img src="assets/icons/social-linkedin.svg?v=9c02418" width="48" height="48" alt="LinkedIn"/></a></td><td align="center"><a href="https://twitter.com/MERCIA_lab"><img src="assets/icons/social-x.svg?v=9c02418" width="48" height="48" alt="X (Twitter)"/></a></td><td align="center"><a href="mailto:meek@beullashop.com"><img src="assets/icons/social-gmail.svg?v=9c02418" width="48" height="48" alt="Gmail"/></a></td></tr></table>
 </div>
 
 <br/>
