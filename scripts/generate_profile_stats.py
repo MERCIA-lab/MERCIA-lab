@@ -176,18 +176,27 @@ def banner_svg(name: str, handle: str, tagline: str, seed: int, light: bool = Fa
 </svg>'''
 
 
-def glitch_svg(seed: int, width: int = 470, height: int = 20) -> str:
+def glitch_svg(seed: int, width: int = 470, height: int = 20, start_x: int = 0) -> str:
     rng = random.Random(seed)
     colors = [PALETTE["green"], PALETTE["bright"], PALETTE["beige"], PALETTE["blue"], PALETTE["muted"]]
     rects = []
     for _ in range(36):
-        x = rng.randint(0, width - 5)
+        x = rng.randint(start_x, width - 5)
         y = rng.choice((3, 7, 11, 15))
         w = rng.choice((4, 6, 8, 12, 16, 22))
         color = rng.choice(colors)
         opacity = max(.16, 1 - x / (width * 1.25))
         rects.append(f'<rect x="{x}" y="{y}" width="{w}" height="3" fill="{color}" opacity="{opacity:.2f}"/>')
-    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}"><path d="M0 10H{width}" stroke="{PALETTE["border"]}"/>{"".join(rects)}</svg>'
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}"><path d="M{start_x} 10H{width}" stroke="{PALETTE["border"]}"/>{"".join(rects)}</svg>'
+
+
+def section_header_svg(text: str, seed: int) -> str:
+    width, height = 900, 24
+    heading_width = (len(text) * 14) + 12
+    divider = glitch_svg(seed, width=width, height=height, start_x=heading_width + 18)
+    root = ET.fromstring(divider)
+    details = "".join(ET.tostring(child, encoding="unicode") for child in root)
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="{escape(text)}">{bitmap(text, 3, 3, 2, PALETTE["heading"], 1)}{details}</svg>'
 
 
 def heading_svg(text: str) -> str:
@@ -505,46 +514,55 @@ def stats_panel(data: dict, light: bool = False) -> str:
 </svg>'''
 
 
-def project_showcase(data: dict) -> str:
-    items = data["selected_repos"]
-    blocks = []
-    for i, item in enumerate(items[:4]):
-        x = 18 + (i % 2) * 440
-        y = 55 + (i // 2) * 86
-        title = escape(item["name"][:30])
-        desc = escape(item["description"][:65])
-        blocks.append(f'<rect x="{x}" y="{y}" width="420" height="72" rx="5" fill="#0f141b" stroke="#1f2630"/><text x="{x+14}" y="{y+23}" fill="#3fb950" font-family="monospace" font-size="13">{title}</text><text x="{x+14}" y="{y+43}" fill="#8b949e" font-family="monospace" font-size="10">{desc}</text><text x="{x+14}" y="{y+60}" fill="#d9d2c5" font-family="monospace" font-size="9">{escape(item["language"])} / ★ {item["stars"]}</text>')
-    return f'<svg xmlns="http://www.w3.org/2000/svg" width="900" height="250" viewBox="0 0 900 250"><rect width="900" height="250" rx="8" fill="#12161d" stroke="#1f2630"/><text x="20" y="30" fill="#e6edf3" font-family="monospace" font-size="12">SELECTED REPOSITORIES / {USERNAME}</text>{"".join(blocks)}</svg>'
+def project_showcase(data: dict, width: int) -> str:
+    item = data["selected_repos"][0]
+    height = 192 if width < 500 else 150
+    left = 20 if width < 500 else 30
+    usable = width - left * 2
+    chars = max(30, int(usable / (6.2 if width < 500 else 7.2)))
+    lines, current = [], ""
+    for word in item["description"].split():
+        if current and len(current) + len(word) + 1 > chars:
+            lines.append(current)
+            current = word
+        else:
+            current = f"{current} {word}".strip()
+    if current:
+        lines.append(current)
+    description = "".join(f'<text x="{left}" y="{88 + i * 17}" fill="#9da7b3" font-family="monospace" font-size="{10 if width < 500 else 12}">{escape(line)}</text>' for i, line in enumerate(lines[:3]))
+    title_size = 14 if width < 500 else 19
+    meta_y = 132 if width < 500 else 100
+    language = str(item["language"] or "").strip()
+    stars = str(item["stars"] or "").strip()
+    language = "N/A" if not language.isascii() or language in ("-", "") else language
+    stars = "N/A" if not stars.isascii() or stars in ("-", "") else stars
+    cta_y = meta_y + 50 if width < 500 else meta_y + 34
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="Featured project: {escape(item["name"])}"><rect x="1" y="1" width="{width-2}" height="{height-2}" rx="8" fill="#12161d" stroke="#303943"/><text x="{left}" y="29" fill="#8b949e" font-family="monospace" font-size="10">FEATURED PROJECT / 01</text><text x="{left}" y="58" fill="#3fb950" font-family="monospace" font-size="{title_size}">{escape(item["name"])}</text>{description}<path d="M{left} {meta_y+13}H{width-left}" stroke="#303943"/><text x="{left}" y="{meta_y+34}" fill="#d9d2c5" font-family="monospace" font-size="10">{escape(language)}  |  STARS {escape(stars)}</text><text x="{left if width < 500 else width-left}" y="{cta_y}" fill="#58a6ff" text-anchor="{'start' if width < 500 else 'end'}" font-family="monospace" font-size="10">OPEN REPOSITORY</text></svg>'
 
-
-def build_skills_grid(profile: dict, sha: str) -> tuple[list[list[dict]], str]:
-    rows = []
-    markup = []
-    for row_index, row in enumerate(profile["skills"]):
-        cells = []
-        for col_index in range(8):
-            name = row[col_index] if col_index < len(row) else ""
-            if name:
-                initials, color = SKILL_META.get(name, (re.sub(r"[^A-Za-z0-9]", "", name)[:3].upper() or "?", "#6e7681"))
-                icon_name = SKILL_ICON.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
-                icon_path = ICONS / f"{icon_name}.svg"
-                write_if_changed(icon_path, skill_icon_svg(name, color, initials))
-                icon = f'<img src="assets/icons/{icon_name}.svg?v={sha}" width="40" height="56" alt="{escape(name)}"/>'
-                label = ""
-            else:
-                icon_name = f"empty-{row_index}-{col_index}"
-                write_if_changed(ICONS / f"{icon_name}.svg", skill_icon_svg("", "#303943", ""))
-                icon = f'<img src="assets/icons/{icon_name}.svg?v={sha}" width="40" height="56" alt=""/>'
-                label = ""
-            cells.append({"name": name, "icon": icon, "label": label})
-            markup.append(f'<td align="center" bgcolor="#0f141b" width="12.5%">{icon}{label}</td>')
-        rows.append(cells)
-    # HTML is consumed by the Jinja template; each row has exactly eight cells.
-    table_rows = []
-    for row_index in range(4):
-        start = row_index * 8
-        table_rows.append("<tr>" + "".join(markup[start:start + 8]) + "</tr>")
-    return rows, '<table cellpadding="0" border="0">' + "".join(table_rows) + "</table>"
+def skills_grid_svg(profile: dict, columns: int, width: int) -> str:
+    names = [name for row in profile["skills"] for name in row]
+    rows = max(1, math.ceil(len(names) / columns))
+    cell_width = width / columns
+    cell_height = 78
+    cells = []
+    for index, name in enumerate(names):
+        col, row = index % columns, index // columns
+        x, y = col * cell_width, row * cell_height
+        cell_fill = "#0f141b"
+        cells.append(f'<rect x="{x:.2f}" y="{y}" width="{cell_width - 1:.2f}" height="{cell_height - 1}" fill="{cell_fill}" stroke="{PALETTE["border"]}"/>')
+        icon_name = ""
+        if name:
+            initials, color = SKILL_META.get(name, (re.sub(r"[^A-Za-z0-9]", "", name)[:3].upper() or "?", "#6e7681"))
+            icon_name = SKILL_ICON.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
+            icon_svg = skill_icon_svg(name, color, initials)
+            write_if_changed(ICONS / f"{icon_name}.svg", icon_svg)
+            icon_root = ET.fromstring(icon_svg)
+            icon_parts = [ET.tostring(child, encoding="unicode") for child in icon_root
+                          if child.tag.rsplit("}", 1)[-1].lower() != "text"]
+            nested_x = x + (cell_width - 40) / 2
+            cells.append(f'<svg x="{nested_x:.2f}" y="{y + 5}" width="40" height="40" viewBox="0 0 40 40">{"".join(icon_parts)}</svg>')
+            cells.append(f'<text x="{x + cell_width / 2:.2f}" y="{y + 64}" fill="{PALETTE["text"]}" text-anchor="middle" font-family="monospace" font-size="10">{escape(name)}</text>')
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{rows * cell_height}" viewBox="0 0 {width} {rows * cell_height}" role="img" aria-label="Technical skills icon grid">{"".join(cells)}</svg>'
 
 
 def social_bar(profile: dict, sha: str) -> str:
@@ -559,7 +577,7 @@ def social_bar(profile: dict, sha: str) -> str:
         icon_content = social_icon_svg(label, key, color)
         write_if_changed(ICONS / filename, icon_content)
         safe_target = html.escape(target, quote=True)
-        cells_body.append(f'<td align="center" bgcolor="#0f141b"><a href="{safe_target}"><img src="assets/icons/{filename}?v={sha}" width="64" height="64" alt="{label}"/></a></td>')
+        cells_body.append(f'<td align="center" bgcolor="#0f141b"><a href="{safe_target}"><img src="assets/icons/{filename}?v={sha}" width="48" height="48" alt="{label}"/></a></td>')
     return '<table cellpadding="2" border="0"><tr>' + "".join(cells_head) + "</tr><tr>" + "".join(cells_body) + "</tr></table>"
 
 
@@ -656,16 +674,19 @@ def main() -> None:
     write_if_changed(ASSETS / "pixel-banner.svg", banner_svg(profile["name"], profile["handle"], profile["tagline"], seed))
     write_if_changed(ASSETS / "pixel-banner-light.svg", banner_svg(profile["name"], profile["handle"], profile["tagline"], seed, True))
     write_if_changed(ASSETS / "pixel-divider.svg", pixel_divider(seed))
-    headings = {"who-i-am": "WHO I AM", "what-i-do": "WHAT I DO", "vision": "VISION", "beyond-code": "BEYOND CODE", "skill-set": "SKILL SET", "projects": "PROJECTS"}
+    headings = {"who-i-am": "WHO I AM", "what-i-do": "WHAT I DO", "vision": "VISION", "beyond-code": "BEYOND CODE", "featured-project": "FEATURED PROJECT", "skill-set": "SKILL SET"}
     for index, (slug, title) in enumerate(headings.items()):
         write_if_changed(GENERATED / f"heading-{slug}.svg", heading_svg(title))
         write_if_changed(GENERATED / f"divider-{slug}.svg", glitch_svg(seed + index * 197, 470))
+        write_if_changed(GENERATED / f"section-header-{slug}.svg", section_header_svg(title, seed + index * 197))
     write_if_changed(GENERATED / "stats-panel.svg", stats_panel(data))
     write_if_changed(GENERATED / "stats-panel-light.svg", stats_panel(data, True))
     write_if_changed(CACHE, json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2))
-    write_if_changed(ASSETS / "project-showcase.svg", project_showcase(data))
+    write_if_changed(ASSETS / "project-showcase.svg", project_showcase(data, 900))
+    write_if_changed(ASSETS / "project-showcase-mobile.svg", project_showcase(data, 360))
     write_if_changed(GENERATED / "pixel-strip.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="280" height="18" viewBox="0 0 280 18">{pixel_mosaic(seed + 991, 0, 1, 35, 2, 8)}</svg>')
-    _, skills_html = build_skills_grid(profile, sha)
+    write_if_changed(GENERATED / "skills-grid.svg", skills_grid_svg(profile, 8, 900))
+    write_if_changed(GENERATED / "skills-grid-mobile.svg", skills_grid_svg(profile, 4, 360))
     socials_html = social_bar(profile, sha)
     write_if_changed(ICONS / "social-pixels-left.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="40" viewBox="0 0 16 40">{pixel_mosaic(seed + 71, 0, 0, 2, 5, 8)}</svg>')
     write_if_changed(ICONS / "social-pixels-right.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="40" viewBox="0 0 16 40">{pixel_mosaic(seed + 107, 0, 0, 2, 5, 8)}</svg>')
@@ -673,15 +694,13 @@ def main() -> None:
     env = Environment(loader=FileSystemLoader(str(ROOT / "templates")), undefined=StrictUndefined,
                       autoescape=False, keep_trailing_newline=True)
     template = env.get_template("README.md.j2")
-    repo_rows = [data["selected_repos"][index:index + 2] for index in range(0, len(data["selected_repos"]), 2)]
-    rendered = template.render(profile=profile, repos=data["selected_repos"], repo_rows=repo_rows, iso_week=iso_week,
+    rendered = template.render(profile=profile, featured_repo=data["selected_repos"][0], iso_week=iso_week,
                                sha=sha,
                                profile_stats={
                                    **data,
                                    "followers_display": data["followers"] if data["user_data_available"] else "—",
                                    "following_display": data["following"] if data["user_data_available"] else "—",
                                },
-                               skills_html=skills_html,
                                socials_html=socials_html)
     write_if_changed(ROOT / "README.md", rendered)
     print(f"Profile build complete for {USERNAME} ({iso_week}); README and local assets are current.")

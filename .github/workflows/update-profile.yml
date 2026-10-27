@@ -43,7 +43,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md assets/pixel-banner.svg assets/pixel-banner-light.svg assets/pixel-divider.svg assets/project-showcase.svg assets/generated assets/icons
+          git add README.md assets/pixel-banner.svg assets/pixel-banner-light.svg assets/pixel-divider.svg assets/project-showcase.svg assets/project-showcase-mobile.svg assets/generated assets/icons
           if git diff --cached --quiet; then
             echo "Generated profile is already up to date."
           else

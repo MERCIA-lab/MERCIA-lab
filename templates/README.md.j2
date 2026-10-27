@@ -2,53 +2,49 @@
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/pixel-banner-light.svg?v={{ sha }}" />
-  <img src="assets/pixel-banner.svg?v={{ sha }}" width="900" alt="{{ profile.name }} — {{ profile.tagline }}" />
+  <img src="assets/pixel-banner.svg?v={{ sha }}" width="100%" alt="{{ profile.name }} - {{ profile.tagline }}" />
 </picture>
 <img src="assets/pixel-divider.svg?v={{ sha }}" width="100%" height="16" alt="" />
 </div>
 
-<table cellpadding="10"><tr><td bgcolor="#12161d">
+<table width="100%" cellpadding="10"><tr><td bgcolor="#12161d">
 
-<table cellpadding="4"><tr><td><img src="assets/generated/heading-who-i-am.svg?v={{ sha }}" height="24" alt="Who I am" /></td><td width="100%"><img src="assets/generated/divider-who-i-am.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.who_i_am }}</td></tr></table>
+<img src="assets/generated/section-header-who-i-am.svg?v={{ sha }}" width="100%" alt="Who I Am" /><br/><br/>
+{{ profile.who_i_am }}
 
-<table cellpadding="4"><tr><td><img src="assets/generated/heading-what-i-do.svg?v={{ sha }}" height="24" alt="What I do" /></td><td width="100%"><img src="assets/generated/divider-what-i-do.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.what_i_do }}</td></tr></table>
+<img src="assets/generated/section-header-what-i-do.svg?v={{ sha }}" width="100%" alt="What I Do" /><br/><br/>
+{{ profile.what_i_do }}
 
-<table cellpadding="4"><tr><td><img src="assets/generated/heading-vision.svg?v={{ sha }}" height="24" alt="Vision" /></td><td width="100%"><img src="assets/generated/divider-vision.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.vision }}</td></tr></table>
+<img src="assets/generated/section-header-vision.svg?v={{ sha }}" width="100%" alt="Vision" /><br/><br/>
+{{ profile.vision }}
 
-<table cellpadding="4"><tr><td><img src="assets/generated/heading-beyond-code.svg?v={{ sha }}" height="24" alt="Beyond code" /></td><td width="100%"><img src="assets/generated/divider-beyond-code.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.beyond_code }}</td></tr></table>
+<img src="assets/generated/section-header-beyond-code.svg?v={{ sha }}" width="100%" alt="Beyond Code" /><br/><br/>
+{{ profile.beyond_code }}
 
 </td></tr></table>
 
 <div align="center">
-
 <table cellpadding="0" border="0"><tr><td><img src="assets/icons/social-pixels-left.svg?v={{ sha }}" width="16" height="40" alt="" /></td><td>{{ socials_html | safe }}</td><td><img src="assets/icons/social-pixels-right.svg?v={{ sha }}" width="16" height="40" alt="" /></td></tr></table>
-
 </div>
 
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/generated/stats-panel-light.svg?v={{ sha }}" />
-  <img src="assets/generated/stats-panel.svg?v={{ sha }}" width="100%" alt="GitHub contributions, activity radar, language mix, stars, and forks" />
+  <img src="assets/generated/stats-panel.svg?v={{ sha }}" width="100%" alt="GitHub contribution ladder, language mix, and activity stats" />
 </picture>
 
-<table><tr><td><img src="assets/generated/heading-skill-set.svg?v={{ sha }}" height="24" alt="Skill set" /></td><td width="100%"><img src="assets/generated/divider-skill-set.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr></table>
+<img src="assets/generated/section-header-featured-project.svg?v={{ sha }}" width="100%" alt="Featured Project" />
+<a href="{{ featured_repo.url }}">
+<picture>
+  <source media="(max-width: 600px)" srcset="assets/project-showcase-mobile.svg?v={{ sha }}" />
+  <img src="assets/project-showcase.svg?v={{ sha }}" width="100%" alt="{{ featured_repo.name }} - {{ featured_repo.description }}" />
+</picture>
+</a>
 
-{{ skills_html | safe }}
-
-<table><tr><td><img src="assets/generated/heading-projects.svg?v={{ sha }}" height="24" alt="Projects" /></td><td width="100%"><img src="assets/generated/divider-projects.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr></table>
-
-<a href="{{ profile.links.github }}"><img src="assets/project-showcase.svg?v={{ sha }}" width="100%" alt="Selected project showcase" /></a>
-
-**Selected repositories**
-
-<table>
-{% for row in repo_rows %}
-<tr>
-{% for repo in row %}
-<td width="50%" valign="top" bgcolor="#12161d"><a href="{{ repo.url }}">{{ repo.name }}</a><br/>{{ repo.description }}<br/><br/>{{ repo.language }} · ★ {{ repo.stars if repo.stars is not none else "—" }}</td>
-{% endfor %}
-</tr>
-{% endfor %}
-</table>
+<img src="assets/generated/section-header-skill-set.svg?v={{ sha }}" width="100%" alt="Skill Set" />
+<picture>
+  <source media="(max-width: 600px)" srcset="assets/generated/skills-grid-mobile.svg?v={{ sha }}" />
+  <img src="assets/generated/skills-grid.svg?v={{ sha }}" width="100%" alt="Technology skills with recognizable language and tool icons" />
+</picture>
 
 <div align="center">
 <img src="assets/generated/pixel-strip.svg?v={{ sha }}" width="280" height="18" alt="Green pixel art footer" />
