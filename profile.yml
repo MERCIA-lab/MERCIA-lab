@@ -1,0 +1,32 @@
+# Edit this file to update your profile. Push it to regenerate README.md and its local SVG assets.
+# Keep repository names and links as public GitHub URLs. Empty portfolio means no portfolio button.
+name: Meek Dieu Merci NUKURI
+handle: MERCIA-lab
+tagline: "COMPUTER SCIENCE / AI & SOFTWARE ENGINEER"
+location: Austin, Texas
+email: meek@beullashop.com
+who_i_am: "I'm Meek Dieu Merci NUKURI, a computer science student interested in applied AI, machine learning, backend systems, and full-stack software. I enjoy turning ideas into useful projects and learning by building."
+what_i_do: "I build full-stack applications and backend services, explore AI and machine-learning tools through practical projects, and design workflows around clear interfaces, useful data, and maintainable code."
+vision: "I want to build dependable, intelligent software that solves real problems and can grow with the people who use it."
+beyond_code: "Curiosity and creative thinking shape how I approach engineering. I value learning from different fields, asking better questions, and making technology useful to people."
+tagline_footer: "Building thoughtful software, one project and one lesson at a time."
+links:
+  github: https://github.com/MERCIA-lab
+  linkedin: https://www.linkedin.com/in/meek-dieu-merci-09589b434/
+  x: https://twitter.com/MERCIA_lab
+  gmail: mailto:meek@beullashop.com
+  portfolio: ""
+selected_repos:
+  - name: Shipping-Tracking-System
+    fallback: Logistics platform for shipment tracking, fleet, warehouse, and dispatch workflows.
+  - name: FreeMCue
+    fallback: Python and AI project.
+  - name: Financial-Advisor-System
+    fallback: Financial planning and portfolio analytics project.
+  - name: daily-routine-tracker
+    fallback: Application for tracking daily routines.
+skills:
+  - [HTML, CSS, JS, TS, React, Next.js, Tailwind, Node.js]
+  - [Express, NestJS, FastAPI, C, C++, Python, PyTorch, TensorFlow]
+  - [OpenCV, PostgreSQL, MySQL, MongoDB, Redis, Docker, AWS, Git]
+  - [GitHub, Linux, Bash, VS Code, Figma]

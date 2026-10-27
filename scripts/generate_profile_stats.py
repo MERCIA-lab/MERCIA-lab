@@ -1,809 +1,557 @@
 #!/usr/bin/env python3
-"""
-generate_profile_stats.py
-Queries GitHub GraphQL & REST APIs and generates self-hosted animated SVG cards
-with CSS animations, gradients, glassmorphism styling, and responsive layout.
-Zero third-party external service dependencies (no Vercel / Heroku).
-"""
+"""Build every local profile graphic and render README.md from profile.yml."""
 
-import os
-import sys
+from __future__ import annotations
+
+import base64
+import hashlib
+import html
 import json
-import urllib.request
-import urllib.error
-from datetime import datetime
+import math
+import os
+import random
+import re
+import sys
+from datetime import date
+from pathlib import Path
+from xml.sax.saxutils import escape
 
+import requests
+from jinja2 import Environment, FileSystemLoader, StrictUndefined
+try:
+    import yaml
+except ImportError:
+    yaml = None
+
+ROOT = Path(__file__).resolve().parents[1]
+ASSETS = ROOT / "assets"
+GENERATED = ASSETS / "generated"
+ICONS = ASSETS / "icons"
 USERNAME = "MERCIA-lab"
-DISPLAY_NAME = "Meek Dieu Merci NUKURI"
-OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets")
-
-# Default / Fallback data from verified live API state
-FALLBACK_DATA = {
-    "total_stars": 5,
-    "total_commits": 54,
-    "total_prs": 1,
-    "total_issues": 0,
-    "contributed_repos": 6,
-    "total_contributions": 61,
-    "current_streak": 3,
-    "longest_streak": 4,
-    "streak_range": "Aug 10 - Sep 03",
-    "languages": [
-        {"name": "TypeScript", "bytes": 331307, "color": "#3178c6", "percent": 51.8},
-        {"name": "JavaScript", "bytes": 133083, "color": "#f1e05a", "percent": 20.8},
-        {"name": "HTML", "bytes": 86433, "color": "#e34c26", "percent": 13.5},
-        {"name": "Java", "bytes": 38044, "color": "#b07219", "percent": 6.0},
-        {"name": "Python", "bytes": 33575, "color": "#3572A5", "percent": 5.3},
-        {"name": "CSS", "bytes": 31636, "color": "#563d7c", "percent": 2.6},
-    ],
-    "top_repos": [
-        {"name": "Shipping-Tracking-System", "lang": "TypeScript", "color": "#3178c6", "stars": 1, "contribs": 38},
-        {"name": "daily-routine-tracker", "lang": "JavaScript", "color": "#f1e05a", "stars": 1, "contribs": 12},
-        {"name": "Financial-Advisor-System", "lang": "JavaScript", "color": "#f1e05a", "stars": 1, "contribs": 6},
-        {"name": "FreeMCue", "lang": "Python/AI", "color": "#3572A5", "stars": 1, "contribs": 5},
-    ],
+API = "https://api.github.com"
+PALETTE = {
+    "bg": "#0d1117", "card": "#12161d", "border": "#1f2630",
+    "text": "#c9d1d9", "heading": "#e6edf3", "green": "#2ea043",
+    "bright": "#3fb950", "deep": "#1a7f37", "beige": "#d9d2c5",
+    "muted": "#6e7681", "blue": "#8bb9d8", "white": "#f0f3f6",
 }
 
-def fetch_live_github_data(token):
-    """Attempts to fetch live statistics via GitHub GraphQL and REST API."""
-    data = dict(FALLBACK_DATA)
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "User-Agent": "MERCIA-lab-Profile-Updater",
-        "Content-Type": "application/json"
-    }
+# Compact 5x7 bitmap font. SVG text is rendered from rectangles, so images need
+# no remote font, installed font, script, or browser font support.
+FONT = {
+    "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
+    "C": ("01111", "10000", "10000", "10000", "10000", "10000", "01111"),
+    "D": ("11110", "10001", "10001", "10001", "10001", "10001", "11110"),
+    "E": ("11111", "10000", "10000", "11110", "10000", "10000", "11111"),
+    "F": ("11111", "10000", "10000", "11110", "10000", "10000", "10000"),
+    "G": ("01111", "10000", "10000", "10111", "10001", "10001", "01111"),
+    "H": ("10001", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "I": ("11111", "00100", "00100", "00100", "00100", "00100", "11111"),
+    "J": ("00111", "00010", "00010", "00010", "10010", "10010", "01100"),
+    "K": ("10001", "10010", "10100", "11000", "10100", "10010", "10001"),
+    "L": ("10000", "10000", "10000", "10000", "10000", "10000", "11111"),
+    "M": ("10001", "11011", "10101", "10101", "10001", "10001", "10001"),
+    "N": ("10001", "11001", "10101", "10011", "10001", "10001", "10001"),
+    "O": ("01110", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "P": ("11110", "10001", "10001", "11110", "10000", "10000", "10000"),
+    "Q": ("01110", "10001", "10001", "10001", "10101", "10010", "01101"),
+    "R": ("11110", "10001", "10001", "11110", "10100", "10010", "10001"),
+    "S": ("01111", "10000", "10000", "01110", "00001", "00001", "11110"),
+    "T": ("11111", "00100", "00100", "00100", "00100", "00100", "00100"),
+    "U": ("10001", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "V": ("10001", "10001", "10001", "10001", "10001", "01010", "00100"),
+    "W": ("10001", "10001", "10001", "10101", "10101", "10101", "01010"),
+    "X": ("10001", "10001", "01010", "00100", "01010", "10001", "10001"),
+    "Y": ("10001", "10001", "01010", "00100", "00100", "00100", "00100"),
+    "Z": ("11111", "00001", "00010", "00100", "01000", "10000", "11111"),
+    "0": ("01110", "10001", "10011", "10101", "11001", "10001", "01110"),
+    "1": ("00100", "01100", "00100", "00100", "00100", "00100", "01110"),
+    "2": ("01110", "10001", "00001", "00010", "00100", "01000", "11111"),
+    "3": ("11110", "00001", "00001", "01110", "00001", "00001", "11110"),
+    "4": ("00010", "00110", "01010", "10010", "11111", "00010", "00010"),
+    "5": ("11111", "10000", "10000", "11110", "00001", "00001", "11110"),
+    "6": ("01110", "10000", "10000", "11110", "10001", "10001", "01110"),
+    "7": ("11111", "00001", "00010", "00100", "01000", "01000", "01000"),
+    "8": ("01110", "10001", "10001", "01110", "10001", "10001", "01110"),
+    "9": ("01110", "10001", "10001", "01111", "00001", "00001", "01110"),
+    "/": ("00001", "00010", "00010", "00100", "01000", "01000", "10000"),
+    "-": ("00000", "00000", "00000", "11111", "00000", "00000", "00000"),
+    ".": ("00000", "00000", "00000", "00000", "00000", "00110", "00110"),
+    ":": ("00000", "00110", "00110", "00000", "00110", "00110", "00000"),
+}
 
-    graphql_query = """
-    query($login: String!) {
-      user(login: $login) {
-        contributionsCollection {
-          totalCommitContributions
-          totalPullRequestContributions
-          totalIssueContributions
-          totalRepositoryContributions
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                date
-                contributionCount
-              }
-            }
-          }
-        }
-        repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
-          nodes {
-            name
-            stargazerCount
-            forkCount
-            primaryLanguage {
-              name
-              color
-            }
-            languages(first: 10) {
-              edges {
-                size
-                node {
-                  name
-                  color
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    """
+SKILL_META = {
+    "HTML": ("html", "#e34f26"), "CSS": ("css", "#1572b6"), "JS": ("js", "#f1e05a"),
+    "TS": ("ts", "#3178c6"), "React": ("react", "#61dafb"), "Next.js": ("N", "#c9d1d9"),
+    "Tailwind": ("TW", "#38bdf8"), "Node.js": ("node", "#339933"), "Express": ("EX", "#c9d1d9"),
+    "NestJS": ("N", "#e0234e"), "FastAPI": ("API", "#009688"), "C": ("C", "#659ad2"),
+    "C++": ("C++", "#00599c"), "Python": ("PY", "#3776ab"), "PyTorch": ("PT", "#ee4c2c"),
+    "TensorFlow": ("TF", "#ff6f00"), "OpenCV": ("CV", "#5c3ee8"), "PostgreSQL": ("PG", "#4169e1"),
+    "MySQL": ("SQL", "#4479a1"), "MongoDB": ("MDB", "#47a248"), "Redis": ("R", "#dc382d"),
+    "Docker": ("D", "#2496ed"), "AWS": ("AWS", "#ff9900"), "Git": ("G", "#f05032"),
+    "GitHub": ("GH", "#c9d1d9"), "Linux": ("LX", "#fcc624"), "Bash": ("$_", "#4eaa25"),
+    "VS Code": ("<>" , "#007acc"), "Figma": ("F", "#f24e1e"),
+}
+SOCIALS = [
+    ("GitHub", "github", "#c9d1d9"), ("LinkedIn", "linkedin", "#0a66c2"),
+    ("X (Twitter)", "x", "#e6edf3"), ("Gmail", "gmail", "#ea4335"),
+    ("Portfolio", "portfolio", "#3fb950"),
+]
+
+
+def write_if_changed(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    value = content.rstrip() + "\n"
+    if not path.exists() or path.read_text(encoding="utf-8") != value:
+        path.write_text(value, encoding="utf-8", newline="\n")
+
+
+def bitmap(text: str, x: int, y: int, cell: int, color: str, gap: int = 1) -> str:
+    parts = []
+    cursor = x
+    for char in text.upper():
+        if char == " ":
+            cursor += cell * 4
+            continue
+        glyph = FONT.get(char)
+        if glyph:
+            for row, bits in enumerate(glyph):
+                for col, bit in enumerate(bits):
+                    if bit == "1":
+                        parts.append(f'<rect x="{cursor + col * cell}" y="{y + row * cell}" width="{cell}" height="{cell}" fill="{color}"/>')
+            cursor += cell * (5 + gap)
+    return "".join(parts)
+
+
+def iso_week_seed() -> tuple[int, str]:
+    today = date.today()
+    iso = today.isocalendar()
+    seed = iso.year * 100 + iso.week
+    return seed, f"{iso.year}-W{iso.week:02d}"
+
+
+def pixel_mosaic(seed: int, x: int, y: int, cols: int, rows: int, cell: int) -> str:
+    rng = random.Random(seed)
+    palette = ["#1a7f37", "#2ea043", "#3fb950", "#7ee787", "#d9d2c5", "#c9d1d9", "#30363d"]
+    weights = [24, 24, 20, 12, 9, 5, 6]
+    parts = []
+    for row in range(rows):
+        for col in range(cols):
+            if rng.random() < .11:
+                continue
+            color = rng.choices(palette, weights=weights, k=1)[0]
+            parts.append(f'<rect x="{x + col * cell}" y="{y + row * cell}" width="{cell - 1}" height="{cell - 1}" fill="{color}" opacity="{rng.choice((".52", ".72", ".9", "1"))}"/>')
+    return "".join(parts)
+
+
+def banner_svg(name: str, handle: str, tagline: str, seed: int, light: bool = False) -> str:
+    bg = "#f6f8fa" if light else PALETTE["bg"]
+    card = "#ffffff" if light else PALETTE["card"]
+    fg = "#18202a" if light else PALETTE["heading"]
+    muted = "#57606a" if light else PALETTE["muted"]
+    # Standard profile text, pixel-rendered name, pixel mosaic that changes by ISO week.
+    title_a = name.upper().replace(" NUKURI", "")
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="200" viewBox="0 0 900 200" role="img" aria-label="{escape(name)} — {escape(tagline)}">
+<rect x=".5" y=".5" width="899" height="199" rx="8" fill="{card}" stroke="{PALETTE['border']}"/>
+<text x="24" y="24" fill="{muted}" font-family="monospace" font-size="11">{escape(handle)} / README.md</text>
+{bitmap(title_a, 25, 42, 4, fg)}
+{bitmap('NUKURI', 25, 79, 4, fg)}
+{pixel_mosaic(seed, 25, 119, 100, 6, 8)}
+<rect x="25" y="172" width="850" height="1" fill="{PALETTE['border']}"/>
+<text x="874" y="191" fill="{muted}" text-anchor="end" font-family="monospace" font-size="10">{escape(tagline)}</text>
+</svg>'''
+
+
+def glitch_svg(seed: int, width: int = 470, height: int = 20) -> str:
+    rng = random.Random(seed)
+    colors = [PALETTE["green"], PALETTE["bright"], PALETTE["beige"], PALETTE["blue"], PALETTE["muted"]]
+    rects = []
+    for _ in range(36):
+        x = rng.randint(0, width - 5)
+        y = rng.choice((3, 7, 11, 15))
+        w = rng.choice((4, 6, 8, 12, 16, 22))
+        color = rng.choice(colors)
+        opacity = max(.16, 1 - x / (width * 1.25))
+        rects.append(f'<rect x="{x}" y="{y}" width="{w}" height="3" fill="{color}" opacity="{opacity:.2f}"/>')
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}"><path d="M0 10H{width}" stroke="{PALETTE["border"]}"/>{"".join(rects)}</svg>'
+
+
+def heading_svg(text: str) -> str:
+    width = max(150, len(text) * 15 + 16)
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="24" viewBox="0 0 {width} 24" role="img" aria-label="{escape(text)}">{bitmap(text, 2, 2, 2, PALETTE["heading"], 1)}</svg>'
+
+
+def icon_svg(label: str, color: str, initials: str = "") -> str:
+    initials = initials or label[:3].upper()
+    safe = escape(initials)
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="{escape(label)}">
+<rect x="1" y="1" width="62" height="62" rx="5" fill="#0f141b" stroke="#1f2630"/>
+<rect x="6" y="6" width="52" height="52" fill="{color}" opacity=".13"/>
+<path d="M8 12h7M49 52h7" stroke="{color}" stroke-width="3"/>
+<text x="32" y="38" text-anchor="middle" fill="{color}" font-family="monospace" font-size="{18 if len(initials) < 4 else 13}" font-weight="bold">{safe}</text>
+</svg>'''
+
+
+def skill_icon_svg(label: str, color: str, initials: str = "") -> str:
+    initials = initials or label[:3].upper()
+    size = 10 if len(initials) > 3 else 13
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="40" height="56" viewBox="0 0 40 56" role="img" aria-label="{escape(label)}">
+<rect x=".5" y=".5" width="39" height="39" rx="3" fill="#0f141b" stroke="#1f2630"/>
+<rect x="4" y="4" width="32" height="32" fill="{color}" opacity=".15"/>
+<path d="M5 8h5M30 32h5" stroke="{color}" stroke-width="2"/>
+<text x="20" y="25" text-anchor="middle" fill="{color}" font-family="monospace" font-size="{size}" font-weight="bold">{escape(initials)}</text>
+<text x="20" y="51" text-anchor="middle" fill="{PALETTE['text']}" font-family="monospace" font-size="5">{escape(label[:11])}</text>
+</svg>'''
+
+
+def pixel_divider(seed: int) -> str:
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="900" height="16" viewBox="0 0 900 16"><path d="M0 8H900" stroke="{PALETTE["border"]}"/>{pixel_mosaic(seed, 560, 1, 42, 2, 8)}</svg>'
+
+
+def fallback_data() -> dict:
+    return {"contributions": 0, "commits": 0, "issues": 0, "pulls": 0,
+            "reviews": 0, "repos": 0, "stars": 0, "forks": 0,
+            "followers": 0, "following": 0,
+            "activity_available": False,
+            "days": [], "languages": [], "selected_repos": []}
+
+
+def fetch_profile_data(profile: dict) -> dict:
+    data = fallback_data()
+    session = requests.Session()
+    session.headers.update({"Accept": "application/vnd.github+json", "User-Agent": "MERCIA-lab-profile-builder"})
+    token = os.getenv("GITHUB_TOKEN")
+    if token:
+        session.headers["Authorization"] = f"Bearer {token}"
+    try:
+        response = session.get(f"{API}/users/{USERNAME}/repos", params={"per_page": 100, "type": "owner"}, timeout=20)
+        response.raise_for_status()
+        repositories = response.json()
+        user_response = session.get(f"{API}/users/{USERNAME}", timeout=20)
+        user_response.raise_for_status()
+        user = user_response.json()
+        data["followers"] = user.get("followers", 0)
+        data["following"] = user.get("following", 0)
+        data["stars"] = sum(repo.get("stargazers_count", 0) for repo in repositories)
+        data["forks"] = sum(repo.get("forks_count", 0) for repo in repositories)
+        language_totals: dict[str, dict] = {}
+        for repo in repositories:
+            repo_languages = {}
+            try:
+                lang_response = session.get(repo.get("languages_url") or f"{API}/repos/{USERNAME}/{repo['name']}/languages", timeout=20)
+                lang_response.raise_for_status()
+                repo_languages = lang_response.json()
+            except requests.RequestException:
+                primary = repo.get("language")
+                if primary:
+                    repo_languages = {primary: max(1, repo.get("size", 1))}
+            for lang, size in repo_languages.items():
+                entry = language_totals.setdefault(lang, {"name": lang, "bytes": 0, "color": language_color(lang)})
+                entry["bytes"] += size
+        total = sum(item["bytes"] for item in language_totals.values()) or 1
+        data["languages"] = sorted(
+            [dict(item, percent=100 * item["bytes"] / total) for item in language_totals.values()],
+            key=lambda item: item["bytes"], reverse=True,
+        )[:5]
+        repo_by_name = {repo["name"].lower(): repo for repo in repositories}
+        for item in profile["selected_repos"]:
+            repo = repo_by_name.get(item["name"].lower())
+            if repo is None:
+                repo_resp = session.get(f"{API}/repos/{USERNAME}/{item['name']}", timeout=20)
+                if repo_resp.status_code == 200:
+                    repo = repo_resp.json()
+            data["selected_repos"].append({
+                **item,
+                "description": (repo or {}).get("description") or item["fallback"],
+                "language": (repo or {}).get("language") or "—",
+                "stars": (repo or {}).get("stargazers_count", 0),
+                "url": (repo or {}).get("html_url") or f"https://github.com/{USERNAME}/{item['name']}",
+            })
+    except requests.RequestException as exc:
+        print(f"GitHub repositories API unavailable; using profile.yml fallback data: {exc}", file=sys.stderr)
+        data["selected_repos"] = [dict(item, description=item["fallback"], language="—", stars=0,
+                                       url=f"https://github.com/{USERNAME}/{item['name']}")
+                                  for item in profile["selected_repos"]]
 
     try:
-        req = urllib.request.Request(
-            "https://api.github.com/graphql",
-            data=json.dumps({"query": graphql_query, "variables": {"login": USERNAME}}).encode(),
-            headers=headers
-        )
-        with urllib.request.urlopen(req, timeout=10) as res:
-            res_data = json.loads(res.read().decode())
-            user = res_data.get("data", {}).get("user")
-            if user:
-                cc = user.get("contributionsCollection", {})
-                data["total_commits"] = cc.get("totalCommitContributions", data["total_commits"])
-                data["total_prs"] = cc.get("totalPullRequestContributions", data["total_prs"])
-                data["total_issues"] = cc.get("totalIssueContributions", data["total_issues"])
-                data["contributed_repos"] = cc.get("totalRepositoryContributions", data["contributed_repos"])
-                data["total_contributions"] = cc.get("contributionCalendar", {}).get("totalContributions", data["total_contributions"])
-
-                weeks = cc.get("contributionCalendar", {}).get("weeks", [])
-                days = [d for w in weeks for d in w.get("contributionDays", [])]
-                cur_streak = 0
-                max_streak = 0
-                streak = 0
-                for d in reversed(days):
-                    if d.get("contributionCount", 0) > 0:
-                        cur_streak += 1
-                    elif cur_streak > 0:
-                        break
-                for d in days:
-                    if d.get("contributionCount", 0) > 0:
-                        streak += 1
-                        if streak > max_streak:
-                            max_streak = streak
-                    else:
-                        streak = 0
-                data["current_streak"] = max(cur_streak, 1)
-                data["longest_streak"] = max(max_streak, data["current_streak"])
-
-                repos = user.get("repositories", {}).get("nodes", [])
-                total_stars = sum(r.get("stargazerCount", 0) for r in repos)
-                data["total_stars"] = max(total_stars, data["total_stars"])
-
-                lang_map = {}
-                for r in repos:
-                    for edge in r.get("languages", {}).get("edges", []):
-                        lname = edge.get("node", {}).get("name")
-                        lcolor = edge.get("node", {}).get("color") or "#8b949e"
-                        lsize = edge.get("size", 0)
-                        if lname not in lang_map:
-                            lang_map[lname] = {"name": lname, "bytes": 0, "color": lcolor}
-                        lang_map[lname]["bytes"] += lsize
-
-                if lang_map:
-                    tot_bytes = sum(v["bytes"] for v in lang_map.values())
-                    sorted_langs = sorted(lang_map.values(), key=lambda x: x["bytes"], reverse=True)[:6]
-                    for l in sorted_langs:
-                        l["percent"] = round((l["bytes"] / tot_bytes) * 100, 1) if tot_bytes > 0 else 0
-                    data["languages"] = sorted_langs
-    except Exception as err:
-        print(f"Note: Using cached fallback analytics ({err})", file=sys.stderr)
-
+        query = """query($login:String!){user(login:$login){contributionsCollection{
+          totalCommitContributions totalPullRequestContributions totalIssueContributions
+          totalPullRequestReviewContributions totalRepositoryContributions
+          contributionCalendar{totalContributions weeks{contributionDays{contributionCount}}}
+        }}}"""
+        response = session.post(f"{API}/graphql", json={"query": query, "variables": {"login": USERNAME}}, timeout=20)
+        response.raise_for_status()
+        result = response.json()
+        if result.get("errors"):
+            raise requests.HTTPError("GitHub GraphQL returned: " + "; ".join(error.get("message", "unknown error") for error in result["errors"]))
+        collection = result.get("data", {}).get("user", {}).get("contributionsCollection", {})
+        data["commits"] = collection.get("totalCommitContributions", 0)
+        data["pulls"] = collection.get("totalPullRequestContributions", 0)
+        data["issues"] = collection.get("totalIssueContributions", 0)
+        data["reviews"] = collection.get("totalPullRequestReviewContributions", 0)
+        data["repos"] = collection.get("totalRepositoryContributions", 0)
+        data["activity_available"] = True
+        calendar = collection.get("contributionCalendar", {})
+        data["contributions"] = calendar.get("totalContributions", 0)
+        data["days"] = [day.get("contributionCount", 0)
+                         for week in calendar.get("weeks", [])
+                         for day in week.get("contributionDays", [])]
+    except requests.RequestException as exc:
+        print(f"GitHub GraphQL unavailable; contribution panel will show zeroes: {exc}", file=sys.stderr)
+    if not data["selected_repos"]:
+        data["selected_repos"] = [dict(item, description=item["fallback"], language="—", stars=0,
+                                       url=f"https://github.com/{USERNAME}/{item['name']}")
+                                  for item in profile["selected_repos"]]
     return data
 
 
-def generate_typing_headline_svg():
-    """Generates an animated neon typing headline SVG."""
-    return """<svg xmlns="http://www.w3.org/2000/svg" width="850" height="70" viewBox="0 0 850 70" fill="none">
-  <style>
-    @keyframes neonGlow {
-      0%, 100% {
-        filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.9)) drop-shadow(0 0 20px rgba(56, 189, 248, 0.4));
-      }
-      50% {
-        filter: drop-shadow(0 0 14px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(99, 102, 241, 0.6));
-      }
-    }
-    .headline-text {
-      font-family: 'Righteous', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      font-size: 38px;
-      font-weight: 700;
-      fill: #38BDF8;
-      animation: neonGlow 3s ease-in-out infinite;
-      text-anchor: middle;
-      dominant-baseline: middle;
-    }
-  </style>
-  <rect width="850" height="70" fill="transparent"/>
-  <text x="425" y="42" class="headline-text">Meek Dieu Merci NUKURI</text>
-</svg>"""
+def language_color(language: str) -> str:
+    return {"TypeScript": "#3178c6", "JavaScript": "#f1e05a", "Python": "#3572a5",
+            "HTML": "#e34c26", "CSS": "#563d7c", "Java": "#b07219", "C#": "#178600",
+            "C++": "#f34b7d", "Go": "#00add8", "Rust": "#dea584"}.get(language, "#8b949e")
 
 
-def generate_github_stats_svg(data):
-    """Generates the native GitHub Stats overview card matching the sample preview."""
-    stars = data["total_stars"]
-    commits = data["total_commits"]
-    prs = data["total_prs"]
-    issues = data["total_issues"]
-    contrib_repos = data["contributed_repos"]
-
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" fill="none">
-  <style>
-    .card-bg {{
-      fill: #0d1117;
-      stroke: #30363d;
-      stroke-width: 1.5;
-      rx: 12px;
-    }}
-    .title {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      fill: #58a6ff;
-    }}
-    .label {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      font-size: 13px;
-      font-weight: 400;
-      fill: #c9d1d9;
-    }}
-    .value {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      fill: #f0f6fc;
-    }}
-    .icon {{
-      fill: #38bdf8;
-    }}
-    .grade-circle-bg {{
-      stroke: rgba(56, 189, 248, 0.15);
-      stroke-width: 5;
-      fill: none;
-    }}
-    .grade-circle-prog {{
-      stroke: url(#cyanGrad);
-      stroke-width: 5;
-      stroke-linecap: round;
-      stroke-dasharray: 220;
-      stroke-dashoffset: 45;
-      fill: none;
-      animation: rotateRing 3s ease-in-out infinite alternate;
-      transform-origin: 405px 105px;
-    }}
-    .grade-text {{
-      font-family: 'Righteous', -apple-system, sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      fill: #38bdf8;
-      text-anchor: middle;
-      dominant-baseline: middle;
-    }}
-    @keyframes rotateRing {{
-      0% {{ stroke-dashoffset: 80; }}
-      100% {{ stroke-dashoffset: 35; }}
-    }}
-  </style>
-
-  <defs>
-    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="100%" stop-color="#818cf8" />
-    </linearGradient>
-  </defs>
-
-  <rect width="495" height="195" class="card-bg" />
-
-  <!-- Header Title -->
-  <text x="25" y="32" class="title">{USERNAME}'s GitHub Stats</text>
-
-  <!-- Metric 1: Total Stars -->
-  <g transform="translate(25, 52)">
-    <path class="icon" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
-    <text x="24" y="12" class="label">Total Stars Earned:</text>
-    <text x="195" y="12" class="value">{stars}</text>
-  </g>
-
-  <!-- Metric 2: Total Commits -->
-  <g transform="translate(25, 78)">
-    <path class="icon" d="M10.5 7.75a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm1.43.75a4.002 4.002 0 01-7.86 0H.75a.75.75 0 110-1.5h3.32a4.002 4.002 0 017.86 0h3.32a.75.75 0 110 1.5h-3.32z"/>
-    <text x="24" y="12" class="label">Total Commits (2026):</text>
-    <text x="195" y="12" class="value">{commits}</text>
-  </g>
-
-  <!-- Metric 3: Total PRs -->
-  <g transform="translate(25, 104)">
-    <path class="icon" d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm0 1.5a.75.75 0 110 1.5.75.75 0 010-1.5zm0 6a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm0 1.5a.75.75 0 110 1.5.75.75 0 010-1.5z"/>
-    <text x="24" y="12" class="label">Total PRs:</text>
-    <text x="195" y="12" class="value">{prs}</text>
-  </g>
-
-  <!-- Metric 4: Total Issues -->
-  <g transform="translate(25, 130)">
-    <path class="icon" d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"/>
-    <text x="24" y="12" class="label">Total Issues:</text>
-    <text x="195" y="12" class="value">{issues}</text>
-  </g>
-
-  <!-- Metric 5: Contributed to -->
-  <g transform="translate(25, 156)">
-    <path class="icon" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5z"/>
-    <text x="24" y="12" class="label">Contributed to (past year):</text>
-    <text x="195" y="12" class="value">{contrib_repos}</text>
-  </g>
-
-  <!-- Circular Grade Badge -->
-  <g transform="translate(405, 105)">
-    <circle cx="0" cy="0" r="35" class="grade-circle-bg" />
-    <circle cx="0" cy="0" r="35" class="grade-circle-prog" />
-    <text x="0" y="2" class="grade-text">A+</text>
-  </g>
-</svg>"""
+def radar_panel(data: dict, cx: int, cy: int, radius: int) -> str:
+    labels = [("Commit", data["commits"]), ("Issue", data["issues"]), ("PullReq", data["pulls"]),
+              ("Review", data["reviews"]), ("Repo", data["repos"])]
+    peak = max([value for _, value in labels] + [1])
+    points = []
+    result = []
+    for ring in (0.25, 0.5, 0.75, 1):
+        coords = []
+        for index in range(5):
+            angle = -math.pi / 2 + index * 2 * math.pi / 5
+            coords.append(f"{cx + math.cos(angle)*radius*ring:.1f},{cy + math.sin(angle)*radius*ring:.1f}")
+        result.append(f'<polygon points="{" ".join(coords)}" fill="none" stroke="#29313a"/>')
+    for index, (name, value) in enumerate(labels):
+        angle = -math.pi / 2 + index * 2 * math.pi / 5
+        length = radius * (0.12 + 0.88 * value / peak)
+        px, py = cx + math.cos(angle) * length, cy + math.sin(angle) * length
+        points.append(f"{px:.1f},{py:.1f}")
+        lx, ly = cx + math.cos(angle) * (radius + 20), cy + math.sin(angle) * (radius + 20)
+        result.append(f'<line x1="{cx}" y1="{cy}" x2="{cx + math.cos(angle)*radius:.1f}" y2="{cy + math.sin(angle)*radius:.1f}" stroke="#29313a"/>')
+        result.append(f'<text x="{lx:.1f}" y="{ly:.1f}" fill="{PALETTE["muted"]}" font-family="monospace" font-size="10" text-anchor="middle">{name}</text>')
+    result.append(f'<polygon points="{" ".join(points)}" fill="#3fb950" fill-opacity=".35" stroke="#3fb950" stroke-width="2"/>')
+    return "".join(result)
 
 
-def generate_streak_stats_svg(data):
-    """Generates the Streak Stats card with animated flame and streak rings."""
-    tot_contribs = data["total_contributions"]
-    cur_streak = data["current_streak"]
-    long_streak = data["longest_streak"]
-    streak_range = data["streak_range"]
-
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" fill="none">
-  <style>
-    .card-bg {{
-      fill: #0d1117;
-      stroke: #30363d;
-      stroke-width: 1.5;
-      rx: 12px;
-    }}
-    .stat-number {{
-      font-family: 'Righteous', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 26px;
-      font-weight: 700;
-      fill: #f0f6fc;
-      text-anchor: middle;
-    }}
-    .stat-label {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      fill: #58a6ff;
-      text-anchor: middle;
-    }}
-    .stat-sub {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 11px;
-      fill: #8b949e;
-      text-anchor: middle;
-    }}
-    .flame-icon {{
-      fill: url(#flameGrad);
-      animation: flamePulse 2s ease-in-out infinite;
-      transform-origin: 247px 55px;
-    }}
-    .streak-ring-bg {{
-      stroke: rgba(249, 115, 22, 0.2);
-      stroke-width: 4;
-      fill: none;
-    }}
-    .streak-ring-prog {{
-      stroke: url(#flameGrad);
-      stroke-width: 4;
-      stroke-linecap: round;
-      stroke-dasharray: 180;
-      stroke-dashoffset: 40;
-      fill: none;
-      animation: glowRing 3s ease-in-out infinite alternate;
-      transform-origin: 247px 88px;
-    }}
-    @keyframes flamePulse {{
-      0%, 100% {{ transform: scale(1); filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8)); }}
-      50% {{ transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(239, 68, 68, 1)); }}
-    }}
-    @keyframes glowRing {{
-      0% {{ stroke-dashoffset: 60; }}
-      100% {{ stroke-dashoffset: 20; }}
-    }}
-    .divider {{
-      stroke: #21262d;
-      stroke-width: 1;
-    }}
-  </style>
-
-  <defs>
-    <linearGradient id="flameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f97316" />
-      <stop offset="100%" stop-color="#ef4444" />
-    </linearGradient>
-  </defs>
-
-  <rect width="495" height="195" class="card-bg" />
-
-  <!-- Column 1: Total Contributions -->
-  <g transform="translate(85, 45)">
-    <text x="0" y="35" class="stat-number">{tot_contribs}</text>
-    <text x="0" y="65" class="stat-label">Total Contributions</text>
-    <text x="0" y="85" class="stat-sub">{streak_range}</text>
-  </g>
-
-  <!-- Vertical Divider 1 -->
-  <line x1="170" y1="30" x2="170" y2="165" class="divider" />
-
-  <!-- Column 2: Current Streak (Centered with Flame & Ring) -->
-  <g transform="translate(247, 0)">
-    <!-- Streak Ring -->
-    <circle cx="0" cy="85" r="32" class="streak-ring-bg" />
-    <circle cx="0" cy="85" r="32" class="streak-ring-prog" />
-
-    <!-- Flame Icon in center -->
-    <path class="flame-icon" transform="translate(-10, 60)" d="M5.05 13.95c.55-.3 1.15-.75 1.4-1.35.35-.85.1-1.85-.35-2.65-.5-1-.95-2-1-3.15 0-.15 0-.3.05-.45.05.3.15.6.3.85.45.85 1.25 1.55 1.9 2.3.9 1 1.7 2.15 1.65 3.55 0 .25-.05.5-.1.75.65-.6 1.1-1.4 1.2-2.3.15-1.15-.35-2.35-.95-3.35-.65-1.05-1.45-2.05-1.95-3.2-.45-1-.65-2.15-.45-3.25.3.35.65.65 1.05.9 1.35.85 2.25 2.3 2.7 3.8.55 1.8.35 3.85-.7 5.45-.45.7-.95 1.35-1.4 2.05-.2.3-.3.65-.25 1 .05.35.25.65.55.85 1.15.7 2.65.45 3.5-.6 1.05-1.25 1.35-2.95 1.1-4.55-.25-1.6-.9-3.1-1.65-4.55-.4-.75-.8-1.5-1.25-2.2-.15-.25-.3-.55-.35-.85.1-.05.2-.05.3-.05 1.5.1 2.9.85 3.9 1.95 1.35 1.5 1.95 3.6 1.75 5.65-.2 2.15-1.25 4.15-2.9 5.55-1.75 1.5-4.2 2.15-6.45 1.75-2.65-.45-4.85-2.35-5.6-4.9-.45-1.5-.2-3.1.6-4.4z"/>
-
-    <!-- Streak number inside -->
-    <text x="0" y="100" class="stat-number">{cur_streak}</text>
-    <text x="0" y="135" class="stat-label">Current Streak</text>
-    <text x="0" y="153" class="stat-sub">Active Cadence</text>
-  </g>
-
-  <!-- Vertical Divider 2 -->
-  <line x1="325" y1="30" x2="325" y2="165" class="divider" />
-
-  <!-- Column 3: Longest Streak -->
-  <g transform="translate(410, 45)">
-    <text x="0" y="35" class="stat-number">{long_streak}</text>
-    <text x="0" y="65" class="stat-label">Longest Streak</text>
-    <text x="0" y="85" class="stat-sub">Personal Best</text>
-  </g>
-</svg>"""
+def donut(data: dict, cx: int, cy: int, radius: int) -> str:
+    langs = data.get("languages", []) or [{"name": "No data", "percent": 100, "color": "#30363d"}]
+    total = sum(lang["percent"] for lang in langs) or 100
+    circumference = 2 * math.pi * radius
+    offset = 0.0
+    pieces = [f'<circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="#1f2630" stroke-width="22"/>']
+    for lang in langs:
+        part = circumference * lang["percent"] / total
+        pieces.append(f'<circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="{lang["color"]}" stroke-width="22" stroke-dasharray="{part:.2f} {circumference-part:.2f}" stroke-dashoffset="{-offset:.2f}" transform="rotate(-90 {cx} {cy})"/>')
+        offset += part
+    for index, lang in enumerate(langs):
+        y = cy - 42 + index * 18
+        pieces.append(f'<rect x="{cx + 44}" y="{y-9}" width="8" height="8" fill="{lang["color"]}"/><text x="{cx + 58}" y="{y}" fill="{PALETTE["text"]}" font-family="monospace" font-size="10">{escape(lang["name"])} {lang["percent"]:.0f}%</text>')
+    return "".join(pieces)
 
 
-def generate_languages_svg(data):
-    """Generates the Most Used Languages segmented bar and legend."""
-    langs = data["languages"]
-    total_pct = sum(l["percent"] for l in langs) or 100
-
-    x_offset = 25
-    bar_width = 445
-    segments_svg = []
-    legend_left = []
-    legend_right = []
-
-    for idx, l in enumerate(langs):
-        w = round((l["percent"] / total_pct) * bar_width, 1)
-        w = max(w, 4)
-        rx = "4" if idx == 0 or idx == len(langs) - 1 else "0"
-        segments_svg.append(f'<rect x="{x_offset}" y="60" width="{w}" height="10" fill="{l["color"]}" rx="{rx}" />')
-        x_offset += w
-
-        legend_item = f"""
-        <g transform="translate(0, {len(legend_left) * 22 if idx % 2 == 0 else len(legend_right) * 22})">
-          <circle cx="5" cy="5" r="5" fill="{l['color']}" />
-          <text x="16" y="9" class="lang-label">{l['name']}</text>
-          <text x="140" y="9" class="lang-pct">{l['percent']}%</text>
-        </g>
-        """
-        if idx % 2 == 0:
-            legend_left.append(legend_item)
-        else:
-            legend_right.append(legend_item)
-
-    segments_str = "\n".join(segments_svg)
-    left_str = "\n".join(legend_left)
-    right_str = "\n".join(legend_right)
-
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="495" height="175" viewBox="0 0 495 175" fill="none">
-  <style>
-    .card-bg {{
-      fill: #0d1117;
-      stroke: #30363d;
-      stroke-width: 1.5;
-      rx: 12px;
-    }}
-    .title {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      fill: #58a6ff;
-      text-anchor: middle;
-    }}
-    .lang-label {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      fill: #c9d1d9;
-    }}
-    .lang-pct {{
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-      fill: #8b949e;
-    }}
-  </style>
-
-  <rect width="495" height="175" class="card-bg" />
-
-  <text x="247" y="35" class="title">Most Used Languages</text>
-
-  <!-- Progress Bar Track Background -->
-  <rect x="25" y="60" width="445" height="10" fill="#21262d" rx="5" />
-
-  <!-- Segmented Progress Bar -->
-  <g>
-    {segments_str}
-  </g>
-
-  <!-- Legend (2 Columns) -->
-  <g transform="translate(45, 95)">
-    {left_str}
-  </g>
-  <g transform="translate(285, 95)">
-    {right_str}
-  </g>
-</svg>"""
+def stats_panel(data: dict, light: bool = False) -> str:
+    bg = "#f6f8fa" if light else PALETTE["bg"]
+    card = "#ffffff" if light else PALETTE["card"]
+    fg = "#24292f" if light else PALETTE["heading"]
+    muted = "#57606a" if light else PALETTE["muted"]
+    # Draw a contribution calendar as an isometric plane with deterministic heights.
+    days = data.get("days", [])[-364:]
+    if len(days) < 364:
+        days = [0] * (364 - len(days)) + days
+    origin_x, origin_y = 85, 120
+    bars = []
+    cells = []
+    colors = ("#1a7f37", "#2ea043", "#3fb950", "#7ee787")
+    for index, count in enumerate(days):
+        week, weekday = divmod(index, 7)
+        x = origin_x + week * 7.2 - weekday * 7.2
+        y = origin_y + week * 3.6 + weekday * 3.6
+        # Isometric square vertices use a 7x3.5 diamond.
+        cells.append(f'<polygon points="{x:.1f},{y:.1f} {x+7:.1f},{y+3.5:.1f} {x:.1f},{y+7:.1f} {x-7:.1f},{y+3.5:.1f}" fill="#202833" stroke="#303943" stroke-width=".45"/>')
+        if count:
+            height = min(28, 4 + int(math.log2(count + 1) * 5))
+            color = colors[min(3, int(math.log2(count + 1) / 2))]
+            bars.append(f'<polygon points="{x:.1f},{y-height:.1f} {x+7:.1f},{y+3.5-height:.1f} {x:.1f},{y+7-height:.1f} {x-7:.1f},{y+3.5-height:.1f}" fill="{color}" stroke="#0d1117" stroke-width=".5"/>')
+            bars.append(f'<polygon points="{x+7:.1f},{y+3.5-height:.1f} {x+7:.1f},{y+3.5:.1f} {x:.1f},{y+7:.1f} {x:.1f},{y+7-height:.1f}" fill="#1a7f37"/>')
+            bars.append(f'<polygon points="{x-7:.1f},{y+3.5-height:.1f} {x:.1f},{y+7-height:.1f} {x:.1f},{y+7:.1f} {x-7:.1f},{y+3.5:.1f}" fill="#14532d"/>')
+    iso = date.today().isocalendar()
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480" role="img" aria-label="GitHub contributions, languages, and activity stats">
+<rect x="1" y="1" width="898" height="478" rx="9" fill="{card}" stroke="{PALETTE['border']}"/>
+<text x="24" y="30" fill="{fg}" font-family="monospace" font-size="12">{USERNAME} / ACTIVITY SNAPSHOT</text>
+<text x="875" y="30" fill="{muted}" text-anchor="end" font-family="monospace" font-size="10">UPDATED {iso.year}-W{iso.week:02d}</text>
+<path d="M18 42H882" stroke="{PALETTE['border']}"/>
+{"".join(cells)}{"".join(bars)}
+<text x="610" y="68" fill="{muted}" font-family="monospace" font-size="10">{"ACTIVITY RADAR" if data['activity_available'] else "ACTIVITY RADAR / DATA PENDING"}</text>
+{radar_panel(data, 720, 160, 62)}
+<text x="30" y="340" fill="{muted}" font-family="monospace" font-size="10">LANGUAGE MIX</text>
+{donut(data, 78, 402, 28)}
+<path d="M24 440H876" stroke="{PALETTE['border']}"/>
+<text x="45" y="464" fill="{PALETTE['bright']}" font-family="monospace" font-size="12">{data['contributions'] if data['activity_available'] else "—"}</text><text x="90" y="464" fill="{muted}" font-family="monospace" font-size="10">CONTRIBUTIONS</text>
+<text x="390" y="464" fill="{PALETTE['beige']}" font-family="monospace" font-size="12">{data['stars']}</text><text x="420" y="464" fill="{muted}" font-family="monospace" font-size="10">STARS</text>
+<text x="650" y="464" fill="{PALETTE['blue']}" font-family="monospace" font-size="12">{data['forks']}</text><text x="680" y="464" fill="{muted}" font-family="monospace" font-size="10">FORKS</text>
+</svg>'''
 
 
-def generate_top_repos_svg(data):
-    """Generates the Top-Contributed Repositories card matching the sample preview."""
-    repos = data["top_repos"]
+def project_showcase(data: dict) -> str:
+    items = data["selected_repos"]
+    blocks = []
+    for i, item in enumerate(items[:4]):
+        x = 18 + (i % 2) * 440
+        y = 55 + (i // 2) * 86
+        title = escape(item["name"][:30])
+        desc = escape(item["description"][:65])
+        blocks.append(f'<rect x="{x}" y="{y}" width="420" height="72" rx="5" fill="#0f141b" stroke="#1f2630"/><text x="{x+14}" y="{y+23}" fill="#3fb950" font-family="monospace" font-size="13">{title}</text><text x="{x+14}" y="{y+43}" fill="#8b949e" font-family="monospace" font-size="10">{desc}</text><text x="{x+14}" y="{y+60}" fill="#d9d2c5" font-family="monospace" font-size="9">{escape(item["language"])} / ★ {item["stars"]}</text>')
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="900" height="250" viewBox="0 0 900 250"><rect width="900" height="250" rx="8" fill="#12161d" stroke="#1f2630"/><text x="20" y="30" fill="#e6edf3" font-family="monospace" font-size="12">SELECTED REPOSITORIES / {USERNAME}</text>{"".join(blocks)}</svg>'
+
+
+def build_skills_grid(profile: dict, sha: str) -> tuple[list[list[dict]], str]:
     rows = []
-    y_pos = 65
-
-    for idx, r in enumerate(repos):
-        badge_color = "#38bdf8" if idx == 0 else "#58a6ff"
-        rows.append(f"""
-    <g transform="translate(25, {y_pos})">
-      <!-- Repo Icon -->
-      <path fill="#8b949e" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5z"/>
-      <!-- Repo Name -->
-      <text x="22" y="12" class="repo-name">{r['name']}</text>
-      <!-- Commits/Contrib Badge -->
-      <rect x="390" y="-2" width="50" height="20" rx="10" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="0.8"/>
-      <text x="415" y="12" class="repo-count">{r['contribs']}</text>
-    </g>
-    <line x1="25" y1="{y_pos + 26}" x2="470" y2="{y_pos + 26}" stroke="#21262d" stroke-width="0.8" />
-        """)
-        y_pos += 36
-
-    rows_str = "\n".join(rows)
-
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="495" height="225" viewBox="0 0 495 225" fill="none">
-  <style>
-    .card-bg {{
-      fill: #0d1117;
-      stroke: #30363d;
-      stroke-width: 1.5;
-      rx: 12px;
-    }}
-    .header-title {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      fill: #58a6ff;
-    }}
-    .header-col {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      fill: #8b949e;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }}
-    .repo-name {{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12.5px;
-      font-weight: 600;
-      fill: #c9d1d9;
-    }}
-    .repo-count {{
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      fill: #38bdf8;
-      text-anchor: middle;
-    }}
-  </style>
-
-  <rect width="495" height="225" class="card-bg" />
-
-  <!-- Card Header -->
-  <text x="25" y="32" class="header-title">{USERNAME}'s GitHub Contribution Stats</text>
-  <text x="47" y="52" class="header-col">Repository</text>
-  <text x="400" y="52" class="header-col">Commits</text>
-  <line x1="25" y1="58" x2="470" y2="58" stroke="#30363d" stroke-width="1" />
-
-  {rows_str}
-</svg>"""
+    markup = []
+    for row_index, row in enumerate(profile["skills"]):
+        cells = []
+        for col_index in range(8):
+            name = row[col_index] if col_index < len(row) else ""
+            if name:
+                initials, color = SKILL_META.get(name, (re.sub(r"[^A-Za-z0-9]", "", name)[:3].upper() or "?", "#6e7681"))
+                icon_name = {"C++": "cplusplus"}.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
+                icon_path = ICONS / f"{icon_name}.svg"
+                write_if_changed(icon_path, skill_icon_svg(name, color, initials))
+                icon = f'<img src="assets/icons/{icon_name}.svg?v={sha}" width="40" height="56" alt="{escape(name)}"/>'
+                label = ""
+            else:
+                icon_name = f"empty-{row_index}-{col_index}"
+                write_if_changed(ICONS / f"{icon_name}.svg", skill_icon_svg("", "#303943", ""))
+                icon = f'<img src="assets/icons/{icon_name}.svg?v={sha}" width="40" height="56" alt=""/>'
+                label = ""
+            cells.append({"name": name, "icon": icon, "label": label})
+            markup.append(f'<td align="center" bgcolor="#0f141b" width="12.5%">{icon}{label}</td>')
+        rows.append(cells)
+    # HTML is consumed by the Jinja template; each row has exactly eight cells.
+    table_rows = []
+    for row_index in range(4):
+        start = row_index * 8
+        table_rows.append("<tr>" + "".join(markup[start:start + 8]) + "</tr>")
+    return rows, '<table cellpadding="0" border="0">' + "".join(table_rows) + "</table>"
 
 
-def generate_dev_quote_svg():
-    """Generates the Random Dev Quote card matching the preview."""
-    return """<svg xmlns="http://www.w3.org/2000/svg" width="495" height="225" viewBox="0 0 495 225" fill="none">
-  <style>
-    .card-bg {
-      fill: #0d1117;
-      stroke: #30363d;
-      stroke-width: 1.5;
-      rx: 12px;
-    }
-    .quote-mark {
-      font-family: Georgia, serif;
-      font-size: 42px;
-      fill: #38bdf8;
-      opacity: 0.6;
-      text-anchor: middle;
-    }
-    .quote-line {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      font-size: 13.5px;
-      font-style: italic;
-      fill: #c9d1d9;
-      text-anchor: middle;
-    }
-    .quote-author {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      fill: #58a6ff;
-      text-anchor: middle;
-    }
-    .quote-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      fill: #8b949e;
-      text-anchor: middle;
-    }
-  </style>
-
-  <rect width="495" height="225" class="card-bg" />
-
-  <!-- Quotation Mark -->
-  <text x="247" y="50" class="quote-mark">“</text>
-
-  <!-- Quote Lines -->
-  <text x="247" y="82" class="quote-line">“Simplicity is prerequisite for reliability.”</text>
-  <text x="247" y="105" class="quote-line">“Computer science is no more about computers</text>
-  <text x="247" y="127" class="quote-line">than astronomy is about telescopes.”</text>
-
-  <!-- Divider -->
-  <line x1="180" y1="145" x2="315" y2="145" stroke="#30363d" stroke-width="1" />
-
-  <!-- Author & Tag -->
-  <text x="247" y="168" class="quote-author">Edsger W. Dijkstra</text>
-  <text x="247" y="188" class="quote-tag">Turing Award Laureate &amp; Computing Pioneer</text>
-</svg>"""
+def social_bar(profile: dict, sha: str) -> str:
+    links = profile["links"]
+    cells_head, cells_body = [], []
+    for label, key, color in SOCIALS:
+        target = links.get(key, "")
+        if not target and key == "portfolio":
+            continue
+        cells_head.append(f'<td align="center" bgcolor="#12161d">{label}</td>')
+        filename = f"social-{key}.svg"
+        icon_content = icon_svg(label, color, {"github": "GH", "linkedin": "in", "x": "X", "gmail": "M", "portfolio": "↗"}[key])
+        write_if_changed(ICONS / filename, icon_content)
+        safe_target = html.escape(target, quote=True)
+        cells_body.append(f'<td align="center" bgcolor="#0f141b"><a href="{safe_target}"><img src="assets/icons/{filename}?v={sha}" width="64" height="64" alt="{label}"/></a></td>')
+    return '<table cellpadding="2" border="0"><tr>' + "".join(cells_head) + "</tr><tr>" + "".join(cells_body) + "</tr></table>"
 
 
-def generate_project_showcase_svg():
-    """Generates high-fidelity project showcase cards for all flagship repositories."""
-    return """<svg xmlns="http://www.w3.org/2000/svg" width="900" height="425" viewBox="0 0 900 425" fill="none">
-  <style>
-    .card {
-      fill: #0d1117;
-      stroke: #30363d;
-      stroke-width: 1.5;
-      rx: 12px;
-    }
-    .card-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      fill: #38bdf8;
-    }
-    .card-desc {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 11.5px;
-      fill: #8b949e;
-    }
-    .badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-    }
-    .status-dot {
-      fill: #238636;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-  </style>
+def parse_profile_yaml(content: str) -> dict:
+    """Read the deliberately small YAML subset used by profile.yml if PyYAML is absent."""
+    profile: dict = {}
+    section = ""
 
-  <!-- Card 1: Shipping-Tracking-System -->
-  <g transform="translate(0, 0)">
-    <rect width="435" height="200" class="card" />
-    <circle cx="28" cy="28" r="4" class="status-dot" />
-    <text x="40" y="32" class="card-title">Shipping-Tracking-System</text>
-    <rect x="340" y="16" width="70" height="20" rx="10" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="0.8"/>
-    <text x="375" y="30" fill="#38bdf8" text-anchor="middle" class="badge">FLAGSHIP</text>
+    def scalar(value: str) -> str:
+        value = value.strip()
+        if value.startswith('"'):
+            try:
+                return json.loads(value)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"invalid quoted YAML value: {value}") from exc
+        return value
 
-    <text x="28" y="62" class="card-desc">Cloud-based enterprise logistics platform covering parcel</text>
-    <text x="28" y="80" class="card-desc">dispatch, freight tracking, dynamic warehouse queues,</text>
-    <text x="28" y="98" class="card-desc">and real-time WebSocket fleet telematics monitoring.</text>
-
-    <rect x="28" y="120" width="75" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="65" y="135" fill="#3178c6" text-anchor="middle" class="badge">TypeScript</text>
-    <rect x="110" y="120" width="65" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="142" y="135" fill="#e0234e" text-anchor="middle" class="badge">NestJS</text>
-    <rect x="182" y="120" width="65" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="214" y="135" fill="#38bdf8" text-anchor="middle" class="badge">Next.js</text>
-    <rect x="254" y="120" width="80" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="294" y="135" fill="#336791" text-anchor="middle" class="badge">PostgreSQL</text>
-
-    <path fill="#8b949e" transform="translate(28, 162)" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
-    <text x="48" y="174" fill="#8b949e" class="badge">38 Commits</text>
-    <text x="405" y="174" fill="#58a6ff" text-anchor="end" class="badge">Public • Production</text>
-  </g>
-
-  <!-- Card 2: FreeMCue -->
-  <g transform="translate(465, 0)">
-    <rect width="435" height="200" class="card" />
-    <circle cx="28" cy="28" r="4" class="status-dot" />
-    <text x="40" y="32" class="card-title">FreeMCue</text>
-    <rect x="330" y="16" width="80" height="20" rx="10" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="0.8"/>
-    <text x="370" y="30" fill="#a855f7" text-anchor="middle" class="badge">AI COPILOT</text>
-
-    <text x="28" y="62" class="card-desc">macOS AI teleprompter &amp; meeting copilot overlaying</text>
-    <text x="28" y="80" class="card-desc">real-time conversational context while staying completely</text>
-    <text x="28" y="98" class="card-desc">invisible from screen shares. Privacy-first architecture.</text>
-
-    <rect x="28" y="120" width="65" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="60" y="135" fill="#3572A5" text-anchor="middle" class="badge">Python</text>
-    <rect x="100" y="120" width="60" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="130" y="135" fill="#f1e05a" text-anchor="middle" class="badge">AI/ML</text>
-    <rect x="167" y="120" width="60" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="197" y="135" fill="#a855f7" text-anchor="middle" class="badge">macOS</text>
-    <rect x="234" y="120" width="75" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="271" y="135" fill="#22c55e" text-anchor="middle" class="badge">Real-Time</text>
-
-    <path fill="#8b949e" transform="translate(28, 162)" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
-    <text x="48" y="174" fill="#8b949e" class="badge">Open Source</text>
-    <text x="405" y="174" fill="#58a6ff" text-anchor="end" class="badge">Public • Active</text>
-  </g>
-
-  <!-- Card 3: Financial-Advisor-System -->
-  <g transform="translate(0, 220)">
-    <rect width="435" height="200" class="card" />
-    <circle cx="28" cy="28" r="4" class="status-dot" />
-    <text x="40" y="32" class="card-title">Financial-Advisor-System</text>
-    <rect x="335" y="16" width="75" height="20" rx="10" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" stroke-width="0.8"/>
-    <text x="372" y="30" fill="#22c55e" text-anchor="middle" class="badge">FINTECH</text>
-
-    <text x="28" y="62" class="card-desc">Automated financial planning &amp; investment intelligence</text>
-    <text x="28" y="80" class="card-desc">platform providing algorithmic risk evaluation, spending</text>
-    <text x="28" y="98" class="card-desc">pattern analytics, and asset allocation modeling.</text>
-
-    <rect x="28" y="120" width="75" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="65" y="135" fill="#f1e05a" text-anchor="middle" class="badge">JavaScript</text>
-    <rect x="110" y="120" width="65" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="142" y="135" fill="#339933" text-anchor="middle" class="badge">Node.js</text>
-    <rect x="182" y="120" width="65" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="214" y="135" fill="#38bdf8" text-anchor="middle" class="badge">Express</text>
-    <rect x="254" y="120" width="75" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="291" y="135" fill="#a855f7" text-anchor="middle" class="badge">Analytics</text>
-
-    <path fill="#8b949e" transform="translate(28, 162)" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
-    <text x="48" y="174" fill="#8b949e" class="badge">6 Commits</text>
-    <text x="405" y="174" fill="#58a6ff" text-anchor="end" class="badge">Public • Core</text>
-  </g>
-
-  <!-- Card 4: daily-routine-tracker -->
-  <g transform="translate(465, 220)">
-    <rect width="435" height="200" class="card" />
-    <circle cx="28" cy="28" r="4" class="status-dot" />
-    <text x="40" y="32" class="card-title">daily-routine-tracker</text>
-    <rect x="315" y="16" width="95" height="20" rx="10" fill="rgba(234, 179, 8, 0.15)" stroke="#eab308" stroke-width="0.8"/>
-    <text x="362" y="30" fill="#eab308" text-anchor="middle" class="badge">PRODUCTIVITY</text>
-
-    <text x="28" y="62" class="card-desc">High-efficiency routine execution &amp; habits system designed</text>
-    <text x="28" y="80" class="card-desc">to monitor cadence consistency, optimize daily focus blocks,</text>
-    <text x="28" y="98" class="card-desc">and record velocity analytics with lightweight sync.</text>
-
-    <rect x="28" y="120" width="75" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="65" y="135" fill="#f1e05a" text-anchor="middle" class="badge">JavaScript</text>
-    <rect x="110" y="120" width="60" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="140" y="135" fill="#1572B6" text-anchor="middle" class="badge">CSS3</text>
-    <rect x="177" y="120" width="65" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="209" y="135" fill="#38bdf8" text-anchor="middle" class="badge">Full-Stack</text>
-    <rect x="249" y="120" width="80" height="22" rx="6" fill="#161b22" stroke="#30363d"/>
-    <text x="289" y="135" fill="#22c55e" text-anchor="middle" class="badge">Automation</text>
-
-    <path fill="#8b949e" transform="translate(28, 162)" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
-    <text x="48" y="174" fill="#8b949e" class="badge">12 Commits</text>
-    <text x="405" y="174" fill="#58a6ff" text-anchor="end" class="badge">Public • Active</text>
-  </g>
-</svg>"""
+    for line_number, raw in enumerate(content.splitlines(), 1):
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        indent = len(raw) - len(raw.lstrip(" "))
+        line = raw.strip()
+        if indent == 0:
+            match = re.fullmatch(r"([a-z_]+):(?:\s*(.*))?", line)
+            if not match:
+                raise ValueError(f"invalid top-level YAML at line {line_number}")
+            key, value = match.group(1), match.group(2) or ""
+            section = key if not value else ""
+            if value:
+                profile[key] = scalar(value)
+            elif key == "links":
+                profile[key] = {}
+            elif key in ("selected_repos", "skills"):
+                profile[key] = []
+            else:
+                profile[key] = ""
+        elif section == "links" and indent == 2:
+            match = re.fullmatch(r"([a-z_]+):\s*(.*)", line)
+            if not match:
+                raise ValueError(f"invalid link at line {line_number}")
+            profile[section][match.group(1)] = scalar(match.group(2))
+        elif section == "selected_repos" and indent == 2:
+            match = re.fullmatch(r"-\s*name:\s*(.*)", line)
+            if not match:
+                raise ValueError(f"invalid repository at line {line_number}")
+            profile[section].append({"name": scalar(match.group(1))})
+        elif section == "selected_repos" and indent == 4:
+            match = re.fullmatch(r"([a-z_]+):\s*(.*)", line)
+            if not match or not profile[section]:
+                raise ValueError(f"invalid repository field at line {line_number}")
+            profile[section][-1][match.group(1)] = scalar(match.group(2))
+        elif section == "skills" and indent == 2:
+            match = re.fullmatch(r"-\s*\[(.*)\]", line)
+            if not match:
+                raise ValueError(f"invalid skill row at line {line_number}")
+            profile[section].append([item.strip() for item in match.group(1).split(",")])
+        else:
+            raise ValueError(f"unsupported profile.yml structure at line {line_number}")
+    return profile
 
 
-def main():
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    token = os.environ.get("GITHUB_TOKEN")
+def main() -> None:
+    try:
+        profile_text = (ROOT / "profile.yml").read_text(encoding="utf-8")
+        profile = yaml.safe_load(profile_text) if yaml else parse_profile_yaml(profile_text)
+    except (OSError, ValueError) as exc:
+        raise SystemExit(f"Unable to read profile.yml: {exc}") from exc
+    if not isinstance(profile, dict) or not profile.get("name") or not profile.get("selected_repos"):
+        raise SystemExit("profile.yml needs a name and at least one selected repository")
 
-    print(f"Fetching GitHub data for user {USERNAME}...")
-    data = fetch_live_github_data(token) if token else FALLBACK_DATA
+    ASSETS.mkdir(exist_ok=True)
+    GENERATED.mkdir(parents=True, exist_ok=True)
+    ICONS.mkdir(parents=True, exist_ok=True)
+    data = fetch_profile_data(profile)
+    seed, iso_week = iso_week_seed()
+    cache_state = json.dumps({"profile": profile, "data": data, "week": iso_week}, sort_keys=True, ensure_ascii=False)
+    sha = os.getenv("PROFILE_SHA") or hashlib.sha256(cache_state.encode("utf-8")).hexdigest()[:7]
+    write_if_changed(ASSETS / "pixel-banner.svg", banner_svg(profile["name"], profile["handle"], profile["tagline"], seed))
+    write_if_changed(ASSETS / "pixel-banner-light.svg", banner_svg(profile["name"], profile["handle"], profile["tagline"], seed, True))
+    write_if_changed(ASSETS / "pixel-divider.svg", pixel_divider(seed))
+    headings = {"who-i-am": "WHO I AM", "what-i-do": "WHAT I DO", "vision": "VISION", "beyond-code": "BEYOND CODE", "skill-set": "SKILL SET", "projects": "PROJECTS"}
+    for index, (slug, title) in enumerate(headings.items()):
+        write_if_changed(GENERATED / f"heading-{slug}.svg", heading_svg(title))
+        write_if_changed(GENERATED / f"divider-{slug}.svg", glitch_svg(seed + index * 197, 470))
+    write_if_changed(GENERATED / "stats-panel.svg", stats_panel(data))
+    write_if_changed(GENERATED / "stats-panel-light.svg", stats_panel(data, True))
+    write_if_changed(ASSETS / "project-showcase.svg", project_showcase(data))
+    write_if_changed(GENERATED / "pixel-strip.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="280" height="18" viewBox="0 0 280 18">{pixel_mosaic(seed + 991, 0, 1, 35, 2, 8)}</svg>')
+    _, skills_html = build_skills_grid(profile, sha)
+    socials_html = social_bar(profile, sha)
+    write_if_changed(ICONS / "social-pixels-left.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="40" viewBox="0 0 16 40">{pixel_mosaic(seed + 71, 0, 0, 2, 5, 8)}</svg>')
+    write_if_changed(ICONS / "social-pixels-right.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="40" viewBox="0 0 16 40">{pixel_mosaic(seed + 107, 0, 0, 2, 5, 8)}</svg>')
 
-    files_to_generate = {
-        "typing-headline.svg": generate_typing_headline_svg(),
-        "github-stats.svg": generate_github_stats_svg(data),
-        "streak-stats.svg": generate_streak_stats_svg(data),
-        "languages.svg": generate_languages_svg(data),
-        "top-repos.svg": generate_top_repos_svg(data),
-        "dev-quote.svg": generate_dev_quote_svg(),
-        "project-showcase.svg": generate_project_showcase_svg(),
-    }
-
-    for filename, content in files_to_generate.items():
-        filepath = os.path.join(OUTPUT_DIR, filename)
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(content.strip() + "\n")
-        print(f"  ✓ Generated: {filepath} ({len(content)} bytes)")
-
-    print(f"\nAll {len(files_to_generate)} SVG profile analytics assets generated successfully.")
+    env = Environment(loader=FileSystemLoader(str(ROOT / "templates")), undefined=StrictUndefined,
+                      autoescape=False, keep_trailing_newline=True)
+    template = env.get_template("README.md.j2")
+    repo_rows = [data["selected_repos"][index:index + 2] for index in range(0, len(data["selected_repos"]), 2)]
+    rendered = template.render(profile=profile, repos=data["selected_repos"], repo_rows=repo_rows, iso_week=iso_week,
+                               sha=sha, profile_stats=data, skills_html=skills_html,
+                               socials_html=socials_html)
+    write_if_changed(ROOT / "README.md", rendered)
+    print(f"Profile build complete for {USERNAME} ({iso_week}); README and local assets are current.")
 
 
 if __name__ == "__main__":

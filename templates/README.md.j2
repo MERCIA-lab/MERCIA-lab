@@ -1,0 +1,68 @@
+<!-- Generated from profile.yml and templates/README.md.j2 by scripts/generate_profile_stats.py. Edit the source files, not README.md. -->
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/pixel-banner-light.svg?v={{ sha }}" />
+  <img src="assets/pixel-banner.svg?v={{ sha }}" width="900" alt="{{ profile.name }} — {{ profile.tagline }}" />
+</picture>
+<img src="assets/pixel-divider.svg?v={{ sha }}" width="100%" height="16" alt="" />
+</div>
+
+<table cellpadding="10"><tr><td bgcolor="#12161d">
+
+<table><tr><td>
+<img src="assets/profile-photo-circle.png" width="150" alt="{{ profile.name }}" />
+</td><td>
+
+**{{ profile.name }}** · [@{{ profile.handle }}]({{ profile.links.github }})<br/>
+Computer Science Student · AI &amp; Software Engineer<br/>
+📍 {{ profile.location }} · [✉ {{ profile.email }}](mailto:{{ profile.email }})<br/>
+👥 {{ profile_stats.followers }} followers · {{ profile_stats.following }} following
+
+</td></tr></table>
+
+<table cellpadding="4"><tr><td><img src="assets/generated/heading-who-i-am.svg?v={{ sha }}" height="24" alt="Who I am" /></td><td width="100%"><img src="assets/generated/divider-who-i-am.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.who_i_am }}</td></tr></table>
+
+<table cellpadding="4"><tr><td><img src="assets/generated/heading-what-i-do.svg?v={{ sha }}" height="24" alt="What I do" /></td><td width="100%"><img src="assets/generated/divider-what-i-do.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.what_i_do }}</td></tr></table>
+
+<table cellpadding="4"><tr><td><img src="assets/generated/heading-vision.svg?v={{ sha }}" height="24" alt="Vision" /></td><td width="100%"><img src="assets/generated/divider-vision.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.vision }}</td></tr></table>
+
+<table cellpadding="4"><tr><td><img src="assets/generated/heading-beyond-code.svg?v={{ sha }}" height="24" alt="Beyond code" /></td><td width="100%"><img src="assets/generated/divider-beyond-code.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.beyond_code }}</td></tr></table>
+
+</td></tr></table>
+
+<div align="center">
+
+<table cellpadding="0" border="0"><tr><td><img src="assets/icons/social-pixels-left.svg?v={{ sha }}" width="16" height="40" alt="" /></td><td>{{ socials_html | safe }}</td><td><img src="assets/icons/social-pixels-right.svg?v={{ sha }}" width="16" height="40" alt="" /></td></tr></table>
+
+</div>
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/generated/stats-panel-light.svg?v={{ sha }}" />
+  <img src="assets/generated/stats-panel.svg?v={{ sha }}" width="100%" alt="GitHub contributions, activity radar, language mix, stars, and forks" />
+</picture>
+
+<table><tr><td><img src="assets/generated/heading-skill-set.svg?v={{ sha }}" height="24" alt="Skill set" /></td><td width="100%"><img src="assets/generated/divider-skill-set.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr></table>
+
+{{ skills_html | safe }}
+
+<table><tr><td><img src="assets/generated/heading-projects.svg?v={{ sha }}" height="24" alt="Projects" /></td><td width="100%"><img src="assets/generated/divider-projects.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr></table>
+
+<a href="{{ profile.links.github }}"><img src="assets/project-showcase.svg?v={{ sha }}" width="100%" alt="Selected project showcase" /></a>
+
+**Selected repositories**
+
+<table>
+{% for row in repo_rows %}
+<tr>
+{% for repo in row %}
+<td width="50%" valign="top" bgcolor="#12161d"><a href="{{ repo.url }}">{{ repo.name }}</a><br/>{{ repo.description }}<br/><br/>{{ repo.language }} · ★ {{ repo.stars }}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+<div align="center">
+<img src="assets/generated/pixel-strip.svg?v={{ sha }}" width="280" height="18" alt="Green pixel art footer" />
+
+**{{ profile.tagline_footer }}**
+</div>
