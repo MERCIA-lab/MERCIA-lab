@@ -6,6 +6,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import html
+import io
 import json
 import math
 import os
@@ -18,6 +19,7 @@ from xml.etree import ElementTree as ET
 from xml.sax.saxutils import escape
 
 import requests
+from PIL import Image, ImageDraw, ImageFont
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 try:
     import yaml
@@ -118,6 +120,12 @@ def write_if_changed(path: Path, content: str) -> None:
     value = content.rstrip() + "\n"
     if not path.exists() or path.read_text(encoding="utf-8") != value:
         path.write_text(value, encoding="utf-8", newline="\n")
+
+
+def write_binary_if_changed(path: Path, content: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not path.exists() or path.read_bytes() != content:
+        path.write_bytes(content)
 
 
 def bitmap(text: str, x: int, y: int, cell: int, color: str, gap: int = 1) -> str:
@@ -232,8 +240,8 @@ def social_icon_svg(label: str, key: str, color: str) -> str:
         if not mark:
             initials = {"github": "GH", "x": "X", "gmail": "M"}.get(key, label[:2])
             mark = f'<text x="32" y="39" text-anchor="middle" fill="{color}" font-family="monospace" font-size="20" font-weight="bold">{escape(initials)}</text>'
-        return f'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="{escape(label)}"><rect x="1" y="1" width="62" height="62" rx="5" fill="#0f141b" stroke="#1f2630"/>{mark}</svg>'
-    return f'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="{escape(label)}"><rect x="1" y="1" width="62" height="62" rx="5" fill="#0f141b" stroke="#1f2630"/><svg x="16" y="16" width="32" height="32" viewBox="0 0 24 24">{mark}</svg></svg>'
+        return f'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="{escape(label)}">{mark}</svg>'
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="{escape(label)}"><svg x="16" y="16" width="32" height="32" viewBox="0 0 24 24">{mark}</svg></svg>'
 
 
 def skill_icon_svg(label: str, color: str, initials: str = "") -> str:
@@ -514,30 +522,182 @@ def stats_panel(data: dict, light: bool = False) -> str:
 </svg>'''
 
 
-def project_showcase(data: dict, width: int) -> str:
-    item = data["selected_repos"][0]
-    height = 192 if width < 500 else 150
-    left = 20 if width < 500 else 30
-    usable = width - left * 2
-    chars = max(30, int(usable / (6.2 if width < 500 else 7.2)))
-    lines, current = [], ""
-    for word in item["description"].split():
-        if current and len(current) + len(word) + 1 > chars:
-            lines.append(current)
+def cargo_route_gif(width: int, item: dict) -> bytes:
+    mobile = width < 500
+    scale = width / 900
+    bg, card, border = "#0d1117", "#12161d", "#303943"
+    green, bright, blue = "#2ea043", "#3fb950", "#8bb9d8"
+    text, muted, parcel = "#e6edf3", "#8b949e", "#d9a441"
+    font_candidates = [
+        Path("C:/Windows/Fonts/consola.ttf"),
+        Path("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"),
+        Path("/usr/share/fonts/truetype/liberation2/LiberationMono-Regular.ttf"),
+    ]
+    font_path = next((path for path in font_candidates if path.exists()), None)
+
+    def font(size: int):
+        return ImageFont.truetype(str(font_path), size) if font_path else ImageFont.load_default()
+
+    title_font = font(12 if mobile else 18)
+    body_font = font(9 if mobile else 12)
+    tag_font = font(8 if mobile else 10)
+    label_font = font(8 if mobile else 10)
+    status_font = font(7 if mobile else 9)
+    foot_font = font(8 if mobile else 9)
+    margin = 19 if mobile else 30
+    description = str(item.get("description") or item.get("fallback") or "Project description unavailable.")
+    image_probe = Image.new("RGB", (width, 1))
+    probe = ImageDraw.Draw(image_probe)
+    max_description_width = width - margin * 2
+    description_lines, current = [], ""
+    for word in description.split():
+        candidate = f"{current} {word}".strip()
+        if current and probe.textlength(candidate, font=body_font) > max_description_width:
+            description_lines.append(current)
             current = word
         else:
-            current = f"{current} {word}".strip()
+            current = candidate
     if current:
-        lines.append(current)
-    description = "".join(f'<text x="{left}" y="{88 + i * 17}" fill="#9da7b3" font-family="monospace" font-size="{10 if width < 500 else 12}">{escape(line)}</text>' for i, line in enumerate(lines[:3]))
-    title_size = 14 if width < 500 else 19
-    meta_y = 132 if width < 500 else 100
-    language = str(item["language"] or "").strip()
-    stars = str(item["stars"] or "").strip()
+        description_lines.append(current)
+    description_lines = description_lines[:4]
+
+    name = str(item.get("name") or "Featured project")
+    language = str(item.get("language") or "").strip()
+    stars = str(item.get("stars") or "").strip()
     language = "N/A" if not language.isascii() or language in ("-", "") else language
     stars = "N/A" if not stars.isascii() or stars in ("-", "") else stars
-    cta_y = meta_y + 50 if width < 500 else meta_y + 34
-    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="Featured project: {escape(item["name"])}"><rect x="1" y="1" width="{width-2}" height="{height-2}" rx="8" fill="#12161d" stroke="#303943"/><text x="{left}" y="29" fill="#8b949e" font-family="monospace" font-size="10">FEATURED PROJECT / 01</text><text x="{left}" y="58" fill="#3fb950" font-family="monospace" font-size="{title_size}">{escape(item["name"])}</text>{description}<path d="M{left} {meta_y+13}H{width-left}" stroke="#303943"/><text x="{left}" y="{meta_y+34}" fill="#d9d2c5" font-family="monospace" font-size="10">{escape(language)}  |  STARS {escape(stars)}</text><text x="{left if width < 500 else width-left}" y="{cta_y}" fill="#58a6ff" text-anchor="{'start' if width < 500 else 'end'}" font-family="monospace" font-size="10">OPEN REPOSITORY</text></svg>'
+    description_y = 67 if mobile else 72
+    description_step = 13 if mobile else 17
+    metadata_y = description_y + len(description_lines) * description_step + (5 if mobile else 7)
+    route_heading_y = metadata_y + (28 if mobile else 34)
+    route_y = route_heading_y + (94 if mobile else 110)
+    footer_y = route_y + (83 if mobile else 98)
+    height = footer_y + (26 if mobile else 28)
+    margin_track = 42 if mobile else 62
+    station_x = [round(margin_track + i * (width - 2 * margin_track) / 3) for i in range(4)]
+    labels = ["WAREHOUSE", "DISPATCH", "TRANSIT HUB", "CUSTOMER"]
+    statuses = ["ORDER RECEIVED", "DISPATCHED", "IN TRANSIT", "DELIVERED"]
+    road_y = route_y - (40 if mobile else 56)
+    stations = [(station_x[0], road_y), (station_x[1], route_y), (station_x[2], road_y), (station_x[3], route_y)]
+    route_vertices = [stations[0], (station_x[1], stations[0][1]), stations[1],
+                      (station_x[2], stations[1][1]), stations[2], (station_x[3], stations[2][1]), stations[3]]
+    station_vertex_indices = (2, 4, 6)
+    frame_count = 60
+    frames = []
+
+    for frame_index in range(frame_count):
+        progress = frame_index / (frame_count - 1)
+        image = Image.new("RGB", (width, height), bg)
+        draw = ImageDraw.Draw(image)
+        draw.rounded_rectangle((1, 1, width - 2, height - 2), radius=10, fill=card, outline=border, width=1)
+
+        draw.text((margin, 17 if mobile else 22), "FEATURED PROJECT / 01", font=tag_font, fill=muted)
+        title_y = 38 if mobile else 46
+        draw.text((margin, title_y), name, font=title_font, fill=bright)
+        for line_index, line in enumerate(description_lines):
+            draw.text((margin, description_y + line_index * description_step), line, font=body_font, fill=text)
+        draw.text((margin, metadata_y), f"{language}  |  STARS {stars}", font=tag_font, fill=muted)
+        draw.line((margin, route_heading_y - (10 if mobile else 12), width - margin, route_heading_y - (10 if mobile else 12)), fill=border, width=1)
+
+        route_title = "CARGO ROUTE PREVIEW" if mobile else "CARGO ROUTE PREVIEW / WAREHOUSE TO CUSTOMER"
+        draw.text((margin, route_heading_y), route_title, font=tag_font, fill=text)
+        badge = "ROUTE PREVIEW"
+        badge_bbox = draw.textbbox((0, 0), badge, font=tag_font)
+        badge_w = badge_bbox[2] - badge_bbox[0] + (14 if mobile else 18)
+        badge_h = badge_bbox[3] - badge_bbox[1] + 8
+        badge_x = width - margin - badge_w
+        badge_y = route_heading_y - 4
+        draw.rounded_rectangle((badge_x, badge_y, badge_x + badge_w, badge_y + badge_h), radius=badge_h // 2, fill="#173321", outline="#236b36")
+        draw.text((badge_x + (7 if mobile else 9), badge_y + 3), badge, font=tag_font, fill=bright)
+
+        route_segments = []
+        station_progress = []
+        route_length = 0.0
+        for vertex_index, (segment_start, segment_end) in enumerate(zip(route_vertices, route_vertices[1:]), 1):
+            length = abs(segment_end[0] - segment_start[0]) + abs(segment_end[1] - segment_start[1])
+            if length:
+                route_segments.append((segment_start, segment_end, length))
+                route_length += length
+                if vertex_index in station_vertex_indices:
+                    station_progress.append(route_length)
+        station_progress.insert(0, 0.0)
+
+        def segment_point(start, end, distance):
+            dx = 0 if start[0] == end[0] else (1 if end[0] > start[0] else -1)
+            dy = 0 if start[1] == end[1] else (1 if end[1] > start[1] else -1)
+            return (int(start[0] + dx * distance), int(start[1] + dy * distance))
+
+        for segment_start, segment_end, length in route_segments:
+            for distance in range(0, length, 9 if mobile else 12):
+                dash_end = segment_point(segment_start, segment_end, min(distance + 4, length))
+                dash_start = segment_point(segment_start, segment_end, distance)
+                draw.line((*dash_start, *dash_end), fill="#4b5563", width=3)
+
+        traveled = progress * route_length
+        current_x, current_y = stations[0]
+        remaining = traveled
+        for segment_start, segment_end, length in route_segments:
+            if remaining >= length:
+                draw.line((*segment_start, *segment_end), fill=green, width=4)
+                current_x, current_y = segment_end
+                remaining -= length
+            elif remaining > 0:
+                current_x, current_y = segment_point(segment_start, segment_end, remaining)
+                draw.line((*segment_start, current_x, current_y), fill=green, width=4)
+                break
+            else:
+                break
+
+        active_station = max(index for index, distance in enumerate(station_progress) if distance <= traveled)
+        for index, point in enumerate(stations):
+            reached = station_progress[index] <= traveled
+            radius = 5 if mobile else 6
+            fill = bright if reached else card
+            outline = bright if reached else muted
+            draw.ellipse((point[0] - radius, point[1] - radius, point[0] + radius, point[1] + radius), fill=fill, outline=outline, width=2)
+            label_bbox = draw.textbbox((0, 0), labels[index], font=label_font)
+            label_width = label_bbox[2] - label_bbox[0]
+            label_color = bright if index == active_station else muted
+            draw.text((point[0] - label_width / 2, point[1] + (12 if mobile else 15)), labels[index], font=label_font, fill=label_color)
+            status_bbox = draw.textbbox((0, 0), statuses[index], font=status_font)
+            status_width = status_bbox[2] - status_bbox[0]
+            status_color = bright if index <= active_station else muted
+            draw.text((point[0] - status_width / 2, point[1] + (23 if mobile else 29)), statuses[index], font=status_font, fill=status_color)
+
+        truck_w = 52 if mobile else 82
+        truck_h = 34 if mobile else 45
+        truck_x = max(margin_track - truck_w // 2, min(width - margin_track - truck_w // 2, int(current_x - truck_w / 2)))
+        truck_top = current_y - truck_h + 1
+        bed_right = truck_x + int(truck_w * .68)
+        draw.rounded_rectangle((truck_x, truck_top + 5, bed_right, truck_top + int(truck_h * .69)), radius=3, fill="#173321", outline=bright, width=2)
+        cab_left = bed_right - 1
+        draw.polygon([(cab_left, truck_top + int(truck_h * .34)), (truck_x + truck_w - 7, truck_top + int(truck_h * .34)), (truck_x + truck_w, truck_top + int(truck_h * .69)), (cab_left, truck_top + int(truck_h * .69))], fill="#1f6f3b", outline=bright)
+        box_x = truck_x + int(truck_w * .16)
+        box_y = truck_top + int(truck_h * .18)
+        box_w = max(9, int(truck_w * .24))
+        box_h = max(8, int(truck_h * .34))
+        draw.rectangle((box_x, box_y, box_x + box_w, box_y + box_h), fill=parcel, outline="#f4d58d", width=1)
+        draw.line((box_x + box_w // 2, box_y, box_x + box_w // 2, box_y + box_h), fill="#fff0c2", width=1)
+        wheel_r = 4 if mobile else 6
+        for wheel_x in (truck_x + int(truck_w * .24), truck_x + int(truck_w * .76)):
+            wheel_y = current_y - 1
+            draw.ellipse((wheel_x - wheel_r, wheel_y - wheel_r, wheel_x + wheel_r, wheel_y + wheel_r), fill="#080b10", outline="#9da7b3", width=1)
+            draw.ellipse((wheel_x - 1, wheel_y - 1, wheel_x + 1, wheel_y + 1), fill=blue)
+
+        draw.text((margin, footer_y), "SAMPLE ORDER", font=foot_font, fill=muted)
+        progress_label = f"{int(progress * 100):02d}%"
+        progress_bbox = draw.textbbox((0, 0), progress_label, font=foot_font)
+        draw.text((width - margin - (progress_bbox[2] - progress_bbox[0]), footer_y), progress_label, font=foot_font, fill=bright)
+        bar_y = height - (8 if mobile else 9)
+        draw.rounded_rectangle((margin, bar_y, width - margin, bar_y + 3), radius=2, fill=border)
+        draw.rounded_rectangle((margin, bar_y, max(margin + 3, int(margin + (width - 2 * margin) * progress)), bar_y + 3), radius=2, fill=green)
+        frames.append(image)
+
+    output = io.BytesIO()
+    frames[0].save(output, format="GIF", save_all=True, append_images=frames[1:], duration=250, loop=0, optimize=True, disposal=2)
+    return output.getvalue()
+
+
 
 def skills_grid_svg(profile: dict, columns: int, width: int) -> str:
     names = [name for row in profile["skills"] for name in row]
@@ -548,8 +708,6 @@ def skills_grid_svg(profile: dict, columns: int, width: int) -> str:
     for index, name in enumerate(names):
         col, row = index % columns, index // columns
         x, y = col * cell_width, row * cell_height
-        cell_fill = "#0f141b"
-        cells.append(f'<rect x="{x:.2f}" y="{y}" width="{cell_width - 1:.2f}" height="{cell_height - 1}" fill="{cell_fill}" stroke="{PALETTE["border"]}"/>')
         icon_name = ""
         if name:
             initials, color = SKILL_META.get(name, (re.sub(r"[^A-Za-z0-9]", "", name)[:3].upper() or "?", "#6e7681"))
@@ -558,7 +716,7 @@ def skills_grid_svg(profile: dict, columns: int, width: int) -> str:
             write_if_changed(ICONS / f"{icon_name}.svg", icon_svg)
             icon_root = ET.fromstring(icon_svg)
             icon_parts = [ET.tostring(child, encoding="unicode") for child in icon_root
-                          if child.tag.rsplit("}", 1)[-1].lower() != "text"]
+                          if child.tag.rsplit("}", 1)[-1].lower() not in ("text", "rect")]
             nested_x = x + (cell_width - 40) / 2
             cells.append(f'<svg x="{nested_x:.2f}" y="{y + 5}" width="40" height="40" viewBox="0 0 40 40">{"".join(icon_parts)}</svg>')
             cells.append(f'<text x="{x + cell_width / 2:.2f}" y="{y + 64}" fill="{PALETTE["text"]}" text-anchor="middle" font-family="monospace" font-size="10">{escape(name)}</text>')
@@ -572,12 +730,12 @@ def social_bar(profile: dict, sha: str) -> str:
         target = links.get(key, "")
         if not target and key == "portfolio":
             continue
-        cells_head.append(f'<td align="center" bgcolor="#12161d">{label}</td>')
+        cells_head.append(f'<td align="center">{label}</td>')
         filename = f"social-{key}.svg"
         icon_content = social_icon_svg(label, key, color)
         write_if_changed(ICONS / filename, icon_content)
         safe_target = html.escape(target, quote=True)
-        cells_body.append(f'<td align="center" bgcolor="#0f141b"><a href="{safe_target}"><img src="assets/icons/{filename}?v={sha}" width="48" height="48" alt="{label}"/></a></td>')
+        cells_body.append(f'<td align="center"><a href="{safe_target}"><img src="assets/icons/{filename}?v={sha}" width="48" height="48" alt="{label}"/></a></td>')
     return '<table cellpadding="2" border="0"><tr>' + "".join(cells_head) + "</tr><tr>" + "".join(cells_body) + "</tr></table>"
 
 
@@ -682,8 +840,9 @@ def main() -> None:
     write_if_changed(GENERATED / "stats-panel.svg", stats_panel(data))
     write_if_changed(GENERATED / "stats-panel-light.svg", stats_panel(data, True))
     write_if_changed(CACHE, json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2))
-    write_if_changed(ASSETS / "project-showcase.svg", project_showcase(data, 900))
-    write_if_changed(ASSETS / "project-showcase-mobile.svg", project_showcase(data, 360))
+    featured_project = data["selected_repos"][0]
+    write_binary_if_changed(ASSETS / "shipping-cargo-route.gif", cargo_route_gif(900, featured_project))
+    write_binary_if_changed(ASSETS / "shipping-cargo-route-mobile.gif", cargo_route_gif(360, featured_project))
     write_if_changed(GENERATED / "pixel-strip.svg", f'<svg xmlns="http://www.w3.org/2000/svg" width="280" height="18" viewBox="0 0 280 18">{pixel_mosaic(seed + 991, 0, 1, 35, 2, 8)}</svg>')
     write_if_changed(GENERATED / "skills-grid.svg", skills_grid_svg(profile, 8, 900))
     write_if_changed(GENERATED / "skills-grid-mobile.svg", skills_grid_svg(profile, 4, 360))

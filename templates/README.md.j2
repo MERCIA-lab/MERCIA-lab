@@ -12,39 +12,56 @@
 <img src="assets/generated/section-header-who-i-am.svg?v={{ sha }}" width="100%" alt="Who I Am" /><br/><br/>
 {{ profile.who_i_am }}
 
+<br/>
+
 <img src="assets/generated/section-header-what-i-do.svg?v={{ sha }}" width="100%" alt="What I Do" /><br/><br/>
 {{ profile.what_i_do }}
 
+<br/>
+
 <img src="assets/generated/section-header-vision.svg?v={{ sha }}" width="100%" alt="Vision" /><br/><br/>
 {{ profile.vision }}
+
+<br/>
 
 <img src="assets/generated/section-header-beyond-code.svg?v={{ sha }}" width="100%" alt="Beyond Code" /><br/><br/>
 {{ profile.beyond_code }}
 
 </td></tr></table>
 
+<br/>
+
 <div align="center">
 <table cellpadding="0" border="0"><tr><td><img src="assets/icons/social-pixels-left.svg?v={{ sha }}" width="16" height="40" alt="" /></td><td>{{ socials_html | safe }}</td><td><img src="assets/icons/social-pixels-right.svg?v={{ sha }}" width="16" height="40" alt="" /></td></tr></table>
 </div>
+
+<br/>
 
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/generated/stats-panel-light.svg?v={{ sha }}" />
   <img src="assets/generated/stats-panel.svg?v={{ sha }}" width="100%" alt="GitHub contribution ladder, language mix, and activity stats" />
 </picture>
 
+<br/>
+
 <img src="assets/generated/section-header-featured-project.svg?v={{ sha }}" width="100%" alt="Featured Project" />
+
 <a href="{{ featured_repo.url }}">
 <picture>
-  <source media="(max-width: 600px)" srcset="assets/project-showcase-mobile.svg?v={{ sha }}" />
-  <img src="assets/project-showcase.svg?v={{ sha }}" width="100%" alt="{{ featured_repo.name }} - {{ featured_repo.description }}" />
+  <source media="(max-width: 600px)" srcset="assets/shipping-cargo-route-mobile.gif?v={{ sha }}" />
+  <img src="assets/shipping-cargo-route.gif?v={{ sha }}" width="100%" alt="{{ featured_repo.name }}: {{ featured_repo.description }} Animated cargo route from warehouse through dispatch to delivery." />
 </picture>
 </a>
+
+<br/>
 
 <img src="assets/generated/section-header-skill-set.svg?v={{ sha }}" width="100%" alt="Skill Set" />
 <picture>
   <source media="(max-width: 600px)" srcset="assets/generated/skills-grid-mobile.svg?v={{ sha }}" />
   <img src="assets/generated/skills-grid.svg?v={{ sha }}" width="100%" alt="Technology skills with recognizable language and tool icons" />
 </picture>
+
+<br/>
 
 <div align="center">
 <img src="assets/generated/pixel-strip.svg?v={{ sha }}" width="280" height="18" alt="Green pixel art footer" />
