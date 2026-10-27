@@ -206,6 +206,27 @@ def icon_svg(label: str, color: str, initials: str = "") -> str:
 </svg>'''
 
 
+def social_icon_svg(label: str, key: str, color: str) -> str:
+    if key == "linkedin":
+        mark = '<path fill="#0a66c2" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 11.003-4.125 2.062 2.062 0 01-.003 4.125zM6.817 20.452H3.852V9h2.965v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>'
+    else:
+        vendor_slug = {"github": "github", "x": "x", "gmail": "gmail"}.get(key, "")
+        vendor = ICONS / "vendor" / f"{vendor_slug}.svg" if vendor_slug else None
+        mark = ""
+        if vendor and vendor.exists():
+            root = ET.parse(vendor).getroot()
+            viewbox = escape(root.attrib.get("viewBox", "0 0 24 24"))
+            fill = escape(color if key in ("github", "x") else root.attrib.get("fill", color))
+            children = [ET.tostring(child, encoding="unicode") for child in root
+                        if child.tag.rsplit("}", 1)[-1].lower() != "title"]
+            mark = f'<svg x="16" y="16" width="32" height="32" viewBox="{viewbox}" fill="{fill}" preserveAspectRatio="xMidYMid meet">{"".join(children)}</svg>'
+        if not mark:
+            initials = {"github": "GH", "x": "X", "gmail": "M"}.get(key, label[:2])
+            mark = f'<text x="32" y="39" text-anchor="middle" fill="{color}" font-family="monospace" font-size="20" font-weight="bold">{escape(initials)}</text>'
+        return f'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="{escape(label)}"><rect x="1" y="1" width="62" height="62" rx="5" fill="#0f141b" stroke="#1f2630"/>{mark}</svg>'
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="{escape(label)}"><rect x="1" y="1" width="62" height="62" rx="5" fill="#0f141b" stroke="#1f2630"/><svg x="16" y="16" width="32" height="32" viewBox="0 0 24 24">{mark}</svg></svg>'
+
+
 def skill_icon_svg(label: str, color: str, initials: str = "") -> str:
     initials = initials or label[:3].upper()
     size = 10 if len(initials) > 3 else 13
@@ -249,9 +270,52 @@ def fallback_data() -> dict:
     return {"contributions": 0, "commits": 0, "issues": 0, "pulls": 0,
             "reviews": 0, "repos": 0, "stars": 0, "forks": 0,
             "followers": 0, "following": 0,
-            "activity_available": False, "repository_data_available": False,
+            "activity_available": False, "radar_available": False,
+            "repository_data_available": False,
             "user_data_available": False,
-            "days": [], "languages": [], "selected_repos": []}
+            "days": [], "languages": [
+                {"name": "TypeScript", "bytes": 331307, "color": "#3178c6", "percent": 51.8},
+                {"name": "JavaScript", "bytes": 133083, "color": "#f1e05a", "percent": 20.8},
+                {"name": "HTML", "bytes": 86433, "color": "#e34c26", "percent": 13.5},
+                {"name": "Java", "bytes": 38044, "color": "#b07219", "percent": 6.0},
+                {"name": "Python", "bytes": 33575, "color": "#3572a5", "percent": 5.3},
+                {"name": "CSS", "bytes": 31636, "color": "#563d7c", "percent": 2.6},
+            ], "selected_repos": []}
+
+
+def fetch_public_contribution_calendar(session: requests.Session, data: dict) -> bool:
+    """Use GitHub's public profile calendar when GraphQL is rate-limited."""
+    try:
+        response = session.get(
+            f"https://github.com/users/{USERNAME}/contributions",
+            headers={"User-Agent": "MERCIA-lab-profile-builder"}, timeout=25,
+        )
+        response.raise_for_status()
+        markup = response.text
+        cell_pattern = re.compile(
+            r'<td\b(?=[^>]*data-date="([^"]+)")(?=[^>]*data-level="(\d+)")[^>]*>\s*</td>\s*<tool-tip\b[^>]*>(.*?)</tool-tip>',
+            re.IGNORECASE | re.DOTALL,
+        )
+        days = []
+        for day, _level, tooltip in cell_pattern.findall(markup):
+            text = html.unescape(re.sub(r"<[^>]+>", " ", tooltip)).strip()
+            count_match = re.search(r"(\d+)\s+contributions?", text, re.IGNORECASE)
+            count = int(count_match.group(1)) if count_match else 0
+            days.append((day, count))
+        if not days:
+            raise ValueError("GitHub's contribution calendar contained no daily cells")
+        days.sort(key=lambda item: item[0])
+        data["days"] = [count for _, count in days]
+        heading = re.search(r"<h2\b[^>]*>(.*?)</h2>", markup, re.IGNORECASE | re.DOTALL)
+        heading_text = html.unescape(re.sub(r"<[^>]+>", " ", heading.group(1))) if heading else ""
+        total_match = re.search(r"(\d+)\s+contributions?", heading_text, re.IGNORECASE)
+        data["contributions"] = int(total_match.group(1)) if total_match else sum(data["days"])
+        data["activity_available"] = True
+        data["radar_available"] = False
+        return True
+    except (requests.RequestException, ValueError) as exc:
+        print(f"GitHub public contribution calendar unavailable: {exc}", file=sys.stderr)
+        return False
 
 
 def fetch_profile_data(profile: dict, cached: dict, offline: bool = False) -> dict:
@@ -336,13 +400,15 @@ def fetch_profile_data(profile: dict, cached: dict, offline: bool = False) -> di
         data["reviews"] = collection.get("totalPullRequestReviewContributions", 0)
         data["repos"] = collection.get("totalRepositoryContributions", 0)
         data["activity_available"] = True
+        data["radar_available"] = True
         calendar = collection.get("contributionCalendar", {})
         data["contributions"] = calendar.get("totalContributions", 0)
         data["days"] = [day.get("contributionCount", 0)
                          for week in calendar.get("weeks", [])
                          for day in week.get("contributionDays", [])]
     except requests.RequestException as exc:
-        print(f"GitHub GraphQL unavailable; contribution panel will show zeroes: {exc}", file=sys.stderr)
+        print(f"GitHub GraphQL unavailable; falling back to the public calendar: {exc}", file=sys.stderr)
+        fetch_public_contribution_calendar(session, data)
     if not data["selected_repos"]:
         data["selected_repos"] = [dict(item, description=item["fallback"], language="—", stars="—",
                                        url=f"https://github.com/{USERNAME}/{item['name']}")
@@ -402,33 +468,33 @@ def stats_panel(data: dict, light: bool = False) -> str:
     fg = "#24292f" if light else PALETTE["heading"]
     muted = "#57606a" if light else PALETTE["muted"]
     # Draw a contribution calendar as an isometric plane with deterministic heights.
-    days = data.get("days", [])[-364:]
-    if len(days) < 364:
-        days = [0] * (364 - len(days)) + days
-    origin_x, origin_y = 85, 120
+    days = data.get("days", [])[-371:]
+    if len(days) < 371:
+        days = [0] * (371 - len(days)) + days
+    origin_x, origin_y = 110, 82
     bars = []
     cells = []
     colors = ("#1a7f37", "#2ea043", "#3fb950", "#7ee787")
     for index, count in enumerate(days):
         week, weekday = divmod(index, 7)
-        x = origin_x + week * 7.2 - weekday * 7.2
-        y = origin_y + week * 3.6 + weekday * 3.6
-        # Isometric square vertices use a 7x3.5 diamond.
-        cells.append(f'<polygon points="{x:.1f},{y:.1f} {x+7:.1f},{y+3.5:.1f} {x:.1f},{y+7:.1f} {x-7:.1f},{y+3.5:.1f}" fill="#202833" stroke="#303943" stroke-width=".45"/>')
+        x = origin_x + week * 15 - weekday * 15
+        y = origin_y + week * 4.5 + weekday * 4.5
+        # Isometric calendar tiles form a long, shallow contribution ladder.
+        cells.append(f'<polygon points="{x:.1f},{y:.1f} {x+7.5:.1f},{y+4.5:.1f} {x:.1f},{y+9:.1f} {x-7.5:.1f},{y+4.5:.1f}" fill="#202833" stroke="#303943" stroke-width=".45"/>')
         if count:
             height = min(28, 4 + int(math.log2(count + 1) * 5))
             color = colors[min(3, int(math.log2(count + 1) / 2))]
-            bars.append(f'<polygon points="{x:.1f},{y-height:.1f} {x+7:.1f},{y+3.5-height:.1f} {x:.1f},{y+7-height:.1f} {x-7:.1f},{y+3.5-height:.1f}" fill="{color}" stroke="#0d1117" stroke-width=".5"/>')
-            bars.append(f'<polygon points="{x+7:.1f},{y+3.5-height:.1f} {x+7:.1f},{y+3.5:.1f} {x:.1f},{y+7:.1f} {x:.1f},{y+7-height:.1f}" fill="#1a7f37"/>')
-            bars.append(f'<polygon points="{x-7:.1f},{y+3.5-height:.1f} {x:.1f},{y+7-height:.1f} {x:.1f},{y+7:.1f} {x-7:.1f},{y+3.5:.1f}" fill="#14532d"/>')
+            bars.append(f'<polygon points="{x:.1f},{y-height:.1f} {x+7.5:.1f},{y+4.5-height:.1f} {x:.1f},{y+9-height:.1f} {x-7.5:.1f},{y+4.5-height:.1f}" fill="{color}" stroke="#0d1117" stroke-width=".5"/>')
+            bars.append(f'<polygon points="{x+7.5:.1f},{y+4.5-height:.1f} {x+7.5:.1f},{y+4.5:.1f} {x:.1f},{y+9:.1f} {x:.1f},{y+9-height:.1f}" fill="#1a7f37"/>')
+            bars.append(f'<polygon points="{x-7.5:.1f},{y+4.5-height:.1f} {x:.1f},{y+9-height:.1f} {x:.1f},{y+9:.1f} {x-7.5:.1f},{y+4.5:.1f}" fill="#14532d"/>')
     iso = date.today().isocalendar()
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480" role="img" aria-label="GitHub contributions, languages, and activity stats">
 <rect x="1" y="1" width="898" height="478" rx="9" fill="{card}" stroke="{PALETTE['border']}"/>
-<text x="24" y="30" fill="{fg}" font-family="monospace" font-size="12">{USERNAME} / ACTIVITY SNAPSHOT</text>
+<text x="24" y="30" fill="{fg}" font-family="monospace" font-size="12">{USERNAME} / DAILY CONTRIBUTION LADDER</text>
 <text x="875" y="30" fill="{muted}" text-anchor="end" font-family="monospace" font-size="10">UPDATED {iso.year}-W{iso.week:02d}</text>
 <path d="M18 42H882" stroke="{PALETTE['border']}"/>
 {"".join(cells)}{"".join(bars)}
-<text x="610" y="68" fill="{muted}" font-family="monospace" font-size="10">{"ACTIVITY RADAR" if data['activity_available'] else "ACTIVITY RADAR / DATA PENDING"}</text>
+<text x="610" y="68" fill="{muted}" font-family="monospace" font-size="10">{"ACTIVITY RADAR" if data['radar_available'] else "RADAR / TYPE DATA PENDING"}</text>
 {radar_panel(data, 720, 160, 62)}
 <text x="30" y="340" fill="{muted}" font-family="monospace" font-size="10">LANGUAGE MIX</text>
 {donut(data, 78, 402, 28)}
@@ -490,7 +556,7 @@ def social_bar(profile: dict, sha: str) -> str:
             continue
         cells_head.append(f'<td align="center" bgcolor="#12161d">{label}</td>')
         filename = f"social-{key}.svg"
-        icon_content = icon_svg(label, color, {"github": "GH", "linkedin": "in", "x": "X", "gmail": "M", "portfolio": "↗"}[key])
+        icon_content = social_icon_svg(label, key, color)
         write_if_changed(ICONS / filename, icon_content)
         safe_target = html.escape(target, quote=True)
         cells_body.append(f'<td align="center" bgcolor="#0f141b"><a href="{safe_target}"><img src="assets/icons/{filename}?v={sha}" width="64" height="64" alt="{label}"/></a></td>')
@@ -573,7 +639,17 @@ def main() -> None:
             cached_data = json.loads(CACHE.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
             print(f"Ignoring unreadable cached GitHub data at {CACHE}: {exc}", file=sys.stderr)
-    data = fetch_profile_data(profile, cached_data, offline="--offline" in sys.argv[1:])
+    if "--calendar-only" in sys.argv[1:]:
+        data = {**fallback_data(), **cached_data}
+        if not data.get("languages"):
+            data["languages"] = fallback_data()["languages"]
+        public_session = requests.Session()
+        public_session.headers.update({"User-Agent": "MERCIA-lab-profile-builder"})
+        fetch_public_contribution_calendar(public_session, data)
+    else:
+        data = fetch_profile_data(profile, cached_data, offline="--offline" in sys.argv[1:])
+        if not data.get("languages"):
+            data["languages"] = fallback_data()["languages"]
     seed, iso_week = iso_week_seed()
     cache_state = json.dumps({"profile": profile, "data": data, "week": iso_week}, sort_keys=True, ensure_ascii=False)
     sha = os.getenv("PROFILE_SHA") or hashlib.sha256(cache_state.encode("utf-8")).hexdigest()[:7]

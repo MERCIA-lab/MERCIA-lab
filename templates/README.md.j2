@@ -9,17 +9,6 @@
 
 <table cellpadding="10"><tr><td bgcolor="#12161d">
 
-<table><tr><td>
-<img src="assets/profile-photo-circle.png" width="150" alt="{{ profile.name }}" />
-</td><td>
-
-**{{ profile.name }}** · [@{{ profile.handle }}]({{ profile.links.github }})<br/>
-Computer Science Student · AI &amp; Software Engineer<br/>
-📍 {{ profile.location }} · [✉ {{ profile.email }}](mailto:{{ profile.email }})<br/>
-👥 {{ profile_stats.followers_display }} followers · {{ profile_stats.following_display }} following
-
-</td></tr></table>
-
 <table cellpadding="4"><tr><td><img src="assets/generated/heading-who-i-am.svg?v={{ sha }}" height="24" alt="Who I am" /></td><td width="100%"><img src="assets/generated/divider-who-i-am.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.who_i_am }}</td></tr></table>
 
 <table cellpadding="4"><tr><td><img src="assets/generated/heading-what-i-do.svg?v={{ sha }}" height="24" alt="What I do" /></td><td width="100%"><img src="assets/generated/divider-what-i-do.svg?v={{ sha }}" width="100%" height="20" alt="" /></td></tr><tr><td colspan="2">{{ profile.what_i_do }}</td></tr></table>
